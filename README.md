@@ -2,6 +2,8 @@
 
 The fox. The pit. How far.
 
+Live: https://cryptojym.github.io/ember-dash/
+
 Play: space / tap to jump. Shift / DASH when you have it.
 
 ```bash
