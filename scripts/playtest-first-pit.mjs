@@ -1,0 +1,25 @@
+/** Replayable first-pit playtest. Needs the game served on :8765 and playwright. */
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ headless: true, channel: 'chrome' });
+const page = await browser.newPage({ viewport: { width: 1100, height: 780 } });
+await page.goto(process.env.EMBER_URL || 'http://127.0.0.1:8765/', { waitUntil: 'networkidle' });
+await page.waitForTimeout(250);
+await page.click('#start-btn');
+await page.waitForTimeout(80);
+await page.evaluate(() => window.advanceTime(4500));
+const walked = JSON.parse(await page.evaluate(() => window.render_game_to_text()));
+await page.reload({ waitUntil: 'networkidle' });
+await page.waitForTimeout(200);
+await page.click('#start-btn');
+await page.waitForTimeout(80);
+await page.evaluate(() => window.advanceTime(2880));
+await page.keyboard.down('Space');
+await page.evaluate(() => window.advanceTime(680));
+await page.keyboard.up('Space');
+await page.evaluate(() => window.advanceTime(400));
+const jumped = JSON.parse(await page.evaluate(() => window.render_game_to_text()));
+const okWalkDie = walked.mode === 'dead' && walked.distanceM <= 40;
+const okJump = jumped.mode === 'playing' && jumped.distanceM >= 33;
+console.log(JSON.stringify({ walked, jumped: { mode: jumped.mode, d: jumped.distanceM, lives: jumped.lives }, okWalkDie, okJump, pass: okWalkDie && okJump }, null, 2));
+if (!(okWalkDie && okJump)) process.exit(1);
+await browser.close();

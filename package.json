@@ -1,0 +1,30 @@
+{
+  "name": "ember-dash",
+  "version": "1.0.0",
+  "description": "Ember Dash — noir-gold side-scroller for web and iOS TestFlight",
+  "private": true,
+  "license": "ISC",
+  "scripts": {
+    "www": "bash scripts/prepare-www.sh",
+    "sync": "bash scripts/prepare-www.sh && npx cap sync ios",
+    "ios:open": "bash scripts/prepare-www.sh && npx cap sync ios && npx cap open ios",
+    "ios:copy": "bash scripts/prepare-www.sh && npx cap copy ios",
+    "serve": "python3 -m http.server 8765",
+    "serve:www": "bash scripts/prepare-www.sh && python3 -m http.server 8765 --directory www",
+    "assets:ios": "npx capacitor-assets generate --assetPath resources --ios --iconBackgroundColor '#0c0a10' --splashBackgroundColor '#0c0a10'"
+  },
+  "dependencies": {
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/cli": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.5.0",
+    "@capacitor/share": "^8.0.1",
+    "@capacitor/splash-screen": "^8.0.2",
+    "@capacitor/status-bar": "^8.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5"
+  }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0c0a10" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <title>Ember</title>
+  <meta name="description" content="The fox. The pit. How far." />
+  <meta property="og:title" content="Ember" />
+  <meta property="og:description" content="The fox. The pit. How far." />
+  <meta property="og:image" content="assets/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ember" />
+  <meta name="twitter:description" content="The fox. The pit. How far." />
+  <meta name="twitter:image" content="assets/og.jpg" />
+  <link rel="stylesheet" href="styles.css?v=20260816-one-1" />
+</head>
+<body class="is-title">
+  <div id="shell">
+    <header class="hud">
+      <span id="meters" class="meters">0m</span>
+      <div class="ember-row" id="lives" hidden aria-label="Lives">
+        <span class="ember on"></span>
+        <span class="ember on"></span>
+        <span class="ember on"></span>
+      </div>
+      <div class="dials" role="group" aria-label="Audio">
+        <button type="button" id="music-btn" class="dial" aria-pressed="true" aria-label="Music on">MUS</button>
+        <button type="button" id="sfx-btn" class="dial" aria-pressed="true" aria-label="Sound on">SFX</button>
+      </div>
+    </header>
+
+    <div id="stage-wrap">
+      <canvas id="game" width="960" height="540" aria-label="Ember Dash game canvas"></canvas>
+      <button
+        type="button"
+        id="dash-btn"
+        class="dash-btn"
+        aria-label="Ember Dash — short invincible gold surge"
+      >
+        <span class="dash-rim" aria-hidden="true"></span>
+        <span class="dash-cd-fill" aria-hidden="true"></span>
+        <span class="dash-btn-label">DASH</span>
+        <span class="dash-btn-hint">shift</span>
+      </button>
+      <button
+        type="button"
+        id="jump-btn"
+        class="jump-btn"
+        aria-label="Jump — hold for higher jump"
+      >
+        <span class="jump-fill" aria-hidden="true"></span>
+        <span class="jump-btn-label">JUMP</span>
+        <span class="jump-btn-hint">hold</span>
+      </button>
+      <video
+        id="entry-trailer"
+        class="entry-trailer"
+        src="assets/entry-trailer.mp4?v=20260816-fox-2"
+        poster="assets/entry-poster.jpg?v=20260816-one-1"
+        muted
+        playsinline
+        loop
+        autoplay
+        preload="auto"
+        aria-hidden="true"
+      ></video>
+      <div id="overlay" class="overlay">
+        <p class="title-mark">EMBER</p>
+        <div class="panel">
+          <img id="death-stamp" class="death-stamp" alt="" hidden />
+          <h2 id="overlay-title">Ember</h2>
+          <p id="overlay-body"></p>
+        </div>
+        <button
+          type="button"
+          id="share-btn"
+          class="share-line"
+          hidden
+          aria-label="Send this death"
+        >
+          SEND
+        </button>
+        <button id="start-btn" type="button" class="enter-line" aria-label="Enter">
+          <span id="start-label" class="enter-word">ENTER</span>
+          <span class="enter-filament" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <script type="module" src="js/game.js?v=20260816-one-1"></script>
+</body>
+</html>
