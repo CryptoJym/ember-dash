@@ -85,6 +85,7 @@ const jumpBtn = document.getElementById("jump-btn");
 const dashBtn = document.getElementById("dash-btn");
 const deathStampEl = document.getElementById("death-stamp");
 const shareBtn = document.getElementById("share-btn");
+const rotateGate = document.getElementById("rotate-gate");
 
 const RUN_FRAME_COUNT = 8;
 // All run frames are pre-normalized to the same cell size (body-centered).
@@ -1999,7 +2000,42 @@ function frame(now) {
 
 let runStartPending = false;
 
+function isPhone() {
+  return (
+    window.matchMedia("(pointer: coarse)").matches ||
+    window.matchMedia("(hover: none) and (max-width: 920px)").matches
+  );
+}
+
+function isPortrait() {
+  if (window.matchMedia("(orientation: portrait)").matches) return true;
+  return window.innerHeight > window.innerWidth;
+}
+
+function needsLandscape() {
+  return isPhone() && isPortrait();
+}
+
+let pausedForRotate = false;
+
+function syncRotateGate() {
+  const need = needsLandscape();
+  document.body.classList.toggle("needs-rotate", need);
+  if (rotateGate) rotateGate.hidden = !need;
+  if (need && state.mode === "playing") {
+    pausedForRotate = true;
+    pauseGame();
+  } else if (!need && pausedForRotate && state.mode === "paused") {
+    pausedForRotate = false;
+    resumeGame();
+  }
+}
+
 function startRunFromOverlay() {
+  if (needsLandscape()) {
+    syncRotateGate();
+    return;
+  }
   if (runStartPending || (state.mode !== "title" && state.mode !== "dead")) return;
   runStartPending = true;
   startBtn.classList.add("is-firing");
@@ -2115,6 +2151,26 @@ window.addEventListener("blur", () => clearHeldJumpInputs(false));
 
 wireJumpButton();
 wireDashButton();
+
+syncRotateGate();
+window.addEventListener("orientationchange", () => {
+  window.setTimeout(syncRotateGate, 80);
+});
+window.addEventListener("resize", syncRotateGate);
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false },
+);
+document.addEventListener(
+  "wheel",
+  (e) => {
+    e.preventDefault();
+  },
+  { passive: false },
+);
 
 function renderGameToText() {
   const visible = (item, width = item.w || 0) => {
