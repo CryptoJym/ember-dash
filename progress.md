@@ -1,5 +1,11 @@
 # Progress
 
+## 2026-08-16 — refine one-2
+
+- iPhone landscape only. Home-screen name Ember. Title/death go edge-to-edge on native.
+- JUMP/DASH are gold rings; hidden on desktop (keyboard). ENTER focus is the filament, not a box.
+- 8-frame painted run. 15s silent `assets/store-preview.mp4`. Store words in `docs/STORE.md`.
+
 ## 2026-08-16 — one fox, one number, public page
 
 - Game sprite, jump, run cells keyed from the cinematic fox. Icon is the face.

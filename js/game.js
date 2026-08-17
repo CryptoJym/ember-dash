@@ -86,7 +86,7 @@ const dashBtn = document.getElementById("dash-btn");
 const deathStampEl = document.getElementById("death-stamp");
 const shareBtn = document.getElementById("share-btn");
 
-const RUN_FRAME_COUNT = 4;
+const RUN_FRAME_COUNT = 8;
 // All run frames are pre-normalized to the same cell size (body-centered).
 const RUN_CELL_W = 128;
 const RUN_CELL_H = 96;

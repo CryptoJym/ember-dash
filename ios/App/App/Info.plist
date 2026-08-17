@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Ember Dash</string>
+        <string>Ember</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -57,12 +57,11 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<!-- Landscape-first runner; portrait kept for one-handed pads -->
+	<!-- iPhone is a street. Portrait crops the run into a face. -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
