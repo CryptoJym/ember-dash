@@ -31,6 +31,10 @@ var atlas_path="res://assets/atlases/ember.png"
 var anchor=Vector2(0.5326,0.8243)
 var frame_size=Vector2(256,192)
 var art_scale=0.63
+var fx_time=0.0
+var trail_age=0.0
+var echoes=[]
+var birthright="ember"
 
 func _ready():
  process_physics_priority=-10
@@ -45,6 +49,7 @@ func _ready():
 
 func set_art(path):
  atlas_path=path
+ birthright=path.get_file().get_basename()
  if sprite==null:return
  var texture=load(path)
  if not texture:return
@@ -118,7 +123,54 @@ func hit(amount=1,origin=Vector2.ZERO):
   hurt.emit()
  return true
 
+func _process(dt):
+ if not active:return
+ fx_time+=minf(dt,.05)
+ for i in range(echoes.size()-1,-1,-1):
+  echoes[i].life-=dt
+  if echoes[i].life<=0:echoes.remove_at(i)
+ trail_age+=dt
+ if dash_time>0 and trail_age>.025 and sprite and sprite.sprite_frames:
+  trail_age=0
+  var texture=sprite.sprite_frames.get_frame_texture(sprite.animation,sprite.frame)
+  echoes.append({"pos":global_position,"face":facing,"life":.17,"texture":texture})
+  if echoes.size()>7:echoes.pop_front()
+ queue_redraw()
+
 func _draw():
+ if sprite==null:return
+ for echo in echoes:
+  draw_set_transform(echo.pos-global_position,0,Vector2(echo.face*art_scale,art_scale))
+  draw_texture(echo.texture,-frame_size*anchor,Color(color,echo.life*1.9))
+ draw_set_transform(Vector2.ZERO)
+ # Persistent birthright details share the fox pivot, not the camera or hitbox.
+ var tail_pos=Vector2(-47*facing,-30)
+ if birthright=="ember":
+  for j in range(4):
+   var p=tail_pos+Vector2(-j*4*facing,-j*3)
+   var points=PackedVector2Array([p+Vector2(-4,5),p+Vector2(-6,-3),p+Vector2(sin(fx_time*7+j)*4,-14-j*2),p+Vector2(5,-1),p+Vector2(4,6)])
+   draw_colored_polygon(points,Color(color,.22+.07*j))
+ elif birthright=="tide":
+  draw_arc(Vector2(6,-54),17,-PI*.9,PI*.38,28,Color(color,.55),1.2,true)
+  for j in range(4):
+   var a=fx_time*.6+j*PI/2;draw_circle(Vector2(6,-54)+Vector2.from_angle(a)*19,1.5,Color(color,.85))
+ elif birthright=="gale":
+  for j in range(3):
+   var points=PackedVector2Array()
+   for i in range(12):points.append(Vector2((-15-i*5)*facing,-32-j*6+sin(i*.5+fx_time*3+j)*3))
+   draw_polyline(points,Color(color,.22-j*.03),1.5,true)
+ elif birthright=="void":
+  for j in range(13):
+   var pos=Vector2((-10-j*4)*facing,-26+sin(j*4+fx_time)*19)
+   var r=1+.7*sin(fx_time*2+j);draw_line(pos-Vector2(r,0),pos+Vector2(r,0),Color(color,.6),1,true);draw_line(pos-Vector2(0,r),pos+Vector2(0,r),Color(color,.6),1,true)
+ elif birthright=="sun":
+  for j in range(7):
+   var a=fx_time*.7+j*TAU/7;var pos=Vector2(2,-28)+Vector2(cos(a)*46,sin(a)*26)
+   draw_circle(pos,1.6,Color(color,.6))
+ elif birthright=="bloom":
+  for j in range(5):
+   var pos=tail_pos+Vector2(sin(fx_time*.7+j*4)*24,-fposmod(fx_time*8+j*13,43))
+   draw_circle(pos,2,Color(color,.5));draw_circle(pos+Vector2(2,1),1.7,Color("f8d5db",.4))
  if ward>0:draw_arc(Vector2(0,-27),42,0,TAU,44,Color(color,.52),1.8,true)
  if dash_time>0:
   for i in range(3):draw_line(Vector2(-facing*(25+i*12),-20+i*9),Vector2(-facing*(65+i*10),-20+i*9),Color(color,.4-i*.1),2,true)

@@ -1,7 +1,7 @@
 {
   "anchor": [
-    0.530607998371124,
-    0.801345437765121
+    0.625,
+    0.850694444444444
   ],
   "clips": {
     "dash": [
@@ -36,11 +36,11 @@
     ]
   },
   "columns": 4.0,
-  "drawScale": 0.42,
+  "drawScale": 0.48,
   "frameHeight": 288.0,
   "frameWidth": 384.0,
   "rows": 4.0,
-  "source": "Art-directed local Blender groom, articulated meshes and curved guard hairs; six modeled birthrights",
+  "source": "Existing Ember Dash trailer art, local foreground extraction, Blender-native birthright overlays. 2.5D texture animation, not a full 3D model.",
   "variants": [
     "ember",
     "tide",

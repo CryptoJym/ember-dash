@@ -56,6 +56,8 @@ func _ready():
  configure_input()
  var bg_layer=CanvasLayer.new();bg_layer.layer=-5;add_child(bg_layer)
  background=TextureRect.new();background.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;background.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;bg_layer.add_child(background)
+ var atmosphere_layer=CanvasLayer.new();atmosphere_layer.layer=-4;add_child(atmosphere_layer)
+ var atmosphere=preload("res://atmosphere.gd").new();atmosphere.game=self;atmosphere_layer.add_child(atmosphere)
  world=Node2D.new();add_child(world)
  camera=Camera2D.new();add_child(camera);camera.enabled=true
  art=WorldArt.new();art.game=self;world.add_child(art)
@@ -96,7 +98,7 @@ func set_mode(next):
  menu_layer.visible=mode!="playing"
  clear_input()
  if is_instance_valid(fox):fox.active=mode=="playing"
- background.modulate=Color(.70,.79,.88,1) if mode in ["playing","paused","camp"] else Color(.68,.78,.85,1)
+ background.modulate=Color(.80,.85,.91,1) if mode in ["playing","paused","camp"] else Color(.74,.81,.87,1)
  hud.visible=mode not in ["title","choose","dead","confirm","conflict"]
  touch_root.visible=mode=="playing" and (DisplayServer.is_touchscreen_available() or (OS.has_feature("web") and JavaScriptBridge.eval("matchMedia('(pointer:coarse)').matches",true)==true))
  # Clear every menu panel, including any deferred/orphaned panel from a button callback.
@@ -131,7 +133,7 @@ func make_menu(title,subtitle,wide=false):
  menu=PanelContainer.new();menu.add_theme_stylebox_override("panel",box_style(Color(.035,.085,.11,.96),Color("9b907363")));menu_layer.add_child(menu)
  var scroller=ScrollContainer.new();scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;menu.add_child(scroller)
  var outer=VBoxContainer.new();outer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;outer.add_theme_constant_override("separation",8 if get_viewport_rect().size.y<520 else 12);scroller.add_child(outer);menu.set_meta("content",outer);outer.minimum_size_changed.connect(_queue_menu_height.bind(menu.get_instance_id()))
- if get_viewport_rect().size.y>=520:outer.add_child(label("EMBER DASH  /  IRONFLAME",10,Color("e8c790")))
+ if get_viewport_rect().size.y>=520:outer.add_child(label("EMBER DASH  /  LINEAGE",10,Color("e8c790")))
  outer.add_child(label(title,24 if get_viewport_rect().size.y<520 else 32))
  outer.add_child(label(subtitle,13,Color("b3c6c1")))
  menu.set_meta("wide",wide)
@@ -188,7 +190,7 @@ func open_choices():
   var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if size.x>=660 else 0
   card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
-  var image=TextureRect.new();image.texture=load("res://assets/portraits/"+birth.id+".png");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size.y=255 if size.x>=660 else 175;v.add_child(image)
+  var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=270 if size.x>=660 else 210;v.add_child(image)
   v.add_child(label(option.name,20,tint));v.add_child(label(birth.gift.to_upper(),10,tint));v.add_child(label(birth.detail,12))
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
