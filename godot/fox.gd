@@ -29,13 +29,18 @@ var step_age=0.0
 var color=Color("ffad67")
 var atlas_path="res://assets/atlases/ember.png"
 var anchor=Vector2(0.5326,0.8243)
+var frame_size=Vector2(256,192)
+var art_scale=0.63
 
 func _ready():
  process_physics_priority=-10
  collision_layer=2;collision_mask=1|4
  floor_snap_length=6.0;safe_margin=0.04;max_slides=6
  var shape=CollisionShape2D.new();var box=RectangleShape2D.new();box.size=Vector2(42,34);shape.shape=box;shape.position=Vector2(0,-17);add_child(shape)
- sprite=AnimatedSprite2D.new();sprite.centered=false;sprite.offset=-Vector2(256,192)*anchor;sprite.scale=Vector2(0.63,0.63);add_child(sprite)
+ var meta=JSON.parse_string(FileAccess.get_file_as_string("res://assets/atlas.json"))
+ if meta is Dictionary:
+  frame_size=Vector2(meta.get("frameWidth",256),meta.get("frameHeight",192));art_scale=float(meta.get("drawScale",.63));anchor=Vector2(meta.anchor[0],meta.anchor[1])
+ sprite=AnimatedSprite2D.new();sprite.centered=false;sprite.offset=-frame_size*anchor;sprite.scale=Vector2.ONE*art_scale;add_child(sprite)
  set_art(atlas_path)
 
 func set_art(path):
@@ -48,7 +53,7 @@ func set_art(path):
  for clip in clips:
   frames.add_animation(clip);frames.set_animation_speed(clip,clips[clip][2]);frames.set_animation_loop(clip,true)
   for i in range(clips[clip][0],clips[clip][0]+clips[clip][1]):
-   var cell=AtlasTexture.new();cell.atlas=texture;cell.region=Rect2((i%4)*256,int(i/4)*192,256,192);frames.add_frame(clip,cell)
+   var cell=AtlasTexture.new();cell.atlas=texture;cell.region=Rect2(Vector2(i%4,int(i/4))*frame_size,frame_size);frames.add_frame(clip,cell)
  sprite.sprite_frames=frames;sprite.play("idle")
 
 func _physics_process(dt):

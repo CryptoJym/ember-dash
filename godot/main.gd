@@ -59,6 +59,8 @@ func _ready():
  world=Node2D.new();add_child(world)
  camera=Camera2D.new();add_child(camera);camera.enabled=true
  art=WorldArt.new();art.game=self;world.add_child(art)
+ var art_ui=CanvasLayer.new();art_ui.layer=9;add_child(art_ui)
+ var presentation=preload("res://presentation.gd").new();presentation.game=self;art_ui.add_child(presentation)
  ui=CanvasLayer.new();ui.layer=10;add_child(ui)
  menu_layer=CanvasLayer.new();menu_layer.layer=20;add_child(menu_layer)
  build_hud()
@@ -94,7 +96,7 @@ func set_mode(next):
  menu_layer.visible=mode!="playing"
  clear_input()
  if is_instance_valid(fox):fox.active=mode=="playing"
- background.modulate=Color(.50,.64,.74,1) if mode in ["playing","paused","camp"] else Color(.68,.78,.85,1)
+ background.modulate=Color(.70,.79,.88,1) if mode in ["playing","paused","camp"] else Color(.68,.78,.85,1)
  hud.visible=mode not in ["title","choose","dead","confirm","conflict"]
  touch_root.visible=mode=="playing" and (DisplayServer.is_touchscreen_available() or (OS.has_feature("web") and JavaScriptBridge.eval("matchMedia('(pointer:coarse)').matches",true)==true))
  # Clear every menu panel, including any deferred/orphaned panel from a button callback.
@@ -107,7 +109,7 @@ func set_mode(next):
 
 func box_style(color=Color("102630"),border=Color("647778")):
  var b=StyleBoxFlat.new();b.bg_color=color;b.border_color=border
- b.set_border_width_all(1);b.set_corner_radius_all(12)
+ b.set_border_width_all(1);b.set_corner_radius_all(5)
  b.content_margin_left=20;b.content_margin_right=20;b.content_margin_top=18;b.content_margin_bottom=18
  return b
 
@@ -116,9 +118,9 @@ func label(text,size=16,color=Color("e6e6d4")):
 
 func button(text,callback,tint=Color("e8c790")):
  var b=Button.new();b.text=text;b.custom_minimum_size.y=48;b.add_theme_font_size_override("font_size",15)
- b.add_theme_color_override("font_color",Color("f2eddd"));b.add_theme_stylebox_override("normal",box_style(Color("18343b"),Color(tint,.55)))
- b.add_theme_stylebox_override("hover",box_style(Color("24474b"),tint));b.add_theme_stylebox_override("focus",box_style(Color("1f4147"),tint))
- b.add_theme_stylebox_override("pressed",box_style(Color("3d5651"),tint));b.pressed.connect(callback, CONNECT_DEFERRED);return b
+ b.add_theme_color_override("font_color",Color("f2eddd"));b.add_theme_stylebox_override("normal",box_style(Color("15262d"),Color(tint,.55)))
+ b.add_theme_stylebox_override("hover",box_style(Color("2c3737"),tint));b.add_theme_stylebox_override("focus",box_style(Color("303c3c"),tint))
+ b.add_theme_stylebox_override("pressed",box_style(Color("4c493d"),tint));b.pressed.connect(callback, CONNECT_DEFERRED);return b
 
 func make_menu(title,subtitle,wide=false):
  for child in menu_layer.get_children():
@@ -140,7 +142,7 @@ func fit_menu():
  var viewport=get_viewport_rect().size
  var width=minf(1020 if menu.get_meta("wide",false) else 540,viewport.x-28)
  menu.size=Vector2(width,viewport.y-36)
- menu.position=Vector2((viewport.x-width)/2,18)
+ menu.position=Vector2(viewport.x*.065 if mode=="title" and viewport.x>1000 else (viewport.x-width)/2,18)
  _fit_menu_height.call_deferred(menu.get_instance_id())
 
 func _fit_menu_height(id):
@@ -179,14 +181,14 @@ func open_choices():
  set_mode("choose")
  var out=make_menu("Who will you become?","Three different names. Three entirely positive gifts.",true)
  var size=get_viewport_rect().size
- var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=minf(325,maxf(90,size.y-260));scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
+ var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=minf(440,maxf(90,size.y-260));scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
  var cards=VBoxContainer.new() if size.x<660 else HBoxContainer.new();cards.size_flags_horizontal=Control.SIZE_EXPAND_FILL;cards.add_theme_constant_override("separation",10);scroll.add_child(cards)
  for i in range(options.size()):
   var option=options[i];var birth=Rules.BLOODLINES[option.bloodline];var tint=Color(birth.color)
   var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if size.x>=660 else 0
-  card.add_theme_stylebox_override("panel",box_style(Color("1b353c"),tint if selection==i else Color("4d6564")));cards.add_child(card)
+  card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
-  var image=TextureRect.new();image.texture=load("res://assets/portraits/"+birth.id+".png");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size.y=175 if size.x>=660 else 115;v.add_child(image)
+  var image=TextureRect.new();image.texture=load("res://assets/portraits/"+birth.id+".png");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size.y=255 if size.x>=660 else 175;v.add_child(image)
   v.add_child(label(option.name,20,tint));v.add_child(label(birth.gift.to_upper(),10,tint));v.add_child(label(birth.detail,12))
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
@@ -429,12 +431,12 @@ func resize_ui():
  background.position=Vector2(-s.x*.03,-s.y*.02);background.size=s*Vector2(1.06,1.04)
  var portrait=s.x<s.y
  camera.zoom=Vector2.ONE*(s.x/500.0 if portrait else minf(s.x/1050.0,s.y/640.0))
- hud_name.position=Vector2(20,18);hud_name.size=Vector2(s.x-100 if portrait else 320,24)
- hud_health.position=Vector2(20,43);hud_health.size=Vector2(310,30)
- hud_level.position=Vector2(20,79);hud_level.size=Vector2(300,18)
- xp_bar.position=Vector2(20,104);xp_bar.size=Vector2(190 if portrait else 260,5)
+ hud_name.position=Vector2(90,18);hud_name.size=Vector2(s.x-164 if portrait else 310,24)
+ hud_health.position=Vector2(90,78);hud_health.size=Vector2(250,20);hud_health.add_theme_font_size_override("font_size",11)
+ hud_level.position=Vector2(90,40);hud_level.size=Vector2(s.x-154 if portrait else 310,20);hud_level.add_theme_font_size_override("font_size",10)
+ xp_bar.position=Vector2(90,103);xp_bar.size=Vector2(190 if portrait else 260,5)
  hud_place.position=Vector2(15 if portrait else s.x/2-210,125 if portrait else 20);hud_place.size=Vector2(s.x-30 if portrait else 420,50)
- hud_light.position=Vector2(s.x-115,64 if portrait else 20);hud_light.size=Vector2(95,32)
+ hud_light.position=Vector2(s.x-115,88 if portrait else 20);hud_light.size=Vector2(95,32)
  hud.get_node("Pause").position=Vector2(s.x-68,14 if portrait else 65);hud.get_node("Pause").size=Vector2(48,48)
  hint.position=Vector2(20,185 if portrait else s.y-155);hint.size=Vector2(s.x-40,50)
  var bottom=s.y-80

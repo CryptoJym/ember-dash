@@ -1,45 +1,46 @@
 {
-  "frameWidth": 256,
-  "frameHeight": 192,
-  "columns": 4,
-  "rows": 4,
   "anchor": [
-    0.5326041579246521,
-    0.8093317747116089
+    0.530607998371124,
+    0.801345437765121
   ],
   "clips": {
-    "idle": [
-      0,
-      4,
-      5
-    ],
-    "run": [
-      4,
-      8,
-      14
-    ],
-    "rise": [
-      12,
-      1,
-      1
+    "dash": [
+      14.0,
+      1.0,
+      1.0
     ],
     "fall": [
-      13,
-      1,
-      1
+      13.0,
+      1.0,
+      1.0
     ],
-    "dash": [
-      14,
-      1,
-      1
+    "idle": [
+      0.0,
+      4.0,
+      5.0
     ],
     "pulse": [
-      15,
-      1,
-      1
+      15.0,
+      1.0,
+      1.0
+    ],
+    "rise": [
+      12.0,
+      1.0,
+      1.0
+    ],
+    "run": [
+      4.0,
+      8.0,
+      14.0
     ]
   },
-  "source": "Blender 5.2.1 authored keyed mesh rig; four articulated legs, head, tail, and six lineage-specific silhouette ornaments",
+  "columns": 4.0,
+  "drawScale": 0.42,
+  "frameHeight": 288.0,
+  "frameWidth": 384.0,
+  "rows": 4.0,
+  "source": "Art-directed local Blender groom, articulated meshes and curved guard hairs; six modeled birthrights",
   "variants": [
     "ember",
     "tide",

@@ -1,0 +1,51 @@
+{
+  "forge/index.html": {
+    "bytes": 6901,
+    "sha256": "a2363039fc38c6ee3dbf23c4e8f0e77e9a2c5192206b5e44f13b90b04f146a33"
+  },
+  "forge/index.pck": {
+    "bytes": 10867248,
+    "sha256": "61c797e458a4899e67ef46f4e2c8aee3ff800e62cc0e1be889e7f2d90aa1b05c"
+  },
+  "forge/index.wasm": {
+    "bytes": 39514754,
+    "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+  },
+  "godot/main.gd": {
+    "bytes": 33501,
+    "sha256": "6c33859ad59f508cd3d01f9a6440132cbd7bc4dea885a8caf2cbc0679484e2b9"
+  },
+  "godot/fox.gd": {
+    "bytes": 5413,
+    "sha256": "85139214c234346b390c00acac93fcedc7759305503db7d9731aa384ba2af918"
+  },
+  "godot/presentation.gd": {
+    "bytes": 3852,
+    "sha256": "dc8b5c1a590001aa17e35dcd3f5e9f15090f04164737b5fae576035dc1c8ddc9"
+  },
+  "godot/rules.gd": {
+    "bytes": 9189,
+    "sha256": "d055aa58d820216b8ffb2eff578106db85fbf1de2e1c25150d893ad0eac0757c"
+  },
+  "godot/assets/atlas.json": {
+    "bytes": 716,
+    "sha256": "84dc35859e76164c55636bad1dab825e9ff23fa875fd3bf29fc1670ab38a3f6e"
+  },
+  "nativeAssertions": {
+    "flow": 25,
+    "physics": 6,
+    "controller": 14,
+    "rules": 20
+  },
+  "sources": [
+    "art-source/art-direction/worlds/grove-detailed.blend",
+    "art-source/art-direction/worlds/cinder-detailed.blend",
+    "art-source/art-direction/worlds/frost-detailed.blend",
+    "art-source/art-direction/foxes/sun-detailed.blend",
+    "art-source/art-direction/foxes/ember-detailed.blend",
+    "art-source/art-direction/foxes/void-detailed.blend",
+    "art-source/art-direction/foxes/bloom-detailed.blend",
+    "art-source/art-direction/foxes/tide-detailed.blend",
+    "art-source/art-direction/foxes/gale-detailed.blend"
+  ]
+}
