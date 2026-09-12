@@ -1,0 +1,201 @@
+{
+  "alive": true,
+  "camera": [
+    2233.99975585938,
+    365
+  ],
+  "candidateNames": [
+    "Sora Moonveil",
+    "Wren Embermane",
+    "Juniper Starstep"
+  ],
+  "dash": 0,
+  "depth": 1,
+  "engine": "Godot 4.7.2",
+  "grounded": true,
+  "health": 5,
+  "level": 2,
+  "light": 35,
+  "menuButtons": [
+    {
+      "rect": [
+        1212,
+        65,
+        50,
+        58
+      ],
+      "text": "II"
+    },
+    {
+      "rect": [
+        150,
+        301.5,
+        321,
+        80
+      ],
+      "text": "Heartwood · +1 heart\n24 light"
+    },
+    {
+      "rect": [
+        479,
+        301.5,
+        321,
+        80
+      ],
+      "text": "Inner flame · +15% strength\n18 light"
+    },
+    {
+      "rect": [
+        808,
+        301.5,
+        322,
+        80
+      ],
+      "text": "Quickening · faster dash\n20 light"
+    },
+    {
+      "rect": [
+        150,
+        393.5,
+        980,
+        58
+      ],
+      "text": "Awaken a new gift  ·  1 available"
+    },
+    {
+      "rect": [
+        150,
+        463.5,
+        485,
+        80
+      ],
+      "text": "Follow the roots\nA balanced path"
+    },
+    {
+      "rect": [
+        645,
+        463.5,
+        485,
+        80
+      ],
+      "text": "Chase the lanterns\nA richer cache"
+    },
+    {
+      "rect": [
+        150,
+        583.5,
+        980,
+        58
+      ],
+      "text": "Save and rest here"
+    }
+  ],
+  "menus": 1,
+  "mode": "camp",
+  "name": "Sora Moonveil",
+  "opponents": [
+    {
+      "cooldown": -2.60833333333332,
+      "flash": 0.17,
+      "hi": 1319,
+      "home": 436,
+      "hp": 0,
+      "id": "enemy2",
+      "level": 1,
+      "lo": 1097,
+      "max_hp": 9.5,
+      "phase": 6.98041139414446,
+      "type": "wisp",
+      "x": 1208.71915413275,
+      "y": 448.79839107882
+    },
+    {
+      "cooldown": -4.73333333333335,
+      "flash": 0.17,
+      "hi": 1729,
+      "home": 523,
+      "hp": 0,
+      "id": "enemy3",
+      "level": 1,
+      "lo": 1520,
+      "max_hp": 9.5,
+      "phase": 9.81087814798639,
+      "type": "crawler",
+      "x": 1639.10795022445,
+      "y": 523
+    },
+    {
+      "cooldown": -7.28333333333348,
+      "flash": 0.17,
+      "hi": 2198,
+      "home": 523,
+      "hp": 0,
+      "id": "enemy4",
+      "level": 1,
+      "lo": 1933,
+      "max_hp": 9.5,
+      "phase": 9.14057347972527,
+      "type": "crawler",
+      "x": 2137.49661164975,
+      "y": 523
+    }
+  ],
+  "seed": 1025328755,
+  "spirit": 3,
+  "terrain": [
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 480,
+      "x": 0,
+      "y": 520
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 403,
+      "x": 550,
+      "y": 545
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 347,
+      "x": 1032,
+      "y": 516
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 334,
+      "x": 1455,
+      "y": 545
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 390,
+      "x": 1868,
+      "y": 545
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 430,
+      "x": 2329,
+      "y": 545
+    }
+  ],
+  "touch": [],
+  "viewport": [
+    1280,
+    800
+  ],
+  "vx": 266.153350830078,
+  "vy": 0,
+  "warning": "",
+  "x": 2609.29418945312,
+  "xp": 50,
+  "y": 544.962646484375,
+  "zoom": 1.21904766559601
+}

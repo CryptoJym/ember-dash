@@ -16,8 +16,8 @@ void fragment(){
  vec2 uv=clamp(UV+drift,vec2(.008),vec2(.992));
  vec4 c=texture(TEXTURE,uv);
  float lum=dot(c.rgb,vec3(.2126,.7152,.0722));
- c.rgb=mix(c.rgb,vec3(lum),.12);
- float depth=smoothstep(.38,.92,UV.y)*.38;
+ c.rgb=mix(c.rgb,vec3(lum),.035);
+ float depth=smoothstep(.38,.92,UV.y)*.18;
  c.rgb=mix(c.rgb,haze_color,depth);
  COLOR=c;
 }"""
@@ -26,7 +26,7 @@ void fragment(){
  for y in range(64):
   for x in range(64):image.set_pixel(x,y,Color(1,1,1,pow(maxf(0,1-Vector2(x-32,y-32).length()/32),2)))
  glow=ImageTexture.create_from_image(image)
- var grad=Gradient.new();grad.set_color(0,Color(.018,.035,.06,0));grad.set_color(1,Color(.018,.035,.06,.76))
+ var grad=Gradient.new();grad.set_color(0,Color(.018,.035,.06,0));grad.set_color(1,Color(.018,.035,.06,.48))
  var texture=GradientTexture2D.new();texture.gradient=grad;texture.fill_from=Vector2(.5,.35);texture.fill_to=Vector2(.5,1)
  veil=TextureRect.new();veil.texture=texture;veil.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(veil)
 

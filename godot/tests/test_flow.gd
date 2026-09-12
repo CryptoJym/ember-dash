@@ -40,9 +40,10 @@ func run():
  check(g.mode=="paused" and not g.fox.active and panels(g).size()==1,"pause disables gameplay with one panel")
  await click(g,"Continue")
  check(g.mode=="playing" and panels(g).is_empty(),"resume removes pause panel")
- var e=g.room.enemies[0];var old=g.profile.xp
+ var e=g.room.enemies[0];var old=g.profile.xp;var old_spirit=g.profile.spirit;var enemy_level=int(e.level)
  g.damage_enemy(e,999);var earned=g.profile.xp
  check(earned>old and e.id in g.profile.defeated,"enemy spirit awards XP once")
+ check(g.profile.spirit==old_spirit+enemy_level,"defeated enemy transfers its level into living fox spirit strength")
  g.damage_enemy(e,999)
  check(g.profile.xp==earned,"defeated enemy cannot award twice")
  g.profile.light=100;g.fox.position=g.room.portal;g.open_camp();await frames(3)
@@ -64,6 +65,7 @@ func run():
  await click(g,"Begin as")
  check(g.profile.xp==0 and g.profile.light==0 and Rules.stats(g.profile).level==1,"next fox starts with no XP or currency")
  check(g.profile.upgrades=={"vitality":0,"power":0,"haste":0},"next fox inherits no dead-character upgrades")
+ check(g.profile.spirit==0,"next fox inherits none of the dead character absorbed enemy levels")
  g.queue_free();await frames(3)
  # Let the native audio mixer acknowledge stopped streams before engine teardown.
  OS.delay_msec(80)

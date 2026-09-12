@@ -2,7 +2,7 @@ extends Control
 ## Read-only visual layer. All progression and collision state stays with main/fox.
 const Rules=preload("res://rules.gd")
 var game
-var hero:TextureRect
+var hero:Control
 var portrait:TextureRect
 var shade:TextureRect
 var last_birth=-1
@@ -16,7 +16,7 @@ func _ready():
  var grad=Gradient.new();grad.set_color(0,Color(.015,.025,.04,.93));grad.set_color(1,Color(.015,.025,.04,0))
  var texture=GradientTexture2D.new();texture.gradient=grad;texture.fill_from=Vector2(.5,0);texture.fill_to=Vector2(.5,1)
  shade=TextureRect.new();shade.texture=texture;shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;add_child(shade);move_child(shade,0);shade.show_behind_parent=true
- hero=TextureRect.new();hero.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;hero.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;hero.mouse_filter=Control.MOUSE_FILTER_IGNORE;hero.texture=load("res://assets/portraits/ember.png");add_child(hero)
+ hero=preload("res://bloodline_portrait.gd").new();hero.birthright="ember";hero.tone=Color("e8c790");add_child(hero)
 
 func _process(_dt):
  if not is_instance_valid(game):return
@@ -24,7 +24,7 @@ func _process(_dt):
  var play=game.mode in ["playing","paused","camp"] and game.profile.get("alive",false)
  portrait.visible=play;shade.visible=play
  hero.visible=game.mode=="title" and size.x>1000
- hero.position=Vector2(size.x*.57,size.y*.10);hero.size=Vector2(size.x*.40,size.y*.80)
+ hero.position=Vector2(size.x*.62,size.y*.12);hero.size=Vector2(size.x*.30,size.y*.76)
  if play:
   var birth=int(game.profile.bloodline)
   if birth!=last_birth:

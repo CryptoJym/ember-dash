@@ -1,7 +1,7 @@
 {
   "anchor": [
-    0.625,
-    0.850694444444444
+    0.5,
+    0.84375
   ],
   "clips": {
     "dash": [
@@ -17,7 +17,7 @@
     "idle": [
       0.0,
       4.0,
-      5.0
+      4.0
     ],
     "pulse": [
       15.0,
@@ -36,11 +36,11 @@
     ]
   },
   "columns": 4.0,
-  "drawScale": 0.48,
-  "frameHeight": 288.0,
-  "frameWidth": 384.0,
+  "drawScale": 0.38,
+  "frameHeight": 384.0,
+  "frameWidth": 512.0,
   "rows": 4.0,
-  "source": "Existing Ember Dash trailer art, local foreground extraction, Blender-native birthright overlays. 2.5D texture animation, not a full 3D model.",
+  "source": "Approved painted six-fox illustration, directly cropped and animated as a Blender 2.5D mesh puppet. No substitute recolored model.",
   "variants": [
     "ember",
     "tide",

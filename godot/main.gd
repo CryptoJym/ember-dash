@@ -98,7 +98,7 @@ func set_mode(next):
  menu_layer.visible=mode!="playing"
  clear_input()
  if is_instance_valid(fox):fox.active=mode=="playing"
- background.modulate=Color(.80,.85,.91,1) if mode in ["playing","paused","camp"] else Color(.74,.81,.87,1)
+ background.modulate=Color(.93,.95,1,1) if mode in ["playing","paused","camp"] else Color(.86,.90,.96,1)
  hud.visible=mode not in ["title","choose","dead","confirm","conflict"]
  touch_root.visible=mode=="playing" and (DisplayServer.is_touchscreen_available() or (OS.has_feature("web") and JavaScriptBridge.eval("matchMedia('(pointer:coarse)').matches",true)==true))
  # Clear every menu panel, including any deferred/orphaned panel from a button callback.
@@ -190,8 +190,8 @@ func open_choices():
   var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if size.x>=660 else 0
   card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
-  var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=270 if size.x>=660 else 210;v.add_child(image)
-  v.add_child(label(option.name,20,tint));v.add_child(label(birth.gift.to_upper(),10,tint));v.add_child(label(birth.detail,12))
+  var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=240 if size.x>=660 else 190;v.add_child(image)
+  v.add_child(label(option.name,20,tint));v.add_child(label((birth.founder+"'S "+birth.name+" · "+birth.gift).to_upper(),10,tint));v.add_child(label(birth.tagline+"  "+birth.detail,12))
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
  if size.y>=520:out.add_child(label("New terrain every life. Double jump and dash are available to every fox.",11,Color("a9c0b7")))
@@ -352,12 +352,13 @@ func damage_enemy(e,amount):
   if e.id in profile.defeated:return
   profile.defeated.append(e.id);profile.slain+=1
   var xp=(55+e.level*12) if e.type=="keeper" else (7+e.level*5)
+  var absorbed=maxi(1,int(e.level));profile.spirit=mini(1000000,int(profile.get("spirit",0))+absorbed)
   var levels=Rules.award_xp(profile,xp)
   profile.light+=16 if e.type=="keeper" else 3
   if levels>0:
    var old_max=fox.attributes.health;fox.attributes=Rules.stats(profile);fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
-   notify("LEVEL %d · Their spirit becomes your strength. +%d experience."%[fox.attributes.level,xp]);sound("level")
-  else:notify("+%d spirit experience"%xp,1.4)
+   notify("LEVEL %d · Absorbed %d enemy levels · +%d experience."%[fox.attributes.level,absorbed,xp]);sound("level")
+  else:notify("Absorbed %d enemy levels · +%d experience"%[absorbed,xp],1.6)
   burst(Vector2(e.x,e.y),fox.color,20);save_life()
 
 func keeper_alive():
@@ -452,7 +453,7 @@ func update_hud():
  var b=Rules.BLOODLINES[int(profile.bloodline)];var level=Rules.level_info(profile.xp)
  hud_name.text=profile.name
  hud_health.text="HEARTS %d / %d%s"%[fox.health,fox.attributes.health,"  WARD" if fox.ward else ""]
- hud_level.text="LEVEL %d  ·  %s  ·  %s"%[level.level,b.gift,"DASH READY" if fox.dash_cooldown<=0 else "DASH %.1fs"%fox.dash_cooldown]
+ hud_level.text="LEVEL %d  ·  SPIRIT %d  ·  %s"%[level.level,profile.get("spirit",0),"DASH READY" if fox.dash_cooldown<=0 else "DASH %.1fs"%fox.dash_cooldown]
  hud_place.text="CHAMBER %02d\n%s"%[profile.depth,Rules.BIOMES[room.biome].name];hud_light.text="LIGHT "+str(profile.light)
  xp_bar.max_value=level.next;xp_bar.value=level.into
  for tb in touch_buttons:
@@ -484,7 +485,7 @@ func _process(dt):
    var state=snapshot();JavaScriptBridge.eval("window.emberStatus="+JSON.stringify(state)+";document.body.dataset.ember="+JSON.stringify(mode)+";",true)
 
 func snapshot():
- return {"engine":"Godot 4.7.2","mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[])}
+ return {"engine":"Godot 4.7.2","mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[])}
 
 func _unhandled_input(event):
  if event.is_action_pressed("pause_game") and not event.is_echo() and mode in ["playing","paused"]:

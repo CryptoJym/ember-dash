@@ -1,10 +1,10 @@
 {
   "clipping": [],
-  "drawScale": 0.48,
+  "drawScale": 0.38,
   "frames": 96,
   "resolution": [
-    384,
-    288
+    512,
+    384
   ],
   "variants": [
     "ember",

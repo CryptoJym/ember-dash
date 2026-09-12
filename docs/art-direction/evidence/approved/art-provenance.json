@@ -1,0 +1,201 @@
+{
+  "sourceSha256": "f16994556e23c1137325ae9864ce552ca939503a7d6191622dd10fa608c71369",
+  "source": "Approved six-fox concept illustration supplied in this conversation; cropped locally, verified AVIF transfer. Not the previous game trailer.",
+  "technique": "Original painted characters, no palette substitution; animated as textured mesh puppets in Blender.",
+  "canvas": [
+    512,
+    384
+  ],
+  "anchor": [
+    0.5,
+    0.84375
+  ],
+  "variants": [
+    {
+      "bloodline": "ember",
+      "portraitCrop": [
+        78,
+        7,
+        362,
+        421
+      ],
+      "headCrop": [
+        168,
+        15,
+        319,
+        166
+      ],
+      "sideCrop": [
+        182,
+        454,
+        345,
+        573
+      ],
+      "sourceSize": [
+        163,
+        119
+      ],
+      "alphaBounds": [
+        60,
+        94,
+        380,
+        322
+      ]
+    },
+    {
+      "bloodline": "tide",
+      "portraitCrop": [
+        323,
+        5,
+        546,
+        421
+      ],
+      "headCrop": [
+        386,
+        11,
+        536,
+        166
+      ],
+      "sideCrop": [
+        343,
+        454,
+        507,
+        573
+      ],
+      "sourceSize": [
+        164,
+        119
+      ],
+      "alphaBounds": [
+        53,
+        92,
+        351,
+        322
+      ]
+    },
+    {
+      "bloodline": "gale",
+      "portraitCrop": [
+        505,
+        38,
+        755,
+        421
+      ],
+      "headCrop": [
+        608,
+        65,
+        758,
+        216
+      ],
+      "sideCrop": [
+        521,
+        454,
+        694,
+        573
+      ],
+      "sourceSize": [
+        173,
+        119
+      ],
+      "alphaBounds": [
+        45,
+        94,
+        359,
+        322
+      ]
+    },
+    {
+      "bloodline": "void",
+      "portraitCrop": [
+        729,
+        12,
+        969,
+        421
+      ],
+      "headCrop": [
+        821,
+        26,
+        971,
+        177
+      ],
+      "sideCrop": [
+        714,
+        454,
+        881,
+        573
+      ],
+      "sourceSize": [
+        167,
+        119
+      ],
+      "alphaBounds": [
+        49,
+        116,
+        359,
+        322
+      ]
+    },
+    {
+      "bloodline": "sun",
+      "portraitCrop": [
+        939,
+        8,
+        1180,
+        421
+      ],
+      "headCrop": [
+        1006,
+        36,
+        1156,
+        187
+      ],
+      "sideCrop": [
+        903,
+        454,
+        1072,
+        573
+      ],
+      "sourceSize": [
+        169,
+        119
+      ],
+      "alphaBounds": [
+        46,
+        100,
+        370,
+        324
+      ]
+    },
+    {
+      "bloodline": "bloom",
+      "portraitCrop": [
+        1164,
+        45,
+        1437,
+        421
+      ],
+      "headCrop": [
+        1259,
+        71,
+        1409,
+        222
+      ],
+      "sideCrop": [
+        1096,
+        454,
+        1256,
+        573
+      ],
+      "sourceSize": [
+        160,
+        119
+      ],
+      "alphaBounds": [
+        58,
+        120,
+        364,
+        322
+      ]
+    }
+  ]
+}

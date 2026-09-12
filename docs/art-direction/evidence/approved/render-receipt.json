@@ -1,0 +1,44 @@
+[
+  {
+    "variant": "ember",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "b7ba5badc8f2816c45ec0731e5946e82b7490c778d4b89e8069fc8987ca5f10c"
+  },
+  {
+    "variant": "tide",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "77989db7a0d7fd41c76f62f55d872bacda6e517ace89b11ce75a6a0ac3a0963a"
+  },
+  {
+    "variant": "gale",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "e9330bede70c5363aea9a1775edb7e76f94308e0a3a36313e082a28369674690"
+  },
+  {
+    "variant": "void",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "065871d8f1f609430c6bcd1c754823edc58ddd97a9508f8c0739771dce4c44a2"
+  },
+  {
+    "variant": "sun",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "7de282f0e25d5da3828019ba108df85b8d60bd16b6b973551754f51dc1b93811"
+  },
+  {
+    "variant": "bloom",
+    "frames": 16,
+    "meshVertices": 1813,
+    "keyedPoses": 16,
+    "sourceSha256": "f2c2ce5d65e6db06eca41c98b1acd9c36de8ee4f08c0a8f76c6c06869a4330ff"
+  }
+]

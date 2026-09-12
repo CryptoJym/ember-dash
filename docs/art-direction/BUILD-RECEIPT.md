@@ -1,36 +1,54 @@
-# Ember Dash: local art build and computer-control receipt
+# Ember Dash approved-art release receipt
 
-Date: 12 September 2026. Work: eco-nt8oly. Branch: astra/art-direction-20260912.
-Baseline: public main aeca864c11cfde739aad77489f19f29301cf4993.
+Date: 12 September 2026. Work: `eco-nt8oly`. Branch: `astra/art-direction-20260912`.
+Baseline before this release: public `main` `aeca864c11cfde739aad77489f19f29301cf4993`.
 
-## Actual local construction
+## What was actually built
 
-The BORG connection was used to write source, execute Blender and Godot on Studio6, transfer results back to Studio0, and test the exported game. This was not read-only work.
+BORG was used for local writes and command execution. Blender 5.2.1 on Studio6 and Godot 4.7.2 were used directly. The classic root game remains byte-unchanged from the baseline; this work targets the additive `/forge/` Godot game.
 
-The new Blender pass produces six fox variants with 28,126 curved groom strands per shared character rig, facial/ear/cheek detail and separately modeled fire, crescent/crystal, leaf/wind, star-orbit, solar-halo and flowering-vine ornaments. All 96 animation cells render at 384 by 288 pixels. The packing check found no clipped animation frames. Metadata now determines the Godot frame dimensions, drawing scale and common foot anchor; collision geometry is unchanged.
+The six foxes now use the approved painted character sheet from this conversation directly. The game no longer depends on one recolored substitute character for the bloodlines. The approved source is stored under `art-source/approved/source.avif`. Six separate Blender 2.5D puppet scenes preserve those paintings as packed textures and animate a continuous mesh with sixteen keyed poses each: idle, run, rise, fall, dash, and pulse. The export therefore contains 96 approved-art animation cells at 512×384, six clean selection portraits, and six HUD heads. The selection UI names the canonical founders Caldera, Mira, Zephra, Astra, Solen, and Briar while living descendants retain randomized personal names.
 
-Nine editable Blender scenes are saved under art-source/art-direction/: six fox scenes and three world scenes. The environment pass adds geometric cliff erosion, material surface detail, modeled leaves, thin roots, waterfall curtains and atmosphere. These are baked 2.5D backgrounds, not fully traversable 3D levels.
+The three approved environment paintings from the conversation are stored at `art-source/approved/worlds.avif` and adapted into widescreen matte plates for The Lanternwild, The Glass Cathedral, and The Cinder Below. Demo characters baked into the source paintings are removed. Foreground collision remains real Godot geometry, while Blender-authored transparent terrain, portals, and four enemy archetypes provide the visible world. The final terrain pass replaces repetitive brick walls with fractured natural stone ledges, moss/flowers, roots, crystal or ember treatments, and a thin visible landing contour that matches the unchanged collision surface.
 
-The Godot presentation pass adds head portraits, drawn hearts independent of a symbol font, a chamber-progress indicator, a title-screen fox, larger selection portraits and coordinated panel borders. Existing character XP, purchases, talents, save/resume, permadeath and all previous save keys are preserved.
+Editable Blender source is retained under `art-source/approved/`: six painted fox puppet `.blend` files, three approved 2.5D stage `.blend` files, and ten prop `.blend` files for terrain, portals, and enemies. These are deliberately 2.5D art scenes; this release does not claim the painted matte worlds were reconstructed as fully modeled 3D environments.
 
-## Verification of this candidate
+## Progression implemented from the owner direction
 
-The existing four Godot suites were rerun: 20 rules assertions, 6 physics assertions, 14 controller/traversal assertions and 25 scene-flow assertions, total 65. This includes 200 actual engine-collision gap traversals. Native logs contain no failed assertions or script errors.
+A living fox keeps its XP, level, light, talents, upgrades, and absorbed Spirit when the page is closed and reopened. Defeating an enemy now transfers that enemy's level into the fox's `Spirit` total in addition to XP. Spirit contributes bounded damage, speed, pulse-radius, and light-attraction growth. The HUD exposes the Spirit total. Death writes only the two-field dead-profile tombstone, so absorbed levels, XP, light, talents, and upgrades disappear with that fox. A descendant starts at level 1 with zero Spirit.
 
-The actual exported web game passed 13 browser smoke checks and 20 journey checks through BORG-run Chrome automation. The journey included ordinary input-driven traversal and combat, earned experience/light, a purchased upgrade, a talent choice, reload, death/reset, old-save preservation, stale-tab rejection, and simultaneous movement/jump touch input at 390px and 844px widths. Mobile proof is Chromium emulation, not a physical iPhone.
+This extends the existing version-1 Ironflame save compatibly: older living profiles normalize with `spirit=0`; earlier classic and Lineage save keys remain untouched.
 
-The engine WASM digest remains fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0. The new game-data PCK is 10,867,248 bytes. Exact candidate/source hashes are in evidence/local-tested-build.json. Actual screenshots, not generated mockups, are under evidence/browser and evidence/journey.
+## Native verification
 
-## Computer-control integration findings
+The exact Godot source used for the candidate passes:
 
-BORG reports computer, desktop and Inbox tools configured. Its native macOS permission check reports Screen Recording, Accessibility and Event Synthesizing granted. Its current source identifies Desktop Commander as the files/commands backend and Peekaboo as the native desktop backend. Reinstalling those as another public remote service is not necessary to continue this build.
+- 21 pure rules assertions, including 1,000 deterministic heir-name batches and 1,000 generated chamber geometry envelopes.
+- 6 direct physics assertions.
+- 14 actual `CharacterBody2D` controller/traversal assertions, including 200 generated gaps traversed through engine collision.
+- 27 actual scene-flow assertions covering menus, combat rewards, Spirit absorption, upgrades, room carry-over, lethal death, and fresh descendant reset.
+- 43 art/projection contract assertions covering all 96 approved fox cells, six distinct bloodlines, no cell clipping, landing-anchor alignment, all three terrain/portal sets, and all four enemy assets.
 
-The native browser interface reported connected with 29 tools. Creating, inspecting and closing a new owned Ember Dash tab worked. Two attempted native provider operations (evaluation and screenshot) returned withheld provider errors. Those are not treated as passed or as missing macOS permissions. BORG-run Playwright remains a separately verified browser automation path.
+That is 111 non-duplicated native assertions. Logs are under `docs/art-direction/evidence/final-native/`.
 
-The third-party community package ahujasid/blender-mcp 1.9.1 was installed on Studio6, pinned to commit 5f8ddaf6e987c4aa0c3467fcc548838b28f64477 with its frozen dependency lock. Its upstream installer placed the Blender addon at /Users/studio6/Library/Application Support/Blender/5.2/scripts/addons/blender_mcp.py. An actual MCP initialize/list-tools exchange advertised 28 tools. That protocol probe used DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=1.
+## Exact browser verification
 
-This community plugin is NOT represented as an official Blender product. Automated live-session startup and a proposed reusable startup wrapper were refused by the connector tool review. Neither is claimed operational. The addon is installed but has not been enabled/connected to a live Blender scene. No new public listener, remote-control subscription, additional account, replacement BORG gateway or global client configuration was created. Existing BORG batch rendering and Godot builds work without the optional plugin.
+The exact exported WebGL artifact passes the final 13-check smoke suite in real local Chrome: runtime startup, unique descendant names, clean menu removal, keyboard movement, braking, held jump, dash activation/distance, pause/resume, native `localStorage` save/reload, and zero uncaught/script errors.
 
-## Release and visual acceptance
+The exact exported artifact also passes the 22-check full browser journey: organic keyboard traversal and combat, XP/level growth, enemy-level absorption into Spirit, earned light, a real purchased strength upgrade, a chosen talent, XP and Spirit persistence across reload, cleared-sanctuary anti-farming, real fall death, dead-profile tombstone, fresh zero-Spirit descendant, preservation of prior Ember Dash save keys, stale-tab write rejection, and simultaneous movement+jump touch input at both 390×844 and 844×390. Mobile verification is Chromium touch emulation, not physical-device certification.
 
-This is a locally built, functionally tested art candidate, not a claim that the approved concept-art quality has been reached. The rendered model proportions, fur and environment composition still differ visibly from the desired illustrated treatment. The work remains open for that visual finish. This candidate has not been published over the current public game. Preserve the current release and these exact local results rather than describing technical test passes as final artistic acceptance.
+Final browser receipts and screenshots are under `docs/art-direction/evidence/exact-final-smoke/` and `docs/art-direction/evidence/exact-final-journey3/`.
+
+## Exact candidate artifacts
+
+- `forge/index.html` SHA-256: `c4117bcfa11c5fcb57e1b703b5c698c8b7a6de841dfb5d0d58a0ed7ba4d05072`
+- `forge/index.pck` SHA-256: `f4f7777cfbd101292f9ee9d707be19bd8bc913e9e2410210d374dc315ad2d671`
+- `forge/index.wasm` SHA-256: `fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0`
+
+The PCK is rebuilt from the approved direct-art pipeline. The WASM engine binary is unchanged from the previously verified Godot 4.7.2 export.
+
+## Remaining boundary
+
+This release is verified in native Godot and real Chrome/WebGL. Physical iPhone/Safari and physical gamepad hardware were not available to this agent, so those are not claimed. The approved matte paintings are the game's 2.5D visual direction; background features that look like distant platforms are scenery, while live traversable surfaces are always drawn with the separate Blender foreground and explicit landing contour.
+
+The community Blender MCP experiment remains optional and is not part of the game runtime. BORG-to-Blender batch rendering is the proven production path used for this release.

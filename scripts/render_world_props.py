@@ -63,34 +63,47 @@ palettes=[('grove','56645C','9AAF6A','2C443B','F8D99D'),('frost','667C9A','ABDCE
 for biome,stone_color,edge_color,dark_color,magic_color in palettes:
     sc=clear(768,512);random.seed(149+len(biome))
     stone=mat('Carved '+biome,stone_color,noise=True);dark=mat('Deep cracks '+biome,dark_color,noise=True);edge=mat('Moss crystal '+biome,edge_color,noise=True);spark=mat('Living light '+biome,magic_color,1.8,rough=.4)
-    # The exact front landing edge is x=-3..3, z=0: captured in the manifest.
-    for row in range(3):
-        for col in range(7):
-            x=-2.57+col*.86+(.20 if row%2 else 0);z=-.18-row*.48
-            cube('Ancient masonry',(x,0,z),(.78+random.uniform(-.08,.08),.82,.37+random.random()*.12),stone,random.uniform(-.045,.045))
-    for i in range(12):
-        x=-2.7+i*.49;z=-1.2-random.random()*.25
-        rock('Fractured hanging stone',(x,.02,z),(.5,.46,random.uniform(.45,.85)),dark if i%3 else stone)
-    for i in range(22):
-        x=-2.85+i*.273
-        rock('Soft irregular moss lip',(x,-.02,-.02),(.23,.52,.10),edge)
-    for i in range(90):
-        x=random.uniform(-2.93,2.93);y=random.uniform(-.40,.45)
-        if biome=='grove':blade('Wind grass',(x,y,.018),random.uniform(.09,.24),.012,edge,random.uniform(-.07,.07))
-        elif biome=='frost' and i%3==0:
-            bpy.ops.mesh.primitive_cone_add(vertices=5,radius1=.06,depth=random.uniform(.18,.32),location=(x,y,.08));bpy.context.object.data.materials.append(edge)
-        elif biome=='cinder' and i%8==0:sphere('Hot ember',(x,y,.04),(.03,.025,.02),spark)
-    for j in range(8):
-        x=-2.7+j*.75;points=[(x+.10*math.sin(i+j),-.52-random.random()*.025,-.01-i*.16) for i in range(8+j%4)]
-        vine('Hanging vine' if biome=='grove' else 'Crystal seam' if biome=='frost' else 'Molten crack',points,.018,edge if biome=='grove' else spark)
-        if biome=='grove':
-            for i,p in enumerate(points[1:]):blade('Ivy leaf',p,.14,.12,edge,(-.10 if i%2 else .10))
+    # The exact front landing edge remains x=-3..3, z=0. The visible body is
+    # now a fractured natural ledge matching the approved painted worlds,
+    # rather than a repeated brick wall.
+    cliff=mat('Fractured cliff '+biome,dark_color,noise=True);topmat=edge
+    for i in range(15):
+        x=-2.85+i*.405
+        rock('Interlocking landing rock',(x,0,-.14-random.uniform(0,.06)),(.33+random.uniform(-.04,.08),.55,.20+random.uniform(0,.08)),stone if i%4 else cliff)
+        if biome=='frost' and i%2==0:
+            bpy.ops.mesh.primitive_cone_add(vertices=5,radius1=.08,depth=random.uniform(.22,.38),location=(x,-.28,.08));bpy.context.object.data.materials.append(topmat)
+        elif biome=='cinder' and i%3==0:sphere('Surface ember',(x,-.30,.035),(.035,.022,.022),spark)
+    for row in range(4):
+        count=12-row
+        for col in range(count):
+            x=-2.70+col*(5.40/max(1,count-1))+random.uniform(-.11,.11);z=-.48-row*.35-random.uniform(0,.12)
+            rock('Layered broken cliff',(x,.03,z),(.36+random.uniform(-.05,.16),.50,.25+random.uniform(-.02,.13)),cliff if (row+col)%3 else stone)
+    for i in range(18):
+        x=-2.87+i*.338
+        rock('Living landing rim',(x,-.04,.005),(.20,.46,.075),topmat)
     if biome=='grove':
-        petal=mat('Warm meadow flowers','EBC8B5')
+        grass=mat('Sunlit meadow edge','B4C487',rough=.95)
+        for i in range(58):
+            x=random.uniform(-2.93,2.93);blade('Fine meadow grass',(x,random.uniform(-.40,.30),.045),random.uniform(.07,.18),.008,grass,random.uniform(-.06,.06))
+        petal=mat('Small wildflowers','F0C9C5')
+        for j in range(8):
+            x=-2.65+j*.75;z=.12+random.random()*.04
+            for a in range(5):sphere('Tiny blossom',(x+.026*math.cos(a*TAU/5),-.27,z+.028*math.sin(a*TAU/5)),(.028,.015,.018),petal)
+            sphere('Pollen',(x,-.30,z),(.012,.01,.012),spark)
+        for j in range(6):
+            x=-2.55+j*.95;points=[(x+.07*math.sin(i+j),-.47,-.03-i*.18) for i in range(8+j%3)]
+            vine('Sparse hanging vine',points,.013,topmat)
+            for i,pt in enumerate(points[1::2]):blade('Small ivy leaf',pt,.11,.085,topmat,(-.08 if i%2 else .08))
+    elif biome=='frost':
+        for i in range(20):
+            x=random.uniform(-2.85,2.85)
+            if i%2==0:
+                bpy.ops.mesh.primitive_cone_add(vertices=5,radius1=random.uniform(.035,.065),depth=random.uniform(.20,.48),location=(x,-.33,-.01));bpy.context.object.data.materials.append(topmat)
+        for j in range(6):vine('Cold fracture seam',[(-2.6+j*.9,-.48,-.05),(-2.7+j*.9,-.48,-.55),(-2.55+j*.9,-.47,-1.15)],.014,spark)
+    else:
         for j in range(7):
-            x=-2.6+j*.83;z=.13+random.random()*.06
-            for a in range(5):sphere('Small blossom',(x+.033*math.cos(a*TAU/5),-.27,z+.035*math.sin(a*TAU/5)),(.038,.018,.023),petal)
-            sphere('Pollen',(x,-.30,z),(.017,.012,.017),spark)
+            x=-2.55+j*.84;points=[(x,-.49,-.03),(x+random.uniform(-.15,.15),-.49,-.55),(x+random.uniform(-.10,.12),-.49,-1.22)]
+            vine('Molten cliff fissure',points,.022,spark)
     cam=camera((0,-10,3),(0,0,-.9),7.4);light((-3,-5,6),950,5,(1,.82,.60));light((4,1,4),1000,4,(.47,.69,1))
     root=OUT/'terrain';root.mkdir(exist_ok=True);sc.render.filepath=str(root/(biome+'.png'));bpy.ops.render.render(write_still=True)
     left=world_to_camera_view(sc,cam,Vector((-3,-.4,0)));right=world_to_camera_view(sc,cam,Vector((3,-.4,0)))
