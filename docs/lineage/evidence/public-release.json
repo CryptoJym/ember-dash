@@ -1,0 +1,55 @@
+{
+  "url": "https://cryptojym.github.io/ember-dash/lineage.html",
+  "releaseCommit": "4e145ca1fbb32a62f850245060744d9db628203f",
+  "featureCommit": "ec3c40c61ca235f600b1fc37234bb66ef4f2f007",
+  "htmlSha256": "e2719789ae7f5b0b3af2391fdee3e63e9696c25ee44acac1da88705f303b9dfb",
+  "checks": [
+    {
+      "name": "public URL returns HTTP 200",
+      "pass": true
+    },
+    {
+      "name": "public HTML is the exact native-tested artifact",
+      "pass": true
+    },
+    {
+      "name": "production test-mutator object is absent",
+      "pass": true
+    },
+    {
+      "name": "live hearth has three heirs",
+      "pass": true
+    },
+    {
+      "name": "real-time movement works on public build",
+      "pass": true
+    },
+    {
+      "name": "real-time jump works on public build",
+      "pass": true
+    },
+    {
+      "name": "public pause works",
+      "pass": true
+    },
+    {
+      "name": "public run settlement creates next generation",
+      "pass": true
+    },
+    {
+      "name": "classic entry remains byte-for-byte unchanged",
+      "pass": true
+    },
+    {
+      "name": "no uncaught public browser errors",
+      "pass": true
+    },
+    {
+      "name": "public portrait touch controls visible",
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "errors": [],
+  "scope": "Real public HTTPS origin, real-time keyboard input, isolated disposable Chrome contexts; portrait is emulation, not a physical phone."
+}
