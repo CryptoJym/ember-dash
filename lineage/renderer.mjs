@@ -1,5 +1,8 @@
 import { VIEW_W, VIEW_H, BIOMES, POWERS, randomFrom, clamp } from './core.mjs';
 const TAU = Math.PI * 2;
+const FOX_ART = Object.fromEntries(Object.entries({ember:'vulpax',tide:'nivalis',gale:'sylra',void:'umbra',sun:'lumen',bloom:'verdara'}).map(([k,v])=>{const i=new Image();i.src=`lineage/assets/foxes/${v}.png`;return [k,i]}));
+const BG_ART = Object.fromEntries(Object.entries({grove:'lanternwild',frost:'glass-cathedral',cinder:'cinder-below'}).map(([k,v])=>{const i=new Image();i.src=`lineage/assets/backdrops/${v}.png`;return [k,i]}));
+
 export class EmberRenderer {
     constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d', { alpha: false }); if (!this.ctx)
         throw new Error('Canvas rendering is unavailable in this browser.'); this.glows = new Map(); this.resize(); }
@@ -345,6 +348,7 @@ export class EmberRenderer {
         c.clip();
         const home = ['title', 'hearth'].includes(game.mode), b = BIOMES.find(x => x.id === (home ? 'grove' : game.room.biome)) || BIOMES[0], t = game.visualTime, camera = home ? 0 : game.camera;
         this.backdrop(b, t, camera, game.motion);
+        const bgImg = BG_ART[b.id]; if (bgImg?.complete && bgImg.naturalWidth) { c.save(); c.globalAlpha=.46; const shift=(camera*.035)%(this.viewWidth*.08); c.drawImage(bgImg,-shift,0,this.viewWidth*1.08,VIEW_H); c.restore(); }
         if (home) {
             this.platform({ x: 635, y: 552, w: 645, h: 230, kind: 'ground' }, b, 0, 12);
             this.platform({ x: 522, y: 601, w: 78, h: 160, kind: 'ground' }, b, 0, 12);
@@ -432,7 +436,7 @@ export class EmberRenderer {
             }
             // Keep the hero readable during immunity; never blink the fox out.
             const heroAlpha = p.invuln > 0 ? (game.motion ? .75 + Math.sin(t * 10) * .12 : .85) : 1;
-            this.fox(p.x + p.w / 2 - camera, p.y + p.h, power, t, p.vx, p.facing, !p.onGround, heroAlpha, 1.2);
+            const art=FOX_ART[power.id]; if(art?.complete&&art.naturalWidth){ c.save(); c.globalAlpha=heroAlpha; const run=Math.min(1,Math.abs(p.vx)/(game.stats?.speed||325)), bob=p.onGround?Math.sin(t*18)*run*2.8:0, tilt=p.dashT>0?-.08*p.facing:clamp(p.vy/2600,-.11,.14), stretch=p.dashT>0?1.12:1, h=118,w=h*art.naturalWidth/art.naturalHeight; c.translate(p.x+p.w/2-camera,p.y+p.h+bob); c.rotate(tilt); c.scale(p.facing*stretch,1/stretch); c.drawImage(art,-w*.48,-h+8,w,h); c.restore(); } else this.fox(p.x + p.w / 2 - camera, p.y + p.h, power, t, p.vx, p.facing, !p.onGround, heroAlpha, 1.2);
             for (const pulse of game.pulses) {
                 c.save();
                 c.globalAlpha = pulse.life / .3;
