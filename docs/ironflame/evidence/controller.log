@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS real CharacterBody2D settles on solid floor
+PASS ground acceleration reaches full speed within 84ms
+PASS release brakes within twelve world pixels
+PASS brief tap clears a useful height and lands
+PASS holding jump rises higher than tapping
+PASS second press performs exactly one air jump
+PASS third jump is unavailable without inherited upgrade
+PASS dash direction cannot reverse mid-burst
+PASS 780px per second dash cannot tunnel through a two-pixel wall
+PASS solid ceiling stops upward motion without clipping
+PASS one-way ledge allows ascent and catches descent
+PASS drop input passes through a one-way ledge to solid ground
+PASS jump buffered before landing fires on landing
+PASS 200 seeded required gaps traversed by actual engine collision with baseline fox
+{"checks":14,"failures":[],"gaps":200,"heldRise":109.110290527344,"missed":[],"suite":"engine controller and generated traversal","tapRise":67.1519470214844}

@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS three candidates
+PASS candidate names unique
+PASS fresh fox starts clean
+PASS spirit XP raises level
+PASS leveling awards talent tokens
+PASS living fox can buy strength
+PASS living fox can awaken talent
+PASS profile round-trip preserves living progression
+PASS death tombstone contains no progression
+PASS boss chamber generated
+PASS generated room has traversal length
+PASS room generation deterministic
+PASS unknown save version is not adopted
+PASS non-object save rejected
+PASS zero health cannot resume as living
+PASS dead profile cannot gain or spend progression
+PASS insufficient funds leave profile unchanged
+PASS unknown upgrade cannot mutate state
+PASS 1000 deterministic choices have no duplicate candidate names
+PASS 1000 generated chambers retain the tested geometry envelope
+RULE_TESTS_OK

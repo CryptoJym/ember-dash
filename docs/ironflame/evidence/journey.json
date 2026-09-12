@@ -1,0 +1,95 @@
+{
+  "url": "http://127.0.0.1:9017/",
+  "checks": [
+    {
+      "name": "real keyboard traversal completes a seeded chamber",
+      "pass": true
+    },
+    {
+      "name": "defeated enemies raise the living fox above level one",
+      "pass": true
+    },
+    {
+      "name": "collecting and defeating enemies earns spendable light",
+      "pass": true
+    },
+    {
+      "name": "earned currency buys a real stat upgrade",
+      "pass": true
+    },
+    {
+      "name": "earned level grants a chosen extra air jump",
+      "pass": true
+    },
+    {
+      "name": "earned XP and level survive a browser reload",
+      "pass": true
+    },
+    {
+      "name": "reopening cleared sanctuary cannot farm experience",
+      "pass": true
+    },
+    {
+      "name": "actual fall death writes only a dead-profile tombstone",
+      "pass": true
+    },
+    {
+      "name": "new character starts at level one with zero XP and light",
+      "pass": true
+    },
+    {
+      "name": "dead character upgrades and talents do not carry over",
+      "pass": true
+    },
+    {
+      "name": "earlier Ember Dash save keys remain unchanged",
+      "pass": true
+    },
+    {
+      "name": "stale tab cannot overwrite a newer saved life",
+      "pass": true
+    },
+    {
+      "name": "conflicting tombstone remains intact",
+      "pass": true
+    },
+    {
+      "name": "390px mobile enters unobstructed play",
+      "pass": true
+    },
+    {
+      "name": "390px mobile has touch movement and jump",
+      "pass": true
+    },
+    {
+      "name": "390px simultaneous touch movement and jump work",
+      "pass": true
+    },
+    {
+      "name": "844px mobile enters unobstructed play",
+      "pass": true
+    },
+    {
+      "name": "844px mobile has touch movement and jump",
+      "pass": true
+    },
+    {
+      "name": "844px simultaneous touch movement and jump work",
+      "pass": true
+    },
+    {
+      "name": "no GDScript or uncaught browser errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "passed": 20,
+  "organic": {
+    "name": "Yara Moonveil",
+    "seed": 1143837912,
+    "xp": 50,
+    "level": 2,
+    "light": 35
+  },
+  "scope": "Actual exported Godot game. Combat, route traversal, earnings, purchase, talent, save, death and reset exercised through real browser inputs. Mobile is Chromium touch emulation, not a physical iPhone."
+}

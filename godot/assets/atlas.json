@@ -1,0 +1,51 @@
+{
+  "frameWidth": 256,
+  "frameHeight": 192,
+  "columns": 4,
+  "rows": 4,
+  "anchor": [
+    0.5326041579246521,
+    0.8093317747116089
+  ],
+  "clips": {
+    "idle": [
+      0,
+      4,
+      5
+    ],
+    "run": [
+      4,
+      8,
+      14
+    ],
+    "rise": [
+      12,
+      1,
+      1
+    ],
+    "fall": [
+      13,
+      1,
+      1
+    ],
+    "dash": [
+      14,
+      1,
+      1
+    ],
+    "pulse": [
+      15,
+      1,
+      1
+    ]
+  },
+  "source": "Blender 5.2.1 authored keyed mesh rig; four articulated legs, head, tail, and six lineage-specific silhouette ornaments",
+  "variants": [
+    "ember",
+    "tide",
+    "gale",
+    "void",
+    "sun",
+    "bloom"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "clipping": [],
+  "clips": [
+    "idle",
+    "run",
+    "rise",
+    "fall",
+    "dash",
+    "pulse"
+  ],
+  "frames": 96,
+  "variants": [
+    "ember",
+    "tide",
+    "gale",
+    "void",
+    "sun",
+    "bloom"
+  ]
+}
