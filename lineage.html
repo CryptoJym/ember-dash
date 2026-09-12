@@ -10,6 +10,10 @@
 
 /* Tutorial notifications stay above the portrait playfield. */
 @media(max-width:600px) and (orientation:portrait){#toast{top:145px;bottom:auto;width:88%;max-width:88%}}
+
+.heir-art{display:block;height:126px;margin:4px -8px 3px;overflow:hidden;position:relative}.heir-art:after{content:'';position:absolute;inset:auto 8% 0;height:22px;background:radial-gradient(ellipse,var(--power),transparent 70%);opacity:.18}.heir-art img{display:block;width:100%;height:150px;object-fit:contain;object-position:center 58%;filter:drop-shadow(0 12px 14px #0007)}.heir-card.selected .heir-art img{transform:scale(1.04);filter:drop-shadow(0 12px 18px color-mix(in srgb,var(--power) 35%,#000))}.heir-card{transition:border-color .18s,background .18s,transform .18s}.heir-card:hover{transform:translateY(-2px)}
+
+.first-hearth .upgrades-heading,.first-hearth .upgrades,.first-hearth .seed-label{display:none}.first-hearth .hearth-bottom{justify-content:flex-end;margin-top:18px}.first-hearth .hearth-help{max-width:620px}.first-hearth .heir-card{min-height:310px}
 </style></head><body data-mode="title">
 <canvas id="world" aria-label="Ember Dash dungeon platformer. Use the menus and control guide to begin."></canvas>
 <header id="topbar"><a class="brand" href="#" aria-label="Ember Dash home"><span class="brand-mark">✧</span><span>EMBER <small>DASH / LINEAGE</small></span></a><div class="meta"><span>GEN <b id="generation">01</b></span><span>✧ <b id="wallet">0</b><small>LIGHT</small></span><span class="best-label" id="best">A new beginning</span></div><div class="top-actions"><button id="sound" class="quiet" aria-pressed="true">♫ Sound on</button><button id="motion" class="quiet" aria-pressed="true">Motion on</button></div></header>
@@ -21,14 +25,14 @@
 (()=>{
 /** Ember Dash: Lineage. Pure, deterministic gameplay and persistence rules. */
 const VIEW_W = 1280, VIEW_H = 720, FIXED_DT = 1 / 120;
-const PHYSICS = Object.freeze({ gravity: 1820, jump: -660, speed: 285, acceleration: 2200, fall: 1000, coyote: .12, buffer: .14, width: 34, height: 38 });
+const PHYSICS = Object.freeze({ gravity: 2150, apexGravity: 1180, jump: -735, jumpCut: -330, speed: 325, groundAcceleration: 4600, airAcceleration: 2600, groundFriction: 5200, airFriction: 700, dashSpeed: 860, fall: 1120, coyote: .16, buffer: .18, landingSnap: 10, width: 34, height: 38 });
 const POWERS = Object.freeze([
-    { id: 'ember', name: 'Emberkin', title: 'The fire remembers.', color: '#ffaf64', dark: '#b74834', mark: '✹', skill: 'Fireburst', detail: 'Your pulse burns brighter. +40% pulse damage and a wider blast.', bonus: 'Blazing pulse', damage: 1.4, radius: 1.2 },
-    { id: 'tide', name: 'Moonveil', title: 'A quiet kind of power.', color: '#8bdeef', dark: '#487fb4', mark: '☾', skill: 'Moonward', detail: 'Begin every chamber with a ward that absorbs one hit.', bonus: 'One shield each room', ward: 1 },
-    { id: 'gale', name: 'Zephyr', title: 'Born between the winds.', color: '#b9efc1', dark: '#4d9c89', mark: '≋', skill: 'Skybound', detail: 'An extra air jump and a quicker stride. Reach the hidden paths.', bonus: 'Triple jump · +12% speed', jumps: 1, speed: 1.12 },
-    { id: 'void', name: 'Starborn', title: 'A little piece of infinity.', color: '#c3a4fb', dark: '#7353b8', mark: '✧', skill: 'Starstep', detail: 'Dash farther, and recover your dash 35% sooner.', bonus: 'Longer, faster-cooling dash', dash: 1.25, cooldown: .65 },
-    { id: 'sun', name: 'Solstice', title: 'Carry the dawn with you.', color: '#f4df8b', dark: '#ba8d3a', mark: '☀', skill: 'Lightkeeper', detail: 'Gather light from farther away. Every fourth mote is worth double.', bonus: 'Light magnet · bonus light', magnet: 1.85, bounty: true },
-    { id: 'bloom', name: 'Wildheart', title: 'Life finds a way.', color: '#eca8c1', dark: '#a35385', mark: '❀', skill: 'Renewal', detail: 'More vitality, and heal one heart after completing a chamber.', bonus: '+1 heart · room healing', health: 1, heal: 1 },
+    { id: 'ember', name: 'Vulpax', title: 'The fire remembers.', color: '#ffaf64', dark: '#b74834', mark: '✹', skill: 'Fireburst', detail: 'Your pulse burns brighter. +40% pulse damage and a wider blast.', bonus: 'Blazing pulse', damage: 1.4, radius: 1.2 },
+    { id: 'tide', name: 'Nivalis', title: 'A quiet kind of power.', color: '#8bdeef', dark: '#487fb4', mark: '☾', skill: 'Moonward', detail: 'Begin every chamber with a ward that absorbs one hit.', bonus: 'One shield each room', ward: 1 },
+    { id: 'gale', name: 'Sylra', title: 'Born between the winds.', color: '#b9efc1', dark: '#4d9c89', mark: '≋', skill: 'Skybound', detail: 'An extra air jump and a quicker stride. Reach the hidden paths.', bonus: 'Triple jump · +12% speed', jumps: 1, speed: 1.12 },
+    { id: 'void', name: 'Umbra', title: 'A little piece of infinity.', color: '#c3a4fb', dark: '#7353b8', mark: '✧', skill: 'Starstep', detail: 'Dash farther, and recover your dash 35% sooner.', bonus: 'Longer, faster-cooling dash', dash: 1.25, cooldown: .65 },
+    { id: 'sun', name: 'Lumen', title: 'Carry the dawn with you.', color: '#f4df8b', dark: '#ba8d3a', mark: '☀', skill: 'Lightkeeper', detail: 'Gather light from farther away. Every fourth mote is worth double.', bonus: 'Light magnet · bonus light', magnet: 1.85, bounty: true },
+    { id: 'bloom', name: 'Verdara', title: 'Life finds a way.', color: '#eca8c1', dark: '#a35385', mark: '❀', skill: 'Renewal', detail: 'More vitality, and heal one heart after completing a chamber.', bonus: '+1 heart · room healing', health: 1, heal: 1 },
 ]);
 const ECHOES = Object.freeze([
     { id: 'bold', name: 'Bold spirit', description: '+15% pulse damage', damage: .15 },
@@ -125,8 +129,13 @@ function buyUpgrade(profile, id) {
     profile.revision++;
     return { ok: true, cost };
 }
-const FOX_NAMES = ['Aster', 'Cinder', 'Luma', 'Fable', 'Sol', 'Wisp', 'Rowan', 'Rune', 'Lyra', 'Ash', 'Nova', 'Fern', 'Sable', 'Mica', 'Halo', 'Sora'];
-function heirsFor(profile) { const rnd = randomFrom(`${profile.familySeed}:${profile.generation}:heirs`); return shuffled(POWERS, rnd).slice(0, 3).map((p, i) => ({ power: p.id, name: FOX_NAMES[Math.floor(rnd() * FOX_NAMES.length)], echo: ECHOES[Math.floor(rnd() * ECHOES.length)].id, generation: profile.generation, ancestor: profile.lastPower, index: i })); }
+const FOX_NAMES = ['Ari','Aster','Briar','Cael','Calyx','Cirrus','Elowen','Ever','Fable','Fen','Halo','Ilyra','Juniper','Kestrel','Liora','Luma','Lyra','Mica','Neri','Nova','Orin','Perrin','Quill','Riven','Rowan','Rune','Sable','Sora','Tarin','Thistle','Vale','Vesper','Wren','Yara','Zevi','Auren','Bramble','Cirra','Damar','Eira','Flint','Galen','Hollis','Iskra','Kiri','Morrow','Nyx','Oriel'];
+function heirsFor(profile) {
+    const rnd = randomFrom(`${profile.familySeed}:${profile.generation}:heirs`), powers = shuffled(POWERS, rnd).slice(0, 3);
+    const recent = new Set((profile.lineage || []).slice(-12).map(x => x.name));
+    const pool = shuffled(FOX_NAMES, rnd), chosen = new Set();
+    return powers.map((p, i) => { let name = pool.find(n => !recent.has(n) && !chosen.has(n)) || pool.find(n => !chosen.has(n)) || `${p.name} ${profile.generation}`; chosen.add(name); return { power: p.id, name, echo: ECHOES[Math.floor(rnd() * ECHOES.length)].id, generation: profile.generation, ancestor: profile.lastPower, index: i }; });
+}
 function getStats(profile, heir, boons = {}) {
     const power = POWERS.find(x => x.id === heir.power) || POWERS[0], echo = ECHOES.find(x => x.id === heir.echo) || ECHOES[0];
     return { health: 5 + profile.upgrades.vitality + (power.health || 0) + (echo.health || 0) + (boons.heart || 0), speed: PHYSICS.speed * (power.speed || 1) * (1 + (echo.speed || 0)), jumps: 2 + (power.jumps || 0) + (boons.wings || 0), damage: (power.damage || 1) * (1 + profile.upgrades.power * .18 + (boons.fire || 0) * .30 + (echo.damage || 0)), pulseRadius: 108 * (power.radius || 1) * (1 + (boons.reach || 0) * .22), dashDuration: .19 * (power.dash || 1), dashCooldown: Math.max(.5, 1.7 * (power.cooldown || 1) * (1 - profile.upgrades.haste * .09) * Math.pow(.8, boons.dash || 0)), magnet: 66 * (power.magnet || 1) * (1 + profile.upgrades.magnet * .2 + (boons.magnet || 0) * .5 + (echo.magnet || 0)), ward: power.ward || 0, heal: power.heal || 0, bounty: !!power.bounty };
@@ -145,7 +154,7 @@ function makeRoom(seed, depth = 1, route = 'wild') {
     let x = 0, y = 548;
     const count = boss ? 7 : 8 + Math.min(3, Math.floor(depth / 5));
     for (let i = 0; i < count; i++) {
-        const w = i === 0 ? 440 : i === count - 1 ? (boss ? 650 : 440) : 220 + Math.floor(rnd() * 140);
+        const w = i === 0 ? 440 : i === count - 1 ? (boss ? 650 : 440) : 260 + Math.floor(rnd() * 150);
         const platform = { x, y, w, h: 220 + Math.floor(rnd() * 110), index: i, kind: 'ground' };
         platforms.push(platform);
         if (i > 0 && i < count - 1) {
@@ -166,8 +175,8 @@ function makeRoom(seed, depth = 1, route = 'wild') {
         }
         x += w;
         if (i < count - 1) {
-            x += 60 + Math.floor(rnd() * Math.min(50, 28 + difficulty * 4));
-            y = clamp(y + Math.floor(rnd() * 101) - 50, 470, 570);
+            x += 44 + Math.floor(rnd() * 30);
+            y = clamp(y + Math.floor(rnd() * 53) - 26, 496, 556);
         }
     }
     const end = platforms.at(-1), portal = { x: end.x + end.w - 115, y: end.y };
@@ -185,77 +194,32 @@ function newPlayer(room, stats) { return { x: room.spawn.x, y: room.spawn.y, vx:
 /** The renderer and automated tests both drive this exact fixed-step integrator. */
 function stepPlayer(p, input, room, stats, dt = FIXED_DT) {
     const events = [];
-    p.invuln = Math.max(0, p.invuln - dt);
-    p.dashCd = Math.max(0, p.dashCd - dt);
-    p.pulseCd = Math.max(0, p.pulseCd - dt);
-    p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);
-    if (input.jumpPressed)
-        p.jumpBuffer = PHYSICS.buffer;
-    if (p.onGround) {
-        p.coyote = PHYSICS.coyote;
-        p.jumpsUsed = 0;
+    p.invuln = Math.max(0, p.invuln - dt); p.dashCd = Math.max(0, p.dashCd - dt); p.pulseCd = Math.max(0, p.pulseCd - dt); p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);
+    if (input.jumpPressed) p.jumpBuffer = PHYSICS.buffer;
+    if (p.onGround) { p.coyote = PHYSICS.coyote; p.jumpsUsed = 0; } else p.coyote = Math.max(0, p.coyote - dt);
+    const dir = Number(!!input.right) - Number(!!input.left); if (dir) p.facing = dir;
+    if (input.dashPressed && p.dashCd <= 0) { p.dashT = stats.dashDuration; p.dashCd = stats.dashCooldown; p.invuln = Math.max(p.invuln, p.dashT + .10); p.vx = (dir || p.facing) * PHYSICS.dashSpeed; p.vy *= .12; events.push('dash'); }
+    if (input.pulsePressed && p.pulseCd <= 0) { p.pulseCd = .48; events.push('pulse'); }
+    if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.jumpsUsed < stats.jumps)) {
+        if (!p.onGround && p.coyote <= 0) p.jumpsUsed = Math.max(1, p.jumpsUsed);
+        if (p.jumpsUsed < stats.jumps) { p.vy = PHYSICS.jump; p.jumpsUsed++; p.onGround = false; p.coyote = 0; p.jumpBuffer = 0; p.dashT = 0; events.push('jump'); }
     }
-    else
-        p.coyote = Math.max(0, p.coyote - dt);
-    const dir = Number(!!input.right) - Number(!!input.left);
-    if (dir)
-        p.facing = dir;
-    if (input.dashPressed && p.dashCd <= 0) {
-        p.dashT = stats.dashDuration;
-        p.dashCd = stats.dashCooldown;
-        p.invuln = Math.max(p.invuln, p.dashT + .08);
-        events.push('dash');
-    }
-    if (input.pulsePressed && p.pulseCd <= 0) {
-        p.pulseCd = .55;
-        events.push('pulse');
-    }
-    if (p.jumpBuffer > 0 && (p.coyote > 0 || p.jumpsUsed < stats.jumps)) {
-        // Walking off a ledge consumes the grounded jump, not an extra free jump.
-        if (!p.onGround && p.coyote <= 0)
-            p.jumpsUsed = Math.max(1, p.jumpsUsed);
-        if (p.jumpsUsed < stats.jumps) {
-            p.vy = PHYSICS.jump;
-            p.jumpsUsed++;
-            p.onGround = false;
-            p.coyote = 0;
-            p.jumpBuffer = 0;
-            events.push('jump');
-        }
-    }
-    if (input.jumpReleased && p.vy < -280)
-        p.vy = -280;
-    if (p.dashT > 0) {
-        p.dashT = Math.max(0, p.dashT - dt);
-        p.vx = p.facing * 760;
-        p.vy = 0;
-    }
+    if (input.jumpReleased && p.vy < PHYSICS.jumpCut) p.vy = PHYSICS.jumpCut;
+    if (p.dashT > 0) { p.dashT = Math.max(0, p.dashT - dt); p.vx = p.facing * PHYSICS.dashSpeed; p.vy += PHYSICS.gravity * .10 * dt; }
     else {
-        const target = dir * stats.speed;
-        p.vx += clamp(target - p.vx, -PHYSICS.acceleration * dt, PHYSICS.acceleration * dt);
-        p.vy = Math.min(PHYSICS.fall, p.vy + PHYSICS.gravity * dt);
+        const accel = p.onGround ? PHYSICS.groundAcceleration : PHYSICS.airAcceleration, friction = p.onGround ? PHYSICS.groundFriction : PHYSICS.airFriction;
+        if (dir) p.vx += clamp(dir * stats.speed - p.vx, -accel * dt, accel * dt);
+        else p.vx += clamp(-p.vx, -friction * dt, friction * dt);
+        const nearApex = Math.abs(p.vy) < 115, g = nearApex ? PHYSICS.apexGravity : PHYSICS.gravity; p.vy = Math.min(PHYSICS.fall, p.vy + g * dt);
     }
-    const oldY = p.y;
-    p.x = clamp(p.x + p.vx * dt, 0, room.width - p.w);
-    p.y += p.vy * dt;
-    p.onGround = false;
+    const oldY = p.y, wasGrounded = p.onGround; p.x = clamp(p.x + p.vx * dt, 0, room.width - p.w); p.y += p.vy * dt; p.onGround = false;
     if (p.vy >= 0) {
         for (const pl of [...room.platforms, ...room.ledges]) {
-            if (p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2 && oldY + p.h <= pl.y + 2 && p.y + p.h >= pl.y) {
-                p.y = pl.y - p.h;
-                p.vy = 0;
-                p.onGround = true;
-                p.jumpsUsed = 0;
-                if (pl.kind === 'ground' && p.x > pl.x + 18 && p.x + p.w < pl.x + pl.w - 18 && !room.hazards.some(h => p.x + p.w + 22 > h.x && p.x - 22 < h.x + h.w && Math.abs(pl.y - h.y) < 30)) {
-                    p.safeX = p.x;
-                    p.safeY = p.y;
-                }
-                break;
-            }
+            const feet0 = oldY + p.h, feet1 = p.y + p.h, withinX = p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2;
+            if (withinX && feet0 <= pl.y + PHYSICS.landingSnap && feet1 >= pl.y) { p.y = pl.y - p.h; p.vy = 0; p.onGround = true; p.jumpsUsed = 0; if (!wasGrounded) events.push('land'); if (pl.kind === 'ground' && p.x > pl.x + 18 && p.x + p.w < pl.x + pl.w - 18 && !room.hazards.some(h => p.x + p.w + 22 > h.x && p.x - 22 < h.x + h.w && Math.abs(pl.y - h.y) < 30)) { p.safeX = p.x; p.safeY = p.y; } break; }
         }
     }
-    if (p.y > VIEW_H + 80)
-        events.push('fall');
+    if (p.y > VIEW_H + 80) events.push('fall');
     return events;
 }
 function takeHit(p, damage = 1) { if (p.invuln > 0)
@@ -266,6 +230,9 @@ else
 
 
 const TAU = Math.PI * 2;
+const FOX_ART = Object.fromEntries(Object.entries({ember:'vulpax',tide:'nivalis',gale:'sylra',void:'umbra',sun:'lumen',bloom:'verdara'}).map(([k,v])=>{const i=new Image();i.src=`lineage/assets/foxes/${v}.png`;return [k,i]}));
+const BG_ART = Object.fromEntries(Object.entries({grove:'lanternwild',frost:'glass-cathedral',cinder:'cinder-below'}).map(([k,v])=>{const i=new Image();i.src=`lineage/assets/backdrops/${v}.png`;return [k,i]}));
+
 class EmberRenderer {
     constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d', { alpha: false }); if (!this.ctx)
         throw new Error('Canvas rendering is unavailable in this browser.'); this.glows = new Map(); this.resize(); }
@@ -611,6 +578,7 @@ class EmberRenderer {
         c.clip();
         const home = ['title', 'hearth'].includes(game.mode), b = BIOMES.find(x => x.id === (home ? 'grove' : game.room.biome)) || BIOMES[0], t = game.visualTime, camera = home ? 0 : game.camera;
         this.backdrop(b, t, camera, game.motion);
+        const bgImg = BG_ART[b.id]; if (bgImg?.complete && bgImg.naturalWidth) { c.save(); c.globalAlpha=.46; const shift=(camera*.035)%(this.viewWidth*.08); c.drawImage(bgImg,-shift,0,this.viewWidth*1.08,VIEW_H); c.restore(); }
         if (home) {
             this.platform({ x: 635, y: 552, w: 645, h: 230, kind: 'ground' }, b, 0, 12);
             this.platform({ x: 522, y: 601, w: 78, h: 160, kind: 'ground' }, b, 0, 12);
@@ -698,7 +666,7 @@ class EmberRenderer {
             }
             // Keep the hero readable during immunity; never blink the fox out.
             const heroAlpha = p.invuln > 0 ? (game.motion ? .75 + Math.sin(t * 10) * .12 : .85) : 1;
-            this.fox(p.x + p.w / 2 - camera, p.y + p.h, power, t, p.vx, p.facing, !p.onGround, heroAlpha, 1.2);
+            const art=FOX_ART[power.id]; if(art?.complete&&art.naturalWidth){ c.save(); c.globalAlpha=heroAlpha; const run=Math.min(1,Math.abs(p.vx)/(game.stats?.speed||325)), bob=p.onGround?Math.sin(t*18)*run*2.8:0, tilt=p.dashT>0?-.08*p.facing:clamp(p.vy/2600,-.11,.14), stretch=p.dashT>0?1.12:1, h=118,w=h*art.naturalWidth/art.naturalHeight; c.translate(p.x+p.w/2-camera,p.y+p.h+bob); c.rotate(tilt); c.scale(p.facing*stretch,1/stretch); c.drawImage(art,-w*.48,-h+8,w,h); c.restore(); } else this.fox(p.x + p.w / 2 - camera, p.y + p.h, power, t, p.vx, p.facing, !p.onGround, heroAlpha, 1.2);
             for (const pulse of game.pulses) {
                 c.save();
                 c.globalAlpha = pulse.life / .3;
@@ -858,13 +826,13 @@ function powerOf(heir = game.heir) { return POWERS.find(x => x.id === heir.power
 function chrome() { $('#wallet').textContent = profile.wallet.toLocaleString(); $('#generation').textContent = String(profile.generation).padStart(2, '0'); $('#best').textContent = profile.bestDepth ? `Chamber ${profile.bestDepth}` : 'A new beginning'; $('#sound').setAttribute('aria-pressed', String(profile.settings.sound)); $('#sound').textContent = profile.settings.sound ? '♫ Sound on' : '♫ Sound off'; $('#motion').setAttribute('aria-pressed', String(game.motion)); $('#motion').textContent = game.motion ? 'Motion on' : 'Motion reduced'; $('#storage-note').textContent = warning || 'Progress stays in this browser. Your light is kept, even when an expedition ends.'; }
 function focusPanel() { requestAnimationFrame(() => panel.querySelector('button:not([disabled])')?.focus({ preventScroll: true })); }
 function showTitle() { setMode('title'); chrome(); panel.className = 'title-panel'; panel.innerHTML = `<div class="eyebrow"><span class="line"></span> A FOX. A FLICKER. AN INFINITE WORLD.</div><h1>Every ending<br>leaves a <em>spark.</em></h1><p class="lead">A different hollow with every expedition.<br>Inherit extraordinary powers. Bring the light home.</p><button class="primary" id="awaken">Awaken your lineage <span>↗</span></button><div class="micro">PROCEDURAL PLATFORMER <i>·</i> NO DOWNLOAD REQUIRED</div><div class="title-features"><span><b>01</b> A new fox every life</span><span><b>02</b> A new path every run</span><span><b>03</b> Your light lives on</span></div>${interrupted ? '<p class="restore-note">Your interrupted expedition has returned to the hearth. All saved light was kept.</p>' : ''}`; $('#awaken').onclick = () => { audio.unlock(); showHearth(); }; }
-function heirCard(h, index) { const p = powerOf(h), echo = ECHOES.find(x => x.id === h.echo); return `<button class="heir-card ${game.heir.index === index ? 'selected' : ''}" data-heir="${index}" style="--power:${p.color}" aria-pressed="${game.heir.index === index}"><span class="card-top"><span>${p.mark} ${p.name}</span><span class="selection">${game.heir.index === index ? '✓' : '○'}</span></span>${foxEmblem(p)}<span class="heir-name">${h.name}</span><span class="heir-skill">${p.skill}</span><span class="heir-detail">${p.detail}</span><span class="echo">${echo.name} <small>${echo.description}</small></span></button>`; }
+function heirCard(h, index) { const p = powerOf(h), echo = ECHOES.find(x => x.id === h.echo), art = {ember:'vulpax',tide:'nivalis',gale:'sylra',void:'umbra',sun:'lumen',bloom:'verdara'}[p.id]; return `<button class="heir-card ${game.heir.index === index ? 'selected' : ''}" data-heir="${index}" style="--power:${p.color}" aria-pressed="${game.heir.index === index}"><span class="card-top"><span>${p.mark} ${p.name}</span><span class="selection">${game.heir.index === index ? '✓' : '○'}</span></span><span class="heir-art"><img src="lineage/assets/foxes/${art}.png" alt="${p.name} fox"></span><span class="heir-name">${h.name}</span><span class="heir-skill">${p.skill}</span><span class="heir-detail">${p.detail}</span><span class="echo">${echo.name} <small>${echo.description}</small></span></button>`; }
 function showHearth() {
     setMode('hearth');
     chrome();
     game.heirs = heirsFor(profile);
     game.heir = game.heirs[game.heir?.generation === profile.generation ? game.heir.index : 0];
-    panel.className = 'hearth-panel';
+    panel.className = `hearth-panel${!profile.lineage.length && profile.wallet === 0 ? ' first-hearth' : ''}`;
     panel.innerHTML = `<div class="panel-heading"><div><div class="eyebrow">THE HEARTH · GENERATION ${String(profile.generation).padStart(2, '0')}</div><h2>Who carries the <em>light?</em></h2><p>Three descendants. Only gifts. Choose the way you play.</p></div><button class="quiet" id="back-title" aria-label="Return to title">←</button></div><div class="heirs">${game.heirs.map(heirCard).join('')}</div><div class="upgrades-heading"><div><span class="eyebrow">ROOTS THAT REMAIN</span><h3>Grow the whole lineage.</h3></div><span class="bank">✧ ${profile.wallet} <small>light to spend</small></span></div><div class="upgrades">${UPGRADES.map(u => { const lv = profile.upgrades[u.id], cost = upgradeCost(u.id, lv); return `<button class="upgrade" data-upgrade="${u.id}" ${cost === null || profile.wallet < cost ? 'disabled' : ''}><span class="upgrade-icon">${u.icon}</span><span><strong>${u.name} <small>${lv}/${u.max}</small></strong><span>${u.description}</span></span><b>${cost === null ? 'MAX' : `✧ ${cost}`}</b></button>`; }).join('')}</div><div class="hearth-bottom"><label class="seed-label">WORLD SEED <input id="seed-input" maxlength="48" placeholder="Leave blank for a new world" aria-label="Optional dungeon seed"></label><button class="primary" id="begin">Enter the hollow <span>↗</span></button></div><p class="hearth-help">Move A / D · Jump Space · Dash Shift · Pulse J · Interact E<br><span>Touch controls and gamepads are supported. All heirs can complete the main route.</span></p>${profile.lineage.length ? `<details class="ancestry"><summary>${profile.lineage.length} remembered ${profile.lineage.length === 1 ? 'ancestor' : 'ancestors'} · their light is yours</summary><div>${profile.lineage.slice().reverse().map(a => `<span>${powerOf(a).mark} ${a.name} · Chamber ${a.depth} · ${a.light} light</span>`).join('')}</div></details>` : ''}`;
     panel.querySelectorAll('[data-heir]').forEach(b => b.onclick = () => { const seed = $('#seed-input').value; game.heir = game.heirs[Number(b.dataset.heir)]; audio.play('select'); showHearth(); $('#seed-input').value = seed; panel.querySelector(`[data-heir="${game.heir.index}"]`).focus({ preventScroll: true }); });
     panel.querySelectorAll('[data-upgrade]').forEach(b => b.onclick = () => { const result = buyUpgrade(profile, b.dataset.upgrade); if (result.ok) {
@@ -881,7 +849,7 @@ function showHearth() {
 function startGame(seed) { audio.unlock(); game.seed = seed || entropy(); game.runId = entropy(); game.boons = {}; game.stats = getStats(profile, game.heir, game.boons); game.room = makeRoom(game.seed, 1); game.player = newPlayer(game.room, game.stats); game.camera = 0; game.t = 0; game.light = 0; game.pickups = 0; game.xp = 0; game.nextBoon = 24; game.boonPending = false; game.death = null; game.dashSerial = 0; clearEffects(); if (!beginExpedition(profile, game.heir, game.runId)) {
     toast('An expedition is already active. Return to the hearth first.');
     return;
-} save(); setMode('playing'); updateHud(); toast(`${game.heir.name}, ${powerOf().name}. Follow the light. ${matchMedia('(pointer:coarse)').matches ? 'Tap JUMP again in the air; PULSE clears your path.' : 'Space to air jump; J to pulse.'}`); }
+} save(); setMode('playing'); updateHud(); toast(`${game.heir.name} of ${powerOf().name}. ${matchMedia('(pointer:coarse)').matches ? 'Move with the left pad. Hold JUMP for height; tap again in the air.' : 'A/D to move. Hold Space for height; tap again in the air.'}`); }
 function clearEffects() { game.particles = []; game.floats = []; game.pulses = []; game.afterimages = []; game.projectiles = []; game.shake = 0; }
 function updateHud() { const p = game.player; if (!p)
     return; const power = powerOf(), b = BIOMES.find(x => x.id === game.room.biome); $('#hud-name').textContent = `${game.heir.name} · ${power.name}`; $('#hearts').textContent = '♥'.repeat(p.health) + '♡'.repeat(Math.max(0, game.stats.health - p.health)) + (p.ward ? ' ◇' : ''); $('#hearts').setAttribute('aria-label', `${p.health} of ${game.stats.health} hearts${p.ward ? ', one protective ward' : ''}`); $('#hud-biome').textContent = b.name; $('#hud-depth').textContent = `CHAMBER ${String(game.room.depth).padStart(2, '0')}`; $('#hud-light').textContent = `✧ ${game.light}`; $('#hud-bank').textContent = `${profile.wallet} banked`; $('#dash-meter').style.setProperty('--ready', `${100 * (1 - p.dashCd / game.stats.dashCooldown)}%`); $('#dash-status').textContent = p.dashCd > 0 ? `${p.dashCd.toFixed(1)}s` : 'READY'; $('#boon-progress').style.width = `${Math.min(100, game.xp / game.nextBoon * 100)}%`; $('#boon-label').textContent = `${Math.floor(game.xp)} / ${game.nextBoon} to awakening`; $('#buffs').textContent = Object.entries(game.boons).map(([k, v]) => `${BOONS.find(b => b.id === k).mark}${v > 1 ? '×' + v : ''}`).join(' '); }
@@ -1121,8 +1089,9 @@ function update(dt) {
     game.pulses = game.pulses.filter(q => q.life > 0);
     game.shake = Math.max(0, game.shake - 30 * dt);
     const visibleWidth = renderer.viewWidth;
-    const target = clamp(p.x - visibleWidth * .34, 0, Math.max(0, r.width - visibleWidth));
-    game.camera += (target - game.camera) * (1 - Math.exp(-7 * dt));
+    const lookAhead = clamp(p.vx * .42, -135, 185);
+    const target = clamp(p.x + lookAhead - visibleWidth * .36, 0, Math.max(0, r.width - visibleWidth));
+    game.camera += (target - game.camera) * (1 - Math.exp(-11 * dt));
     if (doInteract)
         interact();
     if (game.mode === 'playing' && game.boonPending && p.onGround && p.invuln <= 0)

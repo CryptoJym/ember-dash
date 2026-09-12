@@ -1,5 +1,5 @@
 /** Native-origin browser proof. Uses an installed Playwright; no user profile or account. */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
@@ -22,7 +22,7 @@ try {
  const state=()=>page.evaluate(()=>JSON.parse(window.render_game_to_text()));
  const stored=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('ember-lineage-v2')));
  check('native storage available with no warning',!(await state()).warning);
- await page.click('#awaken');await page.fill('#seed-input','native-verification');await page.click('#begin');
+ await page.click('#awaken');await page.locator('#seed-input').evaluate((el)=>{el.value='native-verification';});await page.click('#begin');
  await page.evaluate(()=>window.__emberTest.award(75));
  check('native localStorage receives earned light',(await stored()).wallet===75);
  await page.keyboard.press('KeyP');await page.click('#return-hearth');

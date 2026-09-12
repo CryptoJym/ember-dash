@@ -118,3 +118,9 @@ test('ancestry is bounded to twelve remembered descendants', () => { const p = b
     beginExpedition(p, heir, `run-${i}`);
     finishExpedition(p, `run-${i}`);
 } assert.equal(p.lineage.length, 12); assert.equal(p.generation, 101); });
+
+test('descendant choices never duplicate names and avoid the recent ancestry roster', () => {
+  const profile = freshProfile(); profile.familySeed = 'name-audit';
+  profile.lineage = ['Ari','Aster','Briar','Cael','Calyx','Cinder','Elowen','Ember','Fable','Fen','Halo','Ilyra'].map((name,i)=>({name,power:POWERS[i%POWERS.length].id,depth:1,light:1,generation:i+1}));
+  for (let generation=13; generation<113; generation++) { profile.generation=generation; const heirs=heirsFor(profile); assert.equal(new Set(heirs.map(h=>h.name)).size,3); for (const h of heirs) assert.ok(!profile.lineage.slice(-12).some(a=>a.name===h.name)); }
+});

@@ -1,13 +1,13 @@
 /** Ember Dash: Lineage. Pure, deterministic gameplay and persistence rules. */
 export const VIEW_W = 1280, VIEW_H = 720, FIXED_DT = 1 / 120;
-export const PHYSICS = Object.freeze({ gravity: 1820, jump: -660, speed: 285, acceleration: 2200, fall: 1000, coyote: .12, buffer: .14, width: 34, height: 38 });
+export const PHYSICS = Object.freeze({ gravity: 2150, apexGravity: 1180, jump: -735, jumpCut: -330, speed: 325, groundAcceleration: 4600, airAcceleration: 2600, groundFriction: 5200, airFriction: 700, dashSpeed: 860, fall: 1120, coyote: .16, buffer: .18, landingSnap: 10, width: 34, height: 38 });
 export const POWERS = Object.freeze([
-    { id: 'ember', name: 'Emberkin', title: 'The fire remembers.', color: '#ffaf64', dark: '#b74834', mark: '✹', skill: 'Fireburst', detail: 'Your pulse burns brighter. +40% pulse damage and a wider blast.', bonus: 'Blazing pulse', damage: 1.4, radius: 1.2 },
-    { id: 'tide', name: 'Moonveil', title: 'A quiet kind of power.', color: '#8bdeef', dark: '#487fb4', mark: '☾', skill: 'Moonward', detail: 'Begin every chamber with a ward that absorbs one hit.', bonus: 'One shield each room', ward: 1 },
-    { id: 'gale', name: 'Zephyr', title: 'Born between the winds.', color: '#b9efc1', dark: '#4d9c89', mark: '≋', skill: 'Skybound', detail: 'An extra air jump and a quicker stride. Reach the hidden paths.', bonus: 'Triple jump · +12% speed', jumps: 1, speed: 1.12 },
-    { id: 'void', name: 'Starborn', title: 'A little piece of infinity.', color: '#c3a4fb', dark: '#7353b8', mark: '✧', skill: 'Starstep', detail: 'Dash farther, and recover your dash 35% sooner.', bonus: 'Longer, faster-cooling dash', dash: 1.25, cooldown: .65 },
-    { id: 'sun', name: 'Solstice', title: 'Carry the dawn with you.', color: '#f4df8b', dark: '#ba8d3a', mark: '☀', skill: 'Lightkeeper', detail: 'Gather light from farther away. Every fourth mote is worth double.', bonus: 'Light magnet · bonus light', magnet: 1.85, bounty: true },
-    { id: 'bloom', name: 'Wildheart', title: 'Life finds a way.', color: '#eca8c1', dark: '#a35385', mark: '❀', skill: 'Renewal', detail: 'More vitality, and heal one heart after completing a chamber.', bonus: '+1 heart · room healing', health: 1, heal: 1 },
+    { id: 'ember', name: 'Vulpax', title: 'The fire remembers.', color: '#ffaf64', dark: '#b74834', mark: '✹', skill: 'Fireburst', detail: 'Your pulse burns brighter. +40% pulse damage and a wider blast.', bonus: 'Blazing pulse', damage: 1.4, radius: 1.2 },
+    { id: 'tide', name: 'Nivalis', title: 'A quiet kind of power.', color: '#8bdeef', dark: '#487fb4', mark: '☾', skill: 'Moonward', detail: 'Begin every chamber with a ward that absorbs one hit.', bonus: 'One shield each room', ward: 1 },
+    { id: 'gale', name: 'Sylra', title: 'Born between the winds.', color: '#b9efc1', dark: '#4d9c89', mark: '≋', skill: 'Skybound', detail: 'An extra air jump and a quicker stride. Reach the hidden paths.', bonus: 'Triple jump · +12% speed', jumps: 1, speed: 1.12 },
+    { id: 'void', name: 'Umbra', title: 'A little piece of infinity.', color: '#c3a4fb', dark: '#7353b8', mark: '✧', skill: 'Starstep', detail: 'Dash farther, and recover your dash 35% sooner.', bonus: 'Longer, faster-cooling dash', dash: 1.25, cooldown: .65 },
+    { id: 'sun', name: 'Lumen', title: 'Carry the dawn with you.', color: '#f4df8b', dark: '#ba8d3a', mark: '☀', skill: 'Lightkeeper', detail: 'Gather light from farther away. Every fourth mote is worth double.', bonus: 'Light magnet · bonus light', magnet: 1.85, bounty: true },
+    { id: 'bloom', name: 'Verdara', title: 'Life finds a way.', color: '#eca8c1', dark: '#a35385', mark: '❀', skill: 'Renewal', detail: 'More vitality, and heal one heart after completing a chamber.', bonus: '+1 heart · room healing', health: 1, heal: 1 },
 ]);
 export const ECHOES = Object.freeze([
     { id: 'bold', name: 'Bold spirit', description: '+15% pulse damage', damage: .15 },
@@ -104,8 +104,13 @@ export function buyUpgrade(profile, id) {
     profile.revision++;
     return { ok: true, cost };
 }
-const FOX_NAMES = ['Aster', 'Cinder', 'Luma', 'Fable', 'Sol', 'Wisp', 'Rowan', 'Rune', 'Lyra', 'Ash', 'Nova', 'Fern', 'Sable', 'Mica', 'Halo', 'Sora'];
-export function heirsFor(profile) { const rnd = randomFrom(`${profile.familySeed}:${profile.generation}:heirs`); return shuffled(POWERS, rnd).slice(0, 3).map((p, i) => ({ power: p.id, name: FOX_NAMES[Math.floor(rnd() * FOX_NAMES.length)], echo: ECHOES[Math.floor(rnd() * ECHOES.length)].id, generation: profile.generation, ancestor: profile.lastPower, index: i })); }
+const FOX_NAMES = ['Ari','Aster','Briar','Cael','Calyx','Cirrus','Elowen','Ever','Fable','Fen','Halo','Ilyra','Juniper','Kestrel','Liora','Luma','Lyra','Mica','Neri','Nova','Orin','Perrin','Quill','Riven','Rowan','Rune','Sable','Sora','Tarin','Thistle','Vale','Vesper','Wren','Yara','Zevi','Auren','Bramble','Cirra','Damar','Eira','Flint','Galen','Hollis','Iskra','Kiri','Morrow','Nyx','Oriel'];
+export function heirsFor(profile) {
+    const rnd = randomFrom(`${profile.familySeed}:${profile.generation}:heirs`), powers = shuffled(POWERS, rnd).slice(0, 3);
+    const recent = new Set((profile.lineage || []).slice(-12).map(x => x.name));
+    const pool = shuffled(FOX_NAMES, rnd), chosen = new Set();
+    return powers.map((p, i) => { let name = pool.find(n => !recent.has(n) && !chosen.has(n)) || pool.find(n => !chosen.has(n)) || `${p.name} ${profile.generation}`; chosen.add(name); return { power: p.id, name, echo: ECHOES[Math.floor(rnd() * ECHOES.length)].id, generation: profile.generation, ancestor: profile.lastPower, index: i }; });
+}
 export function getStats(profile, heir, boons = {}) {
     const power = POWERS.find(x => x.id === heir.power) || POWERS[0], echo = ECHOES.find(x => x.id === heir.echo) || ECHOES[0];
     return { health: 5 + profile.upgrades.vitality + (power.health || 0) + (echo.health || 0) + (boons.heart || 0), speed: PHYSICS.speed * (power.speed || 1) * (1 + (echo.speed || 0)), jumps: 2 + (power.jumps || 0) + (boons.wings || 0), damage: (power.damage || 1) * (1 + profile.upgrades.power * .18 + (boons.fire || 0) * .30 + (echo.damage || 0)), pulseRadius: 108 * (power.radius || 1) * (1 + (boons.reach || 0) * .22), dashDuration: .19 * (power.dash || 1), dashCooldown: Math.max(.5, 1.7 * (power.cooldown || 1) * (1 - profile.upgrades.haste * .09) * Math.pow(.8, boons.dash || 0)), magnet: 66 * (power.magnet || 1) * (1 + profile.upgrades.magnet * .2 + (boons.magnet || 0) * .5 + (echo.magnet || 0)), ward: power.ward || 0, heal: power.heal || 0, bounty: !!power.bounty };
@@ -124,7 +129,7 @@ export function makeRoom(seed, depth = 1, route = 'wild') {
     let x = 0, y = 548;
     const count = boss ? 7 : 8 + Math.min(3, Math.floor(depth / 5));
     for (let i = 0; i < count; i++) {
-        const w = i === 0 ? 440 : i === count - 1 ? (boss ? 650 : 440) : 220 + Math.floor(rnd() * 140);
+        const w = i === 0 ? 440 : i === count - 1 ? (boss ? 650 : 440) : 260 + Math.floor(rnd() * 150);
         const platform = { x, y, w, h: 220 + Math.floor(rnd() * 110), index: i, kind: 'ground' };
         platforms.push(platform);
         if (i > 0 && i < count - 1) {
@@ -145,8 +150,8 @@ export function makeRoom(seed, depth = 1, route = 'wild') {
         }
         x += w;
         if (i < count - 1) {
-            x += 60 + Math.floor(rnd() * Math.min(50, 28 + difficulty * 4));
-            y = clamp(y + Math.floor(rnd() * 101) - 50, 470, 570);
+            x += 44 + Math.floor(rnd() * 30);
+            y = clamp(y + Math.floor(rnd() * 53) - 26, 496, 556);
         }
     }
     const end = platforms.at(-1), portal = { x: end.x + end.w - 115, y: end.y };
@@ -164,77 +169,32 @@ export function newPlayer(room, stats) { return { x: room.spawn.x, y: room.spawn
 /** The renderer and automated tests both drive this exact fixed-step integrator. */
 export function stepPlayer(p, input, room, stats, dt = FIXED_DT) {
     const events = [];
-    p.invuln = Math.max(0, p.invuln - dt);
-    p.dashCd = Math.max(0, p.dashCd - dt);
-    p.pulseCd = Math.max(0, p.pulseCd - dt);
-    p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);
-    if (input.jumpPressed)
-        p.jumpBuffer = PHYSICS.buffer;
-    if (p.onGround) {
-        p.coyote = PHYSICS.coyote;
-        p.jumpsUsed = 0;
+    p.invuln = Math.max(0, p.invuln - dt); p.dashCd = Math.max(0, p.dashCd - dt); p.pulseCd = Math.max(0, p.pulseCd - dt); p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);
+    if (input.jumpPressed) p.jumpBuffer = PHYSICS.buffer;
+    if (p.onGround) { p.coyote = PHYSICS.coyote; p.jumpsUsed = 0; } else p.coyote = Math.max(0, p.coyote - dt);
+    const dir = Number(!!input.right) - Number(!!input.left); if (dir) p.facing = dir;
+    if (input.dashPressed && p.dashCd <= 0) { p.dashT = stats.dashDuration; p.dashCd = stats.dashCooldown; p.invuln = Math.max(p.invuln, p.dashT + .10); p.vx = (dir || p.facing) * PHYSICS.dashSpeed; p.vy *= .12; events.push('dash'); }
+    if (input.pulsePressed && p.pulseCd <= 0) { p.pulseCd = .48; events.push('pulse'); }
+    if (p.jumpBuffer > 0 && (p.onGround || p.coyote > 0 || p.jumpsUsed < stats.jumps)) {
+        if (!p.onGround && p.coyote <= 0) p.jumpsUsed = Math.max(1, p.jumpsUsed);
+        if (p.jumpsUsed < stats.jumps) { p.vy = PHYSICS.jump; p.jumpsUsed++; p.onGround = false; p.coyote = 0; p.jumpBuffer = 0; p.dashT = 0; events.push('jump'); }
     }
-    else
-        p.coyote = Math.max(0, p.coyote - dt);
-    const dir = Number(!!input.right) - Number(!!input.left);
-    if (dir)
-        p.facing = dir;
-    if (input.dashPressed && p.dashCd <= 0) {
-        p.dashT = stats.dashDuration;
-        p.dashCd = stats.dashCooldown;
-        p.invuln = Math.max(p.invuln, p.dashT + .08);
-        events.push('dash');
-    }
-    if (input.pulsePressed && p.pulseCd <= 0) {
-        p.pulseCd = .55;
-        events.push('pulse');
-    }
-    if (p.jumpBuffer > 0 && (p.coyote > 0 || p.jumpsUsed < stats.jumps)) {
-        // Walking off a ledge consumes the grounded jump, not an extra free jump.
-        if (!p.onGround && p.coyote <= 0)
-            p.jumpsUsed = Math.max(1, p.jumpsUsed);
-        if (p.jumpsUsed < stats.jumps) {
-            p.vy = PHYSICS.jump;
-            p.jumpsUsed++;
-            p.onGround = false;
-            p.coyote = 0;
-            p.jumpBuffer = 0;
-            events.push('jump');
-        }
-    }
-    if (input.jumpReleased && p.vy < -280)
-        p.vy = -280;
-    if (p.dashT > 0) {
-        p.dashT = Math.max(0, p.dashT - dt);
-        p.vx = p.facing * 760;
-        p.vy = 0;
-    }
+    if (input.jumpReleased && p.vy < PHYSICS.jumpCut) p.vy = PHYSICS.jumpCut;
+    if (p.dashT > 0) { p.dashT = Math.max(0, p.dashT - dt); p.vx = p.facing * PHYSICS.dashSpeed; p.vy += PHYSICS.gravity * .10 * dt; }
     else {
-        const target = dir * stats.speed;
-        p.vx += clamp(target - p.vx, -PHYSICS.acceleration * dt, PHYSICS.acceleration * dt);
-        p.vy = Math.min(PHYSICS.fall, p.vy + PHYSICS.gravity * dt);
+        const accel = p.onGround ? PHYSICS.groundAcceleration : PHYSICS.airAcceleration, friction = p.onGround ? PHYSICS.groundFriction : PHYSICS.airFriction;
+        if (dir) p.vx += clamp(dir * stats.speed - p.vx, -accel * dt, accel * dt);
+        else p.vx += clamp(-p.vx, -friction * dt, friction * dt);
+        const nearApex = Math.abs(p.vy) < 115, g = nearApex ? PHYSICS.apexGravity : PHYSICS.gravity; p.vy = Math.min(PHYSICS.fall, p.vy + g * dt);
     }
-    const oldY = p.y;
-    p.x = clamp(p.x + p.vx * dt, 0, room.width - p.w);
-    p.y += p.vy * dt;
-    p.onGround = false;
+    const oldY = p.y, wasGrounded = p.onGround; p.x = clamp(p.x + p.vx * dt, 0, room.width - p.w); p.y += p.vy * dt; p.onGround = false;
     if (p.vy >= 0) {
         for (const pl of [...room.platforms, ...room.ledges]) {
-            if (p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2 && oldY + p.h <= pl.y + 2 && p.y + p.h >= pl.y) {
-                p.y = pl.y - p.h;
-                p.vy = 0;
-                p.onGround = true;
-                p.jumpsUsed = 0;
-                if (pl.kind === 'ground' && p.x > pl.x + 18 && p.x + p.w < pl.x + pl.w - 18 && !room.hazards.some(h => p.x + p.w + 22 > h.x && p.x - 22 < h.x + h.w && Math.abs(pl.y - h.y) < 30)) {
-                    p.safeX = p.x;
-                    p.safeY = p.y;
-                }
-                break;
-            }
+            const feet0 = oldY + p.h, feet1 = p.y + p.h, withinX = p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2;
+            if (withinX && feet0 <= pl.y + PHYSICS.landingSnap && feet1 >= pl.y) { p.y = pl.y - p.h; p.vy = 0; p.onGround = true; p.jumpsUsed = 0; if (!wasGrounded) events.push('land'); if (pl.kind === 'ground' && p.x > pl.x + 18 && p.x + p.w < pl.x + pl.w - 18 && !room.hazards.some(h => p.x + p.w + 22 > h.x && p.x - 22 < h.x + h.w && Math.abs(pl.y - h.y) < 30)) { p.safeX = p.x; p.safeY = p.y; } break; }
         }
     }
-    if (p.y > VIEW_H + 80)
-        events.push('fall');
+    if (p.y > VIEW_H + 80) events.push('fall');
     return events;
 }
 export function takeHit(p, damage = 1) { if (p.invuln > 0)

@@ -10,3 +10,7 @@
 
 /* Tutorial notifications stay above the portrait playfield. */
 @media(max-width:600px) and (orientation:portrait){#toast{top:145px;bottom:auto;width:88%;max-width:88%}}
+
+.heir-art{display:block;height:126px;margin:4px -8px 3px;overflow:hidden;position:relative}.heir-art:after{content:'';position:absolute;inset:auto 8% 0;height:22px;background:radial-gradient(ellipse,var(--power),transparent 70%);opacity:.18}.heir-art img{display:block;width:100%;height:150px;object-fit:contain;object-position:center 58%;filter:drop-shadow(0 12px 14px #0007)}.heir-card.selected .heir-art img{transform:scale(1.04);filter:drop-shadow(0 12px 18px color-mix(in srgb,var(--power) 35%,#000))}.heir-card{transition:border-color .18s,background .18s,transform .18s}.heir-card:hover{transform:translateY(-2px)}
+
+.first-hearth .upgrades-heading,.first-hearth .upgrades,.first-hearth .seed-label{display:none}.first-hearth .hearth-bottom{justify-content:flex-end;margin-top:18px}.first-hearth .hearth-help{max-width:620px}.first-hearth .heir-card{min-height:310px}
