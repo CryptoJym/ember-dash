@@ -1,0 +1,1280 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#091a20"><meta name="description" content="A luminous fox roguelite. Explore seeded dungeons, inherit extraordinary powers, and grow a lineage with the light you bring home."><title>Ember Dash — Lineage</title><style>:root{color-scheme:dark;--ink:#e9eade;--muted:#9aafa9;--gold:#eac28c;--line:#c4d1b524;--panel:#0a1b22ed;--power:#ffaf64;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:#071219;color:var(--ink);min-height:100svh;overflow:hidden}button,input{font:inherit}button,a,input{-webkit-tap-highlight-color:transparent}button{color:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px}button{transition:background .18s,border-color .18s,transform .18s}button:hover:not(:disabled){filter:brightness(1.12)}button:active:not(:disabled){transform:translateY(1px)}a{color:inherit;text-decoration:none}[hidden]{display:none!important}#world{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}#topbar{position:fixed;z-index:5;top:0;left:0;width:100%;padding:27px 4.2%;display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(#07121970,transparent)}.brand{display:flex;align-items:center;gap:12px;font:20px Georgia,serif;letter-spacing:3px}.brand-mark{display:grid;place-items:center;border:1px solid #d6b98066;width:39px;height:42px;color:var(--gold);font:29px Georgia;transform:rotate(-7deg)}.brand small{font:8px ui-sans-serif,system-ui;letter-spacing:3.5px;display:block;color:var(--muted);margin-top:5px}.meta{display:flex;gap:29px;align-items:center;font-size:10px;letter-spacing:1.3px;color:var(--muted)}.meta b{color:var(--ink);font-weight:500;font-size:14px}.meta small{font-size:8px;margin-left:7px}.best-label{border-left:1px solid var(--line);padding-left:25px}.top-actions{display:flex;gap:12px}.quiet{border:0;background:transparent;color:#b8c8bc;font-size:11px;padding:10px 5px;min-height:36px}.eyebrow{font-size:10px;font-weight:500;letter-spacing:2.5px;color:var(--gold);line-height:1.7;display:flex;gap:12px;align-items:center}.line{height:1px;width:33px;background:var(--gold)}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-1.8px}em{color:var(--gold);font-weight:400}h1{font-size:clamp(49px,5.4vw,84px);line-height:1.08;margin:28px 0 23px}h2{font-size:42px;line-height:1.15;margin:12px 0}h3{font-size:24px;letter-spacing:-.5px}.lead{font-size:15px;line-height:1.9;color:#a8bdb5}.title-panel{position:fixed;z-index:2;left:6.8%;top:24%;width:600px;max-width:50%;padding-bottom:40px}.primary{display:flex;align-items:center;justify-content:space-between;gap:42px;border:1px solid #f2d4a2;background:var(--gold);color:#182426;padding:18px 23px;font-size:13px;font-weight:600;min-height:55px;border-radius:3px;box-shadow:0 8px 30px #e4bd7820}.primary span{font-size:21px;font-weight:400}.title-panel .primary{margin-top:31px;min-width:265px}.micro{font-size:8px;letter-spacing:1.5px;color:#9caea3;margin-top:16px}.micro i{margin:0 8px;color:var(--gold);font-style:normal}.title-features{display:flex;gap:28px;margin-top:45px;color:#b0c2b7;font-size:10px}.title-features b{display:block;color:var(--gold);font-size:9px;font-weight:400;letter-spacing:2px;margin-bottom:9px}.restore-note{margin-top:20px;font-size:12px;max-width:390px;line-height:1.6;color:var(--gold)}#footer{position:fixed;z-index:5;bottom:0;left:0;width:100%;padding:22px 4.2%;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:9px;color:#9aac9f;background:linear-gradient(transparent,#071219aa)}#footer button,#footer a{font-size:10px;background:none;border:0;color:#b5c4ba;padding:9px 0;margin-left:17px;text-decoration:none}.footer-note{display:flex;align-items:center;gap:8px;max-width:640px;line-height:1.5}.status-dot{display:block;width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}.hearth-panel{position:fixed;z-index:7;top:100px;bottom:74px;left:50%;transform:translateX(-50%);width:min(1020px,94%);padding:26px 35px;background:linear-gradient(130deg,#10272bef,#071920f5);border:1px solid #d3d1aa30;border-radius:8px;overflow-y:auto;box-shadow:0 30px 120px #02070b77;scrollbar-color:#526b68 transparent;scrollbar-width:thin}.panel-heading{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:23px}.panel-heading p,.modal-panel>p{color:var(--muted);font-size:13px;line-height:1.8}.panel-heading h2{font-size:34px}.heirs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.heir-card{display:block;text-align:left;position:relative;border:1px solid #8fa3973b;border-radius:5px;padding:15px 17px 17px;background:#12303944;overflow:hidden;min-height:290px}.heir-card.selected{border-color:var(--power);background:linear-gradient(155deg,color-mix(in srgb,var(--power) 8%,#0e262a),#0b1d27);box-shadow:0 0 28px color-mix(in srgb,var(--power) 6%,transparent)}.card-top{display:flex;justify-content:space-between;font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:var(--power)}.selection{font-size:15px}.heir-card svg{width:160px;height:105px;display:block;margin:0 auto}.heir-name{display:block;font:28px Georgia,serif;color:var(--ink)}.heir-skill{display:block;color:var(--power);text-transform:uppercase;letter-spacing:1.6px;font-size:9px;margin-top:6px}.heir-detail{display:block;font-size:11px;line-height:1.65;min-height:54px;margin-top:11px;color:#b7c8bf}.echo{display:block;border-top:1px solid var(--line);padding-top:12px;margin-top:12px;font-size:10px;color:var(--power)}.echo small{font-size:9px;display:block;color:#b7c8bf;margin-top:4px}.upgrades-heading{display:flex;justify-content:space-between;align-items:center;margin:26px 0 15px}.upgrades-heading .eyebrow{font-size:8px;letter-spacing:1.8px;margin-bottom:4px}.bank{color:var(--gold);font:23px Georgia}.bank small{display:block;color:var(--muted);font:9px system-ui;text-align:right;margin-top:5px}.upgrades{display:grid;grid-template-columns:1fr 1fr;gap:9px}.upgrade{display:flex;gap:12px;align-items:center;text-align:left;padding:13px 15px;border:1px solid var(--line);background:#ffffff03;border-radius:4px}.upgrade-icon{color:var(--gold);font-size:25px;width:25px}.upgrade>span:nth-child(2){flex:1}.upgrade strong{display:block;font-size:11px;font-weight:500;margin-bottom:5px}.upgrade strong small{font-size:9px;color:var(--muted);margin-left:5px}.upgrade span span{font-size:10px;line-height:1.5;display:block;color:#94aaa3}.upgrade>b{color:var(--gold);font-size:11px;white-space:nowrap}.hearth-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:22px}.seed-label{color:var(--muted);font-size:8px;letter-spacing:1.5px;display:block;flex:1;max-width:290px}#seed-input{display:block;width:100%;border:0;border-bottom:1px solid #91aaa24f;background:transparent;color:#c2d2c6;padding:10px 0;outline-offset:2px;font-size:11px;letter-spacing:0}.hearth-help{font-size:10px;color:#bacac0;line-height:1.8;margin-top:18px}.hearth-help span{color:#90a79e}.ancestry{font-size:11px;color:var(--muted);margin-top:15px}.ancestry summary{cursor:pointer;padding:6px 0}.ancestry div{display:flex;flex-wrap:wrap;gap:13px;margin:10px 0}.modal-panel{position:fixed;z-index:9;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,92%);max-height:86svh;overflow:auto;border:1px solid #e3d1a644;border-radius:9px;background:linear-gradient(145deg,#142c32f8,#081b23fa);padding:35px 40px;text-align:center;box-shadow:0 30px 100px #0009}.modal-panel .eyebrow{justify-content:center}.modal-panel .primary{margin:24px auto 0}.modal-panel h2{margin:17px 0}.wide-modal{width:min(900px,94%)}.boon-cards,.route-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:27px}.route-cards{grid-template-columns:repeat(2,1fr)}.boon-card{border:1px solid #bfbd8e40;background:#9dab8210;border-radius:5px;text-align:left;padding:24px 20px;min-height:208px}.boon-card>span{font-size:35px;display:block;color:var(--gold);margin-bottom:20px}.boon-card strong{font:20px Georgia;display:block}.boon-card p{font-size:12px;line-height:1.6;color:var(--muted);margin-top:12px;min-height:55px}.boon-card small{display:block;font-size:8px;letter-spacing:1px;color:var(--gold);margin-top:22px}.death-mark{color:var(--gold);font:55px Georgia;margin-top:17px}.death-stats{display:flex;justify-content:center;gap:65px;margin-top:28px}.death-stats b{display:block;font:40px Georgia;color:var(--gold)}.death-stats span{display:block;font-size:8px;letter-spacing:1.5px;color:var(--muted);margin-top:8px}.small-note{font-size:10px!important;color:#8ba299!important;margin-top:18px!important;line-height:1.8!important}.secondary{display:block;margin:14px auto 0;border:1px solid var(--line);background:transparent;padding:13px 20px;font-size:11px;color:#b8c8bd;border-radius:3px}.control-guide{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:27px;text-align:left;font-size:10px;color:var(--muted)}.control-guide span{display:flex;flex-direction:column;gap:4px}.control-guide b{font-size:11px;color:#d3dccd;font-weight:500}.seed-text{overflow-wrap:anywhere}#hud{position:fixed;z-index:4;inset:0 0 auto 0;padding:24px 3%;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;background:linear-gradient(#06121bc9,transparent)}.hud-left{min-width:240px}.hud-left strong{display:block;font-size:12px;font-weight:500;letter-spacing:.4px}#hearts{font-size:21px;letter-spacing:5px;color:#e4bd91;display:block;margin-top:9px;max-width:380px;overflow-wrap:anywhere}.hud-place{text-align:center}.hud-place small{display:block;font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:7px}.hud-place strong{font:21px Georgia}.hud-right{display:grid;grid-template-columns:1fr auto;column-gap:22px;text-align:right;min-width:210px}.hud-right strong{color:var(--gold);font:27px Georgia;grid-column:1}.hud-right small{color:var(--muted);font-size:9px;grid-column:1;margin-top:5px}.hud-right button{grid-column:2;grid-row:1/3;pointer-events:auto;align-self:center;border:1px solid var(--line);background:#17323a88;border-radius:50%;width:42px;height:42px;color:#d7dfcd}.ability-strip{position:fixed;bottom:27px;left:3%;display:flex;gap:20px;align-items:center}#dash-meter{position:relative;display:block;width:152px;height:33px;border-bottom:2px solid #859c6e33;--ready:100%;font-size:8px;letter-spacing:1px}#dash-meter:after{content:'';position:absolute;bottom:-2px;left:0;width:var(--ready);height:2px;background:var(--gold)}#dash-meter b{font-size:8px;font-weight:500;color:#a8bcb0}#dash-meter small{font-size:9px;float:right;color:var(--gold)}.awakening{position:relative;width:170px;height:33px;border-bottom:2px solid #a28ebb30}.awakening>span{position:absolute;bottom:-2px;height:2px;background:#ba9be0}.awakening small{font-size:9px;color:#ae9bc6}#buffs{font-size:22px;color:#cdb3e9}body:not([data-mode="title"]):not([data-mode="hearth"]) #topbar,body:not([data-mode="title"]):not([data-mode="hearth"]) #footer{display:none}#context-hint{position:fixed;z-index:4;bottom:86px;left:50%;transform:translateX(-50%);padding:12px 20px;background:#071721d6;color:#ddcfad;border:1px solid #bba77630;border-radius:4px;font-size:11px;text-align:center;pointer-events:none;max-width:90%;white-space:nowrap}#toast{position:fixed;z-index:15;bottom:90px;left:50%;transform:translate(-50%,8px);max-width:min(600px,88%);background:#0e262def;border:1px solid #e0c59b55;padding:13px 22px;color:#e5d6b2;font-size:12px;line-height:1.6;text-align:center;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}#toast.visible{opacity:1;transform:translate(-50%,0)}#touch-controls{display:none;position:fixed;z-index:6;bottom:max(18px,env(safe-area-inset-bottom));left:20px;right:20px;justify-content:space-between;align-items:flex-end;pointer-events:none;user-select:none;-webkit-user-select:none;touch-action:none}.move-controls,.action-controls{display:flex;gap:11px;align-items:flex-end}.control{pointer-events:auto;touch-action:none;border:1px solid #f2d3a155;background:#153039b0;border-radius:50%;width:62px;height:62px;font-size:28px;color:#efdfbb;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 0 20px #aad2bc08}.control small{font-size:7px;letter-spacing:1px;margin-top:1px}.control.held{background:#c5b7916b;border-color:var(--gold)}.small-control{width:48px;height:48px;font-size:22px}.jump-control{border-color:#e8c696a0;background:#7c785233;width:74px;height:74px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.noscript{position:fixed;inset:30%;padding:30px;background:#122b34;z-index:20}
+@media (pointer:coarse){#touch-controls:not([hidden]){display:flex}.ability-strip{bottom:106px;left:24px}.awakening{width:130px}#context-hint{bottom:184px}#toast{bottom:195px}}
+@media(max-width:900px){#topbar{padding:20px 5%}.best-label,#motion{display:none}.meta{gap:16px}.title-panel{left:6%;top:23%;max-width:64%;width:600px}.title-panel h1{font-size:59px}.title-features{gap:18px;font-size:9px}.title-panel .eyebrow{font-size:8px}.hearth-panel{top:85px;bottom:67px;padding:22px}.heir-card{padding:13px;min-height:270px}.heir-detail{font-size:10px}.heir-card svg{width:135px;height:91px}.panel-heading h2{font-size:31px}#footer{padding:15px 5%}.footer-note{max-width:48%;font-size:8px}#footer button,#footer a{margin-left:12px;font-size:9px}.hud-left{min-width:185px}.hud-right{min-width:145px}.hud-place strong{font-size:18px}.ability-strip{gap:13px}.boon-card{padding:20px 14px}.boon-card strong{font-size:18px}}
+@media(max-width:600px) and (orientation:portrait){body[data-mode="title"] #world{opacity:.74}.brand{font-size:17px}.brand-mark{width:31px;height:35px}.brand small{font-size:7px;letter-spacing:2px}.meta{display:none}.quiet{font-size:10px}#topbar{padding-top:max(20px,env(safe-area-inset-top))}.title-panel{top:22%;max-width:88%;width:auto;left:7%;right:7%;background:linear-gradient(90deg,#08192088,transparent)}.title-panel h1{font-size:57px;line-height:1.1}.lead{font-size:13px}.title-panel .primary{min-width:245px;padding:16px 20px}.title-features{gap:20px;margin-top:35px;font-size:9px}.micro{font-size:7px}.footer-note{display:none}#footer{justify-content:center;padding-bottom:max(16px,env(safe-area-inset-bottom))}#footer button,#footer a{font-size:10px;margin:0 11px}.hearth-panel{padding:20px 17px;top:82px;bottom:64px}.panel-heading h2{font-size:28px}.panel-heading p{font-size:11px}.heirs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding:2px 2px 9px}.heir-card{min-width:230px;scroll-snap-align:center}.hearth-bottom{flex-direction:column;align-items:stretch}.seed-label{max-width:none}.hearth-bottom .primary{width:100%}.upgrades{grid-template-columns:1fr}.upgrades-heading h3{font-size:21px}.upgrades-heading .eyebrow{font-size:7px}.bank{font-size:21px}.modal-panel{padding:29px 22px}.modal-panel h2{font-size:32px}.boon-cards,.route-cards{grid-template-columns:1fr;gap:10px}.boon-card{min-height:0;padding:15px 18px;display:grid;grid-template-columns:35px 1fr;column-gap:14px}.boon-card>span{grid-column:1;grid-row:1/4;font-size:28px;margin:0;align-self:center}.boon-card strong{grid-column:2;font-size:18px}.boon-card p{grid-column:2;font-size:11px;min-height:0;margin-top:5px}.boon-card small{grid-column:2;margin-top:10px}.hud-place{position:absolute;top:87px;left:50%;transform:translateX(-50%);white-space:nowrap}.hud-left{min-width:0;max-width:67%}.hud-left strong{font-size:10px}#hearts{font-size:18px;letter-spacing:3px}.hud-right{min-width:110px;column-gap:12px}.hud-right strong{font-size:23px}.hud-right button{width:35px;height:35px}.ability-strip{bottom:115px;font-size:8px}.awakening{width:120px}#touch-controls{left:12px;right:12px;bottom:max(28px,env(safe-area-inset-bottom))}.control{width:48px;height:48px}.small-control{width:38px;height:38px;font-size:18px}.jump-control{width:55px;height:55px}.action-controls,.move-controls{gap:7px}#context-hint{white-space:normal;bottom:171px;font-size:10px;width:87%;padding:10px}#toast{bottom:219px;font-size:11px}.death-stats{gap:35px}}
+@media(max-height:600px) and (orientation:landscape){#topbar{padding:14px 4%}.title-panel{top:22%;left:6%}.title-panel h1{font-size:46px;margin:16px 0}.lead{font-size:12px}.title-panel .primary{margin-top:18px;padding:12px 18px;min-height:44px;font-size:11px;min-width:230px}.title-features{display:none}.micro{font-size:7px;margin-top:11px}.eyebrow{font-size:8px}.hearth-panel{top:66px;bottom:48px;padding:20px 25px}.heir-card{min-height:240px}.panel-heading{margin-bottom:15px}.panel-heading h2{font-size:27px}#footer{padding:8px 4%}.footer-note{font-size:8px;max-width:55%}.modal-panel{max-height:89svh;padding:25px}.modal-panel h2{font-size:31px}.hud-place strong{font-size:17px}#hud{padding:15px 3%}.ability-strip{bottom:17px;left:37%;gap:10px}#dash-meter{width:110px}.awakening{width:120px}#context-hint{bottom:74px}#toast{bottom:114px}.control{width:50px;height:50px}.small-control{width:42px;height:42px}.jump-control{width:60px;height:60px}#touch-controls{bottom:14px}.control-guide{margin-top:20px}.boon-card{min-height:180px}.boon-card>span{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Keep the primary action visible while the hearth content scrolls. */
+.hearth-bottom{position:sticky;bottom:-22px;padding:14px 0 8px;background:linear-gradient(180deg,#10282ed9,#0c2027);z-index:2}.heir-card{min-height:282px}.heir-card svg{height:94px}.heir-detail{min-height:52px}.hearth-panel{scrollbar-width:thin;scrollbar-color:#8ca392 #0b2228}body:has(#toast.visible) #context-hint{visibility:hidden}
+
+/* Tutorial notifications stay above the portrait playfield. */
+@media(max-width:600px) and (orientation:portrait){#toast{top:145px;bottom:auto;width:88%;max-width:88%}}
+</style></head><body data-mode="title">
+<canvas id="world" aria-label="Ember Dash dungeon platformer. Use the menus and control guide to begin."></canvas>
+<header id="topbar"><a class="brand" href="#" aria-label="Ember Dash home"><span class="brand-mark">✧</span><span>EMBER <small>DASH / LINEAGE</small></span></a><div class="meta"><span>GEN <b id="generation">01</b></span><span>✧ <b id="wallet">0</b><small>LIGHT</small></span><span class="best-label" id="best">A new beginning</span></div><div class="top-actions"><button id="sound" class="quiet" aria-pressed="true">♫ Sound on</button><button id="motion" class="quiet" aria-pressed="true">Motion on</button></div></header>
+<section id="hud" hidden><div class="hud-left"><strong id="hud-name"></strong><span id="hearts"></span></div><div class="hud-place"><small id="hud-depth"></small><strong id="hud-biome"></strong></div><div class="hud-right"><strong id="hud-light">✧ 0</strong><small id="hud-bank"></small><button id="pause" aria-label="Pause game">Ⅱ</button></div><div class="ability-strip"><span id="dash-meter"><b>SHIFT · DASH</b><small id="dash-status">READY</small></span><span class="awakening"><span id="boon-progress"></span><small id="boon-label"></small></span><span id="buffs"></span></div></section>
+<main id="panel" class="title-panel"></main><div id="context-hint" hidden></div><div id="toast" role="status"></div><div id="announcer" class="sr-only" aria-live="polite"></div>
+<div id="touch-controls" hidden aria-label="Game controls"><div class="move-controls"><button class="control" data-control="left" aria-label="Move left">←</button><button class="control" data-control="right" aria-label="Move right">→</button></div><div class="action-controls"><button class="control small-control" data-control="interact" aria-label="Interact">✧<small>OPEN</small></button><button class="control small-control" data-control="pulse" aria-label="Light pulse">✹<small>PULSE</small></button><button class="control" data-control="dash" aria-label="Dash">↠<small>DASH</small></button><button class="control jump-control" data-control="jump" aria-label="Jump">↑<small>JUMP</small></button></div></div>
+<footer id="footer"><span class="footer-note"><span class="status-dot"></span> <span id="storage-note">Your light lives on.</span></span><div><button id="export">Export save</button><button id="import">Import save</button><input id="save-file" type="file" accept="application/json,.json" hidden><a id="classic-link" href="index.html">Classic runner ↗</a></div></footer>
+<noscript><div class="noscript">Ember Dash needs JavaScript to run. Enable JavaScript in your browser, then reload.</div></noscript><script>'use strict';
+(()=>{
+/** Ember Dash: Lineage. Pure, deterministic gameplay and persistence rules. */
+const VIEW_W = 1280, VIEW_H = 720, FIXED_DT = 1 / 120;
+const PHYSICS = Object.freeze({ gravity: 1820, jump: -660, speed: 285, acceleration: 2200, fall: 1000, coyote: .12, buffer: .14, width: 34, height: 38 });
+const POWERS = Object.freeze([
+    { id: 'ember', name: 'Emberkin', title: 'The fire remembers.', color: '#ffaf64', dark: '#b74834', mark: '✹', skill: 'Fireburst', detail: 'Your pulse burns brighter. +40% pulse damage and a wider blast.', bonus: 'Blazing pulse', damage: 1.4, radius: 1.2 },
+    { id: 'tide', name: 'Moonveil', title: 'A quiet kind of power.', color: '#8bdeef', dark: '#487fb4', mark: '☾', skill: 'Moonward', detail: 'Begin every chamber with a ward that absorbs one hit.', bonus: 'One shield each room', ward: 1 },
+    { id: 'gale', name: 'Zephyr', title: 'Born between the winds.', color: '#b9efc1', dark: '#4d9c89', mark: '≋', skill: 'Skybound', detail: 'An extra air jump and a quicker stride. Reach the hidden paths.', bonus: 'Triple jump · +12% speed', jumps: 1, speed: 1.12 },
+    { id: 'void', name: 'Starborn', title: 'A little piece of infinity.', color: '#c3a4fb', dark: '#7353b8', mark: '✧', skill: 'Starstep', detail: 'Dash farther, and recover your dash 35% sooner.', bonus: 'Longer, faster-cooling dash', dash: 1.25, cooldown: .65 },
+    { id: 'sun', name: 'Solstice', title: 'Carry the dawn with you.', color: '#f4df8b', dark: '#ba8d3a', mark: '☀', skill: 'Lightkeeper', detail: 'Gather light from farther away. Every fourth mote is worth double.', bonus: 'Light magnet · bonus light', magnet: 1.85, bounty: true },
+    { id: 'bloom', name: 'Wildheart', title: 'Life finds a way.', color: '#eca8c1', dark: '#a35385', mark: '❀', skill: 'Renewal', detail: 'More vitality, and heal one heart after completing a chamber.', bonus: '+1 heart · room healing', health: 1, heal: 1 },
+]);
+const ECHOES = Object.freeze([
+    { id: 'bold', name: 'Bold spirit', description: '+15% pulse damage', damage: .15 },
+    { id: 'nimble', name: 'Nimble paws', description: '+8% movement speed', speed: .08 },
+    { id: 'kindled', name: 'Kindled heart', description: '+1 maximum heart', health: 1 },
+    { id: 'keen', name: 'Keen senses', description: '+35% light attraction', magnet: .35 },
+]);
+const UPGRADES = Object.freeze([
+    { id: 'vitality', name: 'Heartwood', icon: '♡', description: 'One more heart for every descendant.', base: 32, growth: 1.65, max: 6 },
+    { id: 'power', name: 'Inner fire', icon: '✹', description: 'Pulses deal 18% more damage.', base: 26, growth: 1.6, max: 8 },
+    { id: 'magnet', name: 'Guiding light', icon: '✧', description: 'Collect light from 20% farther away.', base: 20, growth: 1.55, max: 6 },
+    { id: 'haste', name: 'Quickening', icon: '↠', description: 'Dash recharges 9% faster.', base: 28, growth: 1.65, max: 6 },
+]);
+const BOONS = Object.freeze([
+    { id: 'fire', name: 'Sunfire', mark: '✹', description: '+30% pulse damage this expedition.' },
+    { id: 'reach', name: 'Wide awakening', mark: '◉', description: '+22% pulse radius this expedition.' },
+    { id: 'wings', name: 'Featherfall', mark: '≋', description: 'One additional air jump this expedition.' },
+    { id: 'heart', name: 'Heart of the hollow', mark: '♡', description: '+1 maximum heart. Restore two hearts.' },
+    { id: 'dash', name: 'Starlight step', mark: '↠', description: 'Dash recharges 20% faster this expedition.' },
+    { id: 'magnet', name: 'A thousand fireflies', mark: '✧', description: '+50% light attraction this expedition.' },
+]);
+const BIOMES = Object.freeze([
+    { id: 'grove', name: 'The Lanternwild', eyebrow: 'Roots of a forgotten world', sky: ['#081c22', '#153b3a', '#254a43'], stone: '#1a3235', edge: '#659283', accent: '#e5b96e', fog: '#598b78' },
+    { id: 'frost', name: 'The Glass Cathedral', eyebrow: 'Where moonlight sleeps', sky: ['#10172c', '#23324d', '#3b5669'], stone: '#263544', edge: '#6d9caa', accent: '#b3e7e9', fog: '#57869b' },
+    { id: 'cinder', name: 'The Cinder Below', eyebrow: 'Even ashes hold a spark', sky: ['#200f24', '#482937', '#68423b'], stone: '#392b3b', edge: '#ac7370', accent: '#f5ac7c', fog: '#875868' },
+]);
+function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+function hashSeed(text) { let h = 2166136261; for (const c of String(text)) {
+    h ^= c.charCodeAt(0);
+    h = Math.imul(h, 16777619);
+} return h >>> 0; }
+function randomFrom(seed) { let a = hashSeed(seed); return () => { a += 0x6d2b79f5; let t = a; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function shuffled(items, rnd) { const out = [...items]; for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+} return out; }
+function freshProfile() { return { version: 2, revision: 0, wallet: 0, generation: 1, bestDepth: 0, totalLight: 0, upgrades: { vitality: 0, power: 0, magnet: 0, haste: 0 }, lineage: [], active: null, settings: { sound: true, motion: true }, familySeed: '', lastPower: null }; }
+const safeName = v => String(v || 'Ember').replace(/[^\p{L}\p{N} '\-]/gu, '').slice(0, 30) || 'Ember';
+const saneInt = (v, max = 100000000) => Number.isFinite(v) ? clamp(Math.floor(v), 0, max) : 0;
+function normalizeProfile(raw) {
+    const p = freshProfile();
+    if (!raw || typeof raw !== 'object' || raw.version !== 2)
+        return p;
+    p.wallet = saneInt(raw.wallet);
+    p.generation = Math.max(1, saneInt(raw.generation));
+    p.revision = saneInt(raw.revision);
+    p.totalLight = Math.max(p.wallet, saneInt(raw.totalLight));
+    p.bestDepth = saneInt(raw.bestDepth, 100000);
+    for (const u of UPGRADES)
+        p.upgrades[u.id] = saneInt(raw.upgrades?.[u.id], u.max);
+    p.familySeed = typeof raw.familySeed === 'string' ? raw.familySeed.slice(0, 64) : '';
+    p.lastPower = POWERS.some(x => x.id === raw.lastPower) ? raw.lastPower : null;
+    p.settings.sound = raw.settings?.sound !== false;
+    p.settings.motion = raw.settings?.motion !== false;
+    p.lineage = Array.isArray(raw.lineage) ? raw.lineage.slice(-12).filter(x => x && POWERS.some(a => a.id === x.power)).map(x => ({ name: safeName(x.name), power: x.power, depth: saneInt(x.depth, 100000), light: saneInt(x.light), generation: saneInt(x.generation) })) : [];
+    if (raw.active && typeof raw.active.id === 'string' && POWERS.some(x => x.id === raw.active.power))
+        p.active = { id: raw.active.id.slice(0, 80), power: raw.active.power, name: safeName(raw.active.name), depth: Math.max(1, saneInt(raw.active.depth, 100000)), light: saneInt(raw.active.light), generation: Math.max(1, saneInt(raw.active.generation)) };
+    return p;
+}
+function loadProfile(storage) {
+    try {
+        const raw = storage.getItem('ember-lineage-v2');
+        if (!raw)
+            return { profile: freshProfile(), warning: '' };
+        const data = JSON.parse(raw);
+        if (data.version !== 2)
+            return { profile: freshProfile(), warning: 'This save uses another version. Your original save has been left untouched.', readOnly: true };
+        return { profile: normalizeProfile(data), warning: '' };
+    }
+    catch {
+        return { profile: freshProfile(), warning: 'Browser saving is unavailable or the save could not be read. You can still play and export a save.', readOnly: true };
+    }
+}
+function persistProfile(storage, profile) { try {
+    storage.setItem('ember-lineage-v2', JSON.stringify(profile));
+    return true;
+}
+catch {
+    return false;
+} }
+function upgradeCost(id, level) { const u = UPGRADES.find(x => x.id === id); if (!u || !Number.isInteger(level) || level < 0 || level >= u.max)
+    return null; return Math.ceil(u.base * Math.pow(u.growth, level)); }
+function buyUpgrade(profile, id) {
+    const u = UPGRADES.find(x => x.id === id);
+    if (!u || profile.active)
+        return { ok: false, reason: 'Return to the hearth first.' };
+    const cost = upgradeCost(id, profile.upgrades[id]);
+    if (cost === null)
+        return { ok: false, reason: 'Fully awakened.' };
+    if (profile.wallet < cost)
+        return { ok: false, reason: 'More light is needed.' };
+    profile.wallet -= cost;
+    profile.upgrades[id]++;
+    profile.revision++;
+    return { ok: true, cost };
+}
+const FOX_NAMES = ['Aster', 'Cinder', 'Luma', 'Fable', 'Sol', 'Wisp', 'Rowan', 'Rune', 'Lyra', 'Ash', 'Nova', 'Fern', 'Sable', 'Mica', 'Halo', 'Sora'];
+function heirsFor(profile) { const rnd = randomFrom(`${profile.familySeed}:${profile.generation}:heirs`); return shuffled(POWERS, rnd).slice(0, 3).map((p, i) => ({ power: p.id, name: FOX_NAMES[Math.floor(rnd() * FOX_NAMES.length)], echo: ECHOES[Math.floor(rnd() * ECHOES.length)].id, generation: profile.generation, ancestor: profile.lastPower, index: i })); }
+function getStats(profile, heir, boons = {}) {
+    const power = POWERS.find(x => x.id === heir.power) || POWERS[0], echo = ECHOES.find(x => x.id === heir.echo) || ECHOES[0];
+    return { health: 5 + profile.upgrades.vitality + (power.health || 0) + (echo.health || 0) + (boons.heart || 0), speed: PHYSICS.speed * (power.speed || 1) * (1 + (echo.speed || 0)), jumps: 2 + (power.jumps || 0) + (boons.wings || 0), damage: (power.damage || 1) * (1 + profile.upgrades.power * .18 + (boons.fire || 0) * .30 + (echo.damage || 0)), pulseRadius: 108 * (power.radius || 1) * (1 + (boons.reach || 0) * .22), dashDuration: .19 * (power.dash || 1), dashCooldown: Math.max(.5, 1.7 * (power.cooldown || 1) * (1 - profile.upgrades.haste * .09) * Math.pow(.8, boons.dash || 0)), magnet: 66 * (power.magnet || 1) * (1 + profile.upgrades.magnet * .2 + (boons.magnet || 0) * .5 + (echo.magnet || 0)), ward: power.ward || 0, heal: power.heal || 0, bounty: !!power.bounty };
+}
+function beginExpedition(profile, heir, id) { if (profile.active)
+    return false; profile.active = { id, power: heir.power, name: heir.name, generation: profile.generation, depth: 1, light: 0 }; profile.revision++; return true; }
+function awardLight(profile, id, amount) { if (!profile.active || profile.active.id !== id || !Number.isInteger(amount) || amount < 1 || amount > 1000)
+    return false; profile.wallet += amount; profile.totalLight += amount; profile.active.light += amount; profile.revision++; return true; }
+function finishExpedition(profile, id) { if (!profile.active || profile.active.id !== id)
+    return null; const a = { ...profile.active }; profile.bestDepth = Math.max(profile.bestDepth, a.depth); profile.lineage.push({ name: a.name, power: a.power, depth: a.depth, light: a.light, generation: a.generation }); profile.lineage = profile.lineage.slice(-12); profile.lastPower = a.power; profile.generation++; profile.active = null; profile.revision++; return a; }
+function makeRoom(seed, depth = 1, route = 'wild') {
+    depth = Math.max(1, Math.floor(depth));
+    const rnd = randomFrom(`${seed}:room:${depth}:${route}`), biome = BIOMES[Math.floor((depth - 1) / 5) % BIOMES.length];
+    const boss = depth % 5 === 0, difficulty = Math.min(12, Math.floor((depth - 1) / 2));
+    const platforms = [], coins = [], enemies = [], hazards = [], ledges = [];
+    let x = 0, y = 548;
+    const count = boss ? 7 : 8 + Math.min(3, Math.floor(depth / 5));
+    for (let i = 0; i < count; i++) {
+        const w = i === 0 ? 440 : i === count - 1 ? (boss ? 650 : 440) : 220 + Math.floor(rnd() * 140);
+        const platform = { x, y, w, h: 220 + Math.floor(rnd() * 110), index: i, kind: 'ground' };
+        platforms.push(platform);
+        if (i > 0 && i < count - 1) {
+            for (let j = 0; j < 4; j++)
+                coins.push({ id: `${i}:${j}`, x: x + 35 + j * (w - 70) / 3, y: y - 42 - (j === 1 || j === 2 ? 12 : 0), value: 1, taken: false });
+            if (i % 3 === 2) {
+                const ledge = { x: x + 35, y: y - 108, w: 125, h: 28, index: i, kind: 'ledge' };
+                ledges.push(ledge);
+                for (let j = 0; j < 3; j++)
+                    coins.push({ id: `secret:${i}:${j}`, x: ledge.x + 25 + j * 35, y: ledge.y - 27, value: 2, taken: false });
+            }
+            if ((i >= 2 || depth > 1) && rnd() < Math.min(.88, .38 + difficulty * .06 + (route === 'trial' ? .16 : 0))) {
+                const type = depth >= 3 && rnd() < .35 ? 'spitter' : rnd() < .35 ? 'wisp' : 'crawler';
+                enemies.push({ id: `mob:${i}`, type, x: x + w * .6, y: y - (type === 'wisp' ? 100 : 26), homeY: y - (type === 'wisp' ? 100 : 26), lo: x + 25, hi: x + w - 25, hp: 1.5 + Math.min(5, difficulty) * .4, maxHp: 1.5 + Math.min(5, difficulty) * .4, phase: rnd() * 6.28, cooldown: 1.5 + rnd(), dead: false, flash: 0 });
+            }
+            if (depth >= 3 && i % 3 === 0)
+                hazards.push({ x: x + w - 70, y: y - 12, w: 36, h: 12 });
+        }
+        x += w;
+        if (i < count - 1) {
+            x += 60 + Math.floor(rnd() * Math.min(50, 28 + difficulty * 4));
+            y = clamp(y + Math.floor(rnd() * 101) - 50, 470, 570);
+        }
+    }
+    const end = platforms.at(-1), portal = { x: end.x + end.w - 115, y: end.y };
+    if (boss)
+        enemies.push({ id: 'guardian', type: 'guardian', x: end.x + 250, y: end.y - 70, homeY: end.y - 70, lo: end.x + 70, hi: end.x + end.w - 180, hp: 10 + Math.min(20, Math.floor(depth / 5)) * 3, maxHp: 10 + Math.min(20, Math.floor(depth / 5)) * 3, phase: 0, cooldown: 2, dead: false, flash: 0 });
+    const chestPlatform = platforms[route === 'cache' ? 3 : 5];
+    return { seed: String(seed), depth, route, biome: biome.id, boss, difficulty, width: x, platforms, ledges, coins, enemies, hazards, portal, chest: { x: chestPlatform.x + 65, y: chestPlatform.y - 25, opened: false, value: route === 'cache' ? 15 : 8 }, shrine: depth % 2 === 0 ? { x: platforms[4].x + 60, y: platforms[4].y, used: false } : null, spawn: { x: 105, y: 548 - PHYSICS.height }, decoSeed: hashSeed(`${seed}:${depth}:decor`) };
+}
+function routeIsReachable(room) {
+    return room.platforms.every((p, i) => { if (!i)
+        return true; const prev = room.platforms[i - 1], gap = p.x - prev.x - prev.w, rise = prev.y - p.y; const d = PHYSICS.jump ** 2 - 2 * PHYSICS.gravity * rise; if (d < 0)
+        return false; const flight = (-PHYSICS.jump + Math.sqrt(d)) / PHYSICS.gravity; return gap + PHYSICS.width + 24 < PHYSICS.speed * flight && p.w >= PHYSICS.width * 3; });
+}
+function newPlayer(room, stats) { return { x: room.spawn.x, y: room.spawn.y, vx: 0, vy: 0, w: PHYSICS.width, h: PHYSICS.height, facing: 1, onGround: true, coyote: PHYSICS.coyote, jumpBuffer: 0, jumpsUsed: 0, dashT: 0, dashCd: 0, pulseCd: 0, invuln: 1, health: stats.health, ward: stats.ward, safeX: room.spawn.x, safeY: room.spawn.y }; }
+/** The renderer and automated tests both drive this exact fixed-step integrator. */
+function stepPlayer(p, input, room, stats, dt = FIXED_DT) {
+    const events = [];
+    p.invuln = Math.max(0, p.invuln - dt);
+    p.dashCd = Math.max(0, p.dashCd - dt);
+    p.pulseCd = Math.max(0, p.pulseCd - dt);
+    p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);
+    if (input.jumpPressed)
+        p.jumpBuffer = PHYSICS.buffer;
+    if (p.onGround) {
+        p.coyote = PHYSICS.coyote;
+        p.jumpsUsed = 0;
+    }
+    else
+        p.coyote = Math.max(0, p.coyote - dt);
+    const dir = Number(!!input.right) - Number(!!input.left);
+    if (dir)
+        p.facing = dir;
+    if (input.dashPressed && p.dashCd <= 0) {
+        p.dashT = stats.dashDuration;
+        p.dashCd = stats.dashCooldown;
+        p.invuln = Math.max(p.invuln, p.dashT + .08);
+        events.push('dash');
+    }
+    if (input.pulsePressed && p.pulseCd <= 0) {
+        p.pulseCd = .55;
+        events.push('pulse');
+    }
+    if (p.jumpBuffer > 0 && (p.coyote > 0 || p.jumpsUsed < stats.jumps)) {
+        // Walking off a ledge consumes the grounded jump, not an extra free jump.
+        if (!p.onGround && p.coyote <= 0)
+            p.jumpsUsed = Math.max(1, p.jumpsUsed);
+        if (p.jumpsUsed < stats.jumps) {
+            p.vy = PHYSICS.jump;
+            p.jumpsUsed++;
+            p.onGround = false;
+            p.coyote = 0;
+            p.jumpBuffer = 0;
+            events.push('jump');
+        }
+    }
+    if (input.jumpReleased && p.vy < -280)
+        p.vy = -280;
+    if (p.dashT > 0) {
+        p.dashT = Math.max(0, p.dashT - dt);
+        p.vx = p.facing * 760;
+        p.vy = 0;
+    }
+    else {
+        const target = dir * stats.speed;
+        p.vx += clamp(target - p.vx, -PHYSICS.acceleration * dt, PHYSICS.acceleration * dt);
+        p.vy = Math.min(PHYSICS.fall, p.vy + PHYSICS.gravity * dt);
+    }
+    const oldY = p.y;
+    p.x = clamp(p.x + p.vx * dt, 0, room.width - p.w);
+    p.y += p.vy * dt;
+    p.onGround = false;
+    if (p.vy >= 0) {
+        for (const pl of [...room.platforms, ...room.ledges]) {
+            if (p.x + p.w > pl.x + 2 && p.x < pl.x + pl.w - 2 && oldY + p.h <= pl.y + 2 && p.y + p.h >= pl.y) {
+                p.y = pl.y - p.h;
+                p.vy = 0;
+                p.onGround = true;
+                p.jumpsUsed = 0;
+                if (pl.kind === 'ground' && p.x > pl.x + 18 && p.x + p.w < pl.x + pl.w - 18 && !room.hazards.some(h => p.x + p.w + 22 > h.x && p.x - 22 < h.x + h.w && Math.abs(pl.y - h.y) < 30)) {
+                    p.safeX = p.x;
+                    p.safeY = p.y;
+                }
+                break;
+            }
+        }
+    }
+    if (p.y > VIEW_H + 80)
+        events.push('fall');
+    return events;
+}
+function takeHit(p, damage = 1) { if (p.invuln > 0)
+    return false; if (p.ward > 0)
+    p.ward--;
+else
+    p.health = Math.max(0, p.health - damage); p.invuln = 1.3; return true; }
+
+
+const TAU = Math.PI * 2;
+class EmberRenderer {
+    constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d', { alpha: false }); if (!this.ctx)
+        throw new Error('Canvas rendering is unavailable in this browser.'); this.glows = new Map(); this.resize(); }
+    resize() {
+        const d = Math.min(2, globalThis.devicePixelRatio || 1), w = innerWidth, h = innerHeight;
+        // Portrait uses a closer camera, not a tiny landscape postcard.
+        const home = ['title', 'hearth'].includes(document.body.dataset.mode);
+        this.viewWidth = w < h && !home ? 540 : VIEW_W;
+        this.canvas.width = Math.round(w * d);
+        this.canvas.height = Math.round(h * d);
+        this.scale = Math.min(w / this.viewWidth, h / VIEW_H) * d;
+        this.ox = (w * d - this.viewWidth * this.scale) / 2;
+        this.oy = (h * d - VIEW_H * this.scale) / 2;
+    }
+    glow(x, y, r, color, alpha = .5) { const c = this.ctx; let img = this.glows.get(color); if (!img) {
+        img = document.createElement('canvas');
+        img.width = img.height = 128;
+        const q = img.getContext('2d');
+        const g = q.createRadialGradient(64, 64, 0, 64, 64, 64);
+        g.addColorStop(0, color);
+        g.addColorStop(.2, color + 'b0');
+        g.addColorStop(1, color + '00');
+        q.fillStyle = g;
+        q.fillRect(0, 0, 128, 128);
+        this.glows.set(color, img);
+    } c.save(); c.globalAlpha *= alpha; c.drawImage(img, x - r, y - r, r * 2, r * 2); c.restore(); }
+    path(points, fill, stroke = null) { const c = this.ctx; c.beginPath(); points.forEach((p, i) => i ? c.lineTo(...p) : c.moveTo(...p)); c.closePath(); if (fill) {
+        c.fillStyle = fill;
+        c.fill();
+    } if (stroke) {
+        c.strokeStyle = stroke;
+        c.stroke();
+    } }
+    tree(x, base, scale, color, lean = 0) { const c = this.ctx; c.save(); c.translate(x, base); c.scale(scale, scale); c.fillStyle = color; c.beginPath(); c.moveTo(-45, 0); c.bezierCurveTo(-18, -100, 5, -195, -10 + lean, -360); c.bezierCurveTo(-27 + lean, -445, -5 + lean, -520, 8 + lean, -580); c.bezierCurveTo(-3 + lean, -390, 36, -220, 28, -95); c.bezierCurveTo(30, -55, 60, -15, 75, 0); c.fill(); c.strokeStyle = color; c.lineCap = 'round'; for (let j = 0; j < 6; j++) {
+        const yy = -150 - j * 56, side = j % 2 ? 1 : -1;
+        c.lineWidth = 16 - j * 1.6;
+        c.beginPath();
+        c.moveTo(7, yy);
+        c.bezierCurveTo(side * 55, yy - 5, side * 100, yy - 35, side * (135 - j * 5), yy - 85);
+        c.stroke();
+        c.lineWidth = 7;
+        c.beginPath();
+        c.moveTo(side * 62, yy - 25);
+        c.quadraticCurveTo(side * 75, yy - 95, side * 58, yy - 120);
+        c.stroke();
+    } c.restore(); }
+    backdrop(b, t, camera, motion = true) {
+        const c = this.ctx;
+        const g = c.createLinearGradient(0, 0, 0, VIEW_H);
+        b.sky.forEach((s, i) => g.addColorStop(i / 2, s));
+        c.fillStyle = g;
+        c.fillRect(0, 0, VIEW_W, VIEW_H);
+        // A distant moon, suspended dust and three independently scrolling depth layers.
+        this.glow(880 - camera * .025, 215, 270, b.fog, .22);
+        this.glow(1010 - camera * .03, 134, 70, b.accent, .14);
+        c.save();
+        c.globalAlpha = .2;
+        c.fillStyle = b.accent;
+        c.beginPath();
+        c.arc(1010 - camera * .03, 134, 24, 0, TAU);
+        c.fill();
+        c.fillStyle = b.sky[0];
+        c.beginPath();
+        c.arc(1020 - camera * .03, 128, 22, 0, TAU);
+        c.fill();
+        c.restore();
+        for (let layer = 0; layer < 3; layer++) {
+            const factor = .08 + layer * .13, spacing = layer === 2 ? 390 : 260, shift = camera * factor;
+            const tone = layer === 0 ? b.sky[1] : layer === 1 ? '#0c202b' : '#0b2228';
+            for (let i = -2; i < 8; i++) {
+                const index = i + Math.floor(shift / spacing), x = i * spacing - shift % spacing, sc = .52 + layer * .2 + (Math.sin(index * 31) * .08);
+                c.globalAlpha = .45 + layer * .16;
+                if (b.id === 'grove')
+                    this.tree(x, 600, sc, tone, Math.sin(index) * 24);
+                else {
+                    c.fillStyle = tone;
+                    c.fillRect(x, 110 + (index % 3) * 28, 35, 490);
+                    c.fillRect(x + 155, 110 + (index % 3) * 28, 35, 490);
+                    c.strokeStyle = tone;
+                    c.lineWidth = 29;
+                    c.beginPath();
+                    c.moveTo(x + 15, 250);
+                    c.bezierCurveTo(x + 15, 80, x + 178, 80, x + 178, 250);
+                    c.stroke();
+                    if (b.id === 'cinder')
+                        this.path([[x, 0], [x + 90, 0], [x + 40, 95]], tone);
+                }
+            }
+        }
+        c.globalAlpha = 1;
+        const mist = c.createLinearGradient(0, 340, 0, 700);
+        mist.addColorStop(0, b.fog + '00');
+        mist.addColorStop(.7, b.fog + '28');
+        mist.addColorStop(1, b.sky[0]);
+        c.fillStyle = mist;
+        c.fillRect(0, 340, VIEW_W, 380);
+        c.save();
+        c.globalCompositeOperation = 'screen';
+        for (let i = 0; i < 5; i++) {
+            c.globalAlpha = .023;
+            c.fillStyle = b.accent;
+            this.path([[520 + i * 168, 0], [540 + i * 168, 0], [240 + i * 145, 630], [160 + i * 145, 630]], b.accent);
+        }
+        c.restore();
+        for (let i = 0; i < 58; i++) {
+            const x = ((i * 149.37 - camera * .18 + (motion ? t * 5 * (1 + i % 3) : 0)) % 1380 + 1380) % 1380 - 50, y = 55 + (i * 93.23) % 545 + (motion ? Math.sin(t * .5 + i) * 12 : 0);
+            c.globalAlpha = .15 + (Math.sin(t + i) * .15 + .15);
+            c.fillStyle = i % 4 === 0 ? b.accent : '#bbe8d4';
+            c.beginPath();
+            c.arc(x, y, i % 7 === 0 ? 2 : 1, 0, TAU);
+            c.fill();
+        }
+        c.globalAlpha = 1;
+    }
+    platform(pl, b, camera, seed) {
+        const c = this.ctx, x = pl.x - camera;
+        if (x + pl.w < -70 || x > VIEW_W + 70)
+            return;
+        const rnd = randomFrom(`${seed}:${pl.x}`), h = pl.kind === 'ledge' ? 30 : Math.min(pl.h, VIEW_H - pl.y + 70);
+        this.path([[x, pl.y + 4], [x + pl.w, pl.y + 4], [x + pl.w - 8, pl.y + h * .7], [x + pl.w * .75, pl.y + h], [x + pl.w * .34, pl.y + h - 28], [x + 10, pl.y + h * .8]], b.stone);
+        c.fillStyle = '#060f1b55';
+        c.fillRect(x + 12, pl.y + 22, pl.w - 24, 4);
+        c.strokeStyle = b.edge + '30';
+        c.lineWidth = 1;
+        for (let i = 0; i < pl.w / 54; i++) {
+            const xx = x + i * 54 + 8;
+            c.beginPath();
+            c.moveTo(xx, pl.y + 14);
+            c.lineTo(xx + 10, pl.y + 39);
+            c.lineTo(xx + 4, pl.y + 76 + rnd() * 50);
+            c.stroke();
+        }
+        c.fillStyle = b.edge + '60';
+        c.fillRect(x, pl.y, pl.w, 4);
+        c.fillStyle = b.accent + '75';
+        c.fillRect(x + 5, pl.y, pl.w - 10, 1);
+        for (let i = 0; i < pl.w / 11; i++) {
+            const xx = x + 5 + i * 11, hh = 3 + rnd() * 12;
+            c.strokeStyle = i % 4 ? b.edge : b.accent + '88';
+            c.beginPath();
+            c.moveTo(xx, pl.y);
+            c.quadraticCurveTo(xx - 5, pl.y - hh / 2, xx + (rnd() - .5) * 13, pl.y - hh);
+            c.stroke();
+        }
+        if (pl.kind !== 'ledge') {
+            for (let i = 0; i < 2; i++) {
+                const xx = x + pl.w * (.2 + i * .56);
+                c.strokeStyle = b.edge + '77';
+                c.beginPath();
+                c.moveTo(xx, pl.y + 8);
+                c.bezierCurveTo(xx - 8, pl.y + 44, xx + 14, pl.y + 63, xx + 3, pl.y + 92);
+                c.stroke();
+                for (let j = 0; j < 4; j++)
+                    this.path([[xx, pl.y + 28 + j * 12], [xx + (j % 2 ? 12 : -12), pl.y + 29 + j * 12], [xx + 2, pl.y + 35 + j * 12]], b.edge + '70');
+            }
+        }
+    }
+    flame(x, y, t, color, size = 1) { const c = this.ctx; this.glow(x, y, 49 * size, color, .32); c.save(); c.translate(x, y); c.scale(size, size); c.fillStyle = color; c.beginPath(); c.moveTo(0, -19 - Math.sin(t * 7) * 3); c.bezierCurveTo(-2, -9, -12, -7, -7, 4); c.bezierCurveTo(-4, 12, 10, 9, 8, 0); c.bezierCurveTo(6, -8, 0, -10, 0, -19); c.fill(); c.fillStyle = '#fff0ce'; c.beginPath(); c.ellipse(0, 2, 3, 6, 0, 0, TAU); c.fill(); c.restore(); }
+    portal(portal, b, camera, t, locked) {
+        const c = this.ctx, x = portal.x - camera, y = portal.y;
+        if (x < -200 || x > VIEW_W + 200)
+            return;
+        const color = locked ? '#be778c' : b.accent;
+        this.glow(x, y - 81, 135, color, .2);
+        c.fillStyle = b.stone;
+        c.fillRect(x - 66, y - 128, 21, 128);
+        c.fillRect(x + 45, y - 128, 21, 128);
+        c.strokeStyle = b.stone;
+        c.lineWidth = 24;
+        c.beginPath();
+        c.arc(x, y - 119, 56, Math.PI, 0);
+        c.stroke();
+        c.strokeStyle = color + '88';
+        c.lineWidth = 2;
+        c.beginPath();
+        c.moveTo(x - 46, y - 2);
+        c.lineTo(x - 46, y - 120);
+        c.arc(x, y - 120, 46, Math.PI, 0);
+        c.lineTo(x + 46, y - 2);
+        c.stroke();
+        const g = c.createLinearGradient(x - 38, y, x + 38, y);
+        g.addColorStop(0, color + '00');
+        g.addColorStop(.5, color + '35');
+        g.addColorStop(1, color + '00');
+        c.fillStyle = g;
+        c.fillRect(x - 38, y - 120, 76, 120);
+        for (let i = 0; i < 10; i++) {
+            const yy = y - 15 - (t * 25 + i * 14) % 138, xx = x + Math.sin(t + i) * 24;
+            this.glow(xx, yy, 5, color, .7);
+        }
+        c.fillStyle = color;
+        c.font = '12px system-ui';
+        c.textAlign = 'center';
+        c.fillText(locked ? 'GUARDIAN SEAL' : 'THE WAY ON', x, y - 197);
+        c.font = '22px Georgia';
+        c.fillText(locked ? '◇' : '✧', x, y - 164);
+        c.textAlign = 'left';
+    }
+    fox(x, y, power, t, velocity = 0, facing = 1, air = false, alpha = 1, scale = 1) {
+        const c = this.ctx;
+        c.save();
+        c.translate(x, y);
+        c.scale(facing * scale, scale);
+        c.globalAlpha = alpha;
+        const run = Math.min(1, Math.abs(velocity) / 220), bob = air ? 0 : Math.sin(t * 18) * run * 2, tail = Math.sin(t * 5) * 3;
+        c.fillStyle = '#02080b55';
+        c.beginPath();
+        c.ellipse(-2, 2, 32, 6, 0, 0, TAU);
+        c.fill();
+        c.translate(0, bob);
+        this.glow(-28, -28, 47, power.color, .13);
+        // The brush is the silhouette: long, upward-curving, pale-tipped, and alive.
+        const fur = c.createLinearGradient(-62, -55, 18, -12);
+        fur.addColorStop(0, power.color);
+        fur.addColorStop(1, power.dark);
+        c.fillStyle = fur;
+        c.beginPath();
+        c.moveTo(-17, -22);
+        c.bezierCurveTo(-41, -16, -61, -26, -72, -51 - tail);
+        c.bezierCurveTo(-58, -39, -48, -67 - tail, -43, -52);
+        c.bezierCurveTo(-42, -36, -27, -42, -17, -30);
+        c.closePath();
+        c.fill();
+        c.fillStyle = '#fff0d9';
+        c.beginPath();
+        c.moveTo(-72, -51 - tail);
+        c.quadraticCurveTo(-61, -41, -53, -52);
+        c.lineTo(-56, -39);
+        c.lineTo(-48, -41);
+        c.lineTo(-51, -29);
+        c.quadraticCurveTo(-64, -35, -72, -51 - tail);
+        c.fill();
+        for (let i = 0; i < 4; i++) {
+            const back = i < 2, px = back ? -16 : 14, phase = t * 18 + (i % 2) * Math.PI + (back ? Math.PI : 0), offset = air ? (back ? -5 : 8) : Math.sin(phase) * 10 * run;
+            c.strokeStyle = i % 2 ? power.dark : '#182c30';
+            c.lineWidth = 5;
+            c.lineCap = 'round';
+            c.beginPath();
+            c.moveTo(px, -17);
+            c.lineTo(px + offset * .5, -8);
+            c.lineTo(px + offset, air ? -4 : 0);
+            c.stroke();
+        }
+        c.fillStyle = fur;
+        c.beginPath();
+        c.ellipse(-1, -25, 25, 13, -.08, 0, TAU);
+        c.fill();
+        c.fillStyle = '#f2e4ce';
+        c.beginPath();
+        c.ellipse(6, -20, 14, 5, -.22, 0, TAU);
+        c.fill();
+        this.path([[10, -31], [12, -59], [25, -43], [29, -58], [35, -37], [47, -29], [32, -21], [19, -21]], power.color);
+        this.path([[15, -52], [17, -39], [23, -41]], power.dark);
+        this.path([[29, -51], [29, -40], [33, -38]], power.dark);
+        this.path([[24, -33], [31, -29], [46, -29], [33, -21], [20, -22]], '#fff0d9');
+        c.fillStyle = '#11272b';
+        c.beginPath();
+        c.ellipse(30, -36, 2.8, 2, 0, 0, TAU);
+        c.fill();
+        c.fillStyle = '#fffce8';
+        c.fillRect(30, -37, 1.3, 1.3);
+        this.path([[43, -31], [48, -29], [43, -26]], '#11272b');
+        c.strokeStyle = power.color + '80';
+        c.lineWidth = 1;
+        c.beginPath();
+        c.moveTo(-17, -34);
+        c.quadraticCurveTo(0, -42, 14, -35);
+        c.stroke();
+        c.restore();
+    }
+    enemy(e, camera, t) {
+        if (e.dead)
+            return;
+        const c = this.ctx, x = e.x - camera, y = e.y;
+        if (x < -100 || x > VIEW_W + 100)
+            return;
+        const color = e.flash > 0 ? '#fff5db' : e.type === 'guardian' ? '#d2a0db' : '#d384ae';
+        this.glow(x, y, e.type === 'guardian' ? 105 : 45, color, e.type === 'guardian' ? .2 : .17);
+        c.save();
+        c.translate(x, y);
+        const boss = e.type === 'guardian';
+        if (boss)
+            c.scale(2.2, 2.2);
+        c.fillStyle = '#2a2038';
+        c.beginPath();
+        c.moveTo(-21, 7);
+        c.bezierCurveTo(-35, -26, -8, -36, 0, -22);
+        c.bezierCurveTo(12, -41, 36, -17, 22, 9);
+        c.lineTo(13, 15);
+        c.lineTo(3, 10);
+        c.lineTo(-8, 16);
+        c.closePath();
+        c.fill();
+        this.path([[-18, -16], [-26, -37], [-7, -25]], '#634b6b');
+        this.path([[10, -23], [28, -39], [21, -10]], '#634b6b');
+        c.fillStyle = color;
+        c.fillRect(-12, -11, 7, 3);
+        c.fillRect(7, -11, 7, 3);
+        c.strokeStyle = '#64536d';
+        c.lineWidth = 3;
+        if (e.type === 'crawler' || e.type === 'spitter') {
+            for (let i = 0; i < 4; i++) {
+                const xx = -19 + i * 12;
+                c.beginPath();
+                c.moveTo(xx, 7);
+                c.lineTo(xx + Math.sin(t * 8 + i) * 4, 22);
+                c.stroke();
+            }
+        }
+        else {
+            c.strokeStyle = color + '77';
+            c.lineWidth = 1;
+            for (let i = 0; i < 3; i++) {
+                c.beginPath();
+                c.moveTo(-10 + i * 10, 12);
+                c.quadraticCurveTo(Math.sin(t * 4 + i) * 15, 25, -8 + i * 9, 31);
+                c.stroke();
+            }
+        }
+        if (e.type === 'spitter') {
+            c.fillStyle = color;
+            c.beginPath();
+            c.arc(0, 1, 5 + Math.max(0, 1 - e.cooldown) * 4, 0, TAU);
+            c.fill();
+        }
+        c.restore();
+        if (e.hp < e.maxHp && !boss) {
+            c.fillStyle = '#08121d';
+            c.fillRect(x - 22, y - 38, 44, 4);
+            c.fillStyle = color;
+            c.fillRect(x - 22, y - 38, 44 * e.hp / e.maxHp, 4);
+        }
+    }
+    render(game) {
+        const c = this.ctx;
+        c.setTransform(1, 0, 0, 1, 0, 0);
+        c.fillStyle = '#071219';
+        c.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        c.setTransform(this.scale, 0, 0, this.scale, this.ox, this.oy);
+        c.save();
+        c.beginPath();
+        c.rect(0, 0, this.viewWidth, VIEW_H);
+        c.clip();
+        const home = ['title', 'hearth'].includes(game.mode), b = BIOMES.find(x => x.id === (home ? 'grove' : game.room.biome)) || BIOMES[0], t = game.visualTime, camera = home ? 0 : game.camera;
+        this.backdrop(b, t, camera, game.motion);
+        if (home) {
+            this.platform({ x: 635, y: 552, w: 645, h: 230, kind: 'ground' }, b, 0, 12);
+            this.platform({ x: 522, y: 601, w: 78, h: 160, kind: 'ground' }, b, 0, 12);
+            this.portal({ x: 1110, y: 552 }, b, 0, t, false);
+            this.tree(1250, 560, .86, '#091b22', -45);
+            this.flame(736, 525, t, b.accent, .9);
+            this.flame(1010, 525, t + 2, b.accent, .9);
+            const power = POWERS.find(p => p.id === game.heir?.power) || POWERS[0];
+            this.fox(886, 548, power, t, 0, 1, false, 1, 1.8);
+            this.glow(885, 522, 175, power.color, .10);
+            c.fillStyle = '#e9d8b17a';
+            c.font = '11px system-ui';
+            c.textAlign = 'center';
+            c.fillText('THE HEARTH · WHERE EVERY STORY BEGINS', 938, 628);
+            c.textAlign = 'left';
+        }
+        else {
+            const room = game.room, p = game.player, power = POWERS.find(x => x.id === game.heir.power) || POWERS[0];
+            if (game.motion && game.shake > 0)
+                c.translate(Math.sin(t * 96) * game.shake, Math.cos(t * 83) * game.shake * .6);
+            for (const pl of [...room.platforms, ...room.ledges])
+                this.platform(pl, b, camera, room.decoSeed);
+            for (const pl of room.platforms) {
+                if (pl.index % 2 === 0)
+                    this.flame(pl.x + pl.w - 25 - camera, pl.y - 25, t + pl.index, b.accent, .7);
+            }
+            for (const h of room.hazards) {
+                for (let j = 0; j < 3; j++)
+                    this.path([[h.x + j * 12 - camera, h.y + h.h], [h.x + 6 + j * 12 - camera, h.y], [h.x + 12 + j * 12 - camera, h.y + h.h]], '#d692a3', '#efb1aa');
+            }
+            const chest = room.chest;
+            if (!chest.opened) {
+                const x = chest.x - camera;
+                this.glow(x, chest.y, 39, b.accent, .18);
+                c.fillStyle = '#745640';
+                c.fillRect(x - 15, chest.y - 7, 30, 22);
+                c.strokeStyle = b.accent;
+                c.lineWidth = 1.5;
+                c.strokeRect(x - 15, chest.y - 7, 30, 22);
+                c.fillStyle = b.accent;
+                c.fillRect(x - 2, chest.y - 3, 4, 8);
+            }
+            if (room.shrine) {
+                const s = room.shrine, x = s.x - camera;
+                c.fillStyle = b.stone;
+                c.fillRect(x - 20, s.y - 33, 40, 33);
+                c.fillRect(x - 28, s.y - 39, 56, 7);
+                if (!s.used) {
+                    this.glow(x, s.y - 73, 62, '#c7abff', .3);
+                    c.save();
+                    c.translate(x, s.y - 70 + Math.sin(t * 2) * 5);
+                    c.rotate(Math.PI / 4 + t * .2);
+                    c.strokeStyle = '#dcc8ff';
+                    c.strokeRect(-9, -9, 18, 18);
+                    c.restore();
+                }
+            }
+            for (const coin of room.coins) {
+                if (coin.taken || coin.x < camera - 50 || coin.x > camera + VIEW_W + 50)
+                    continue;
+                const x = coin.x - camera, y = coin.y + Math.sin(t * 3 + coin.x) * 4;
+                this.glow(x, y, 20, coin.value > 1 ? '#d2b7fa' : b.accent, .35);
+                c.fillStyle = coin.value > 1 ? '#e9d6ff' : '#fff0ba';
+                this.path([[x, y - 5], [x + 3, y], [x, y + 5], [x - 3, y]], c.fillStyle);
+            }
+            const guardian = room.enemies.find(e => e.type === 'guardian' && !e.dead);
+            this.portal(room.portal, b, camera, t, !!guardian);
+            for (const a of game.afterimages)
+                this.fox(a.x - camera, a.y, power, t, a.vx, a.facing, a.air, a.life * .45, 1.2);
+            for (const e of room.enemies)
+                this.enemy(e, camera, t);
+            for (const q of game.projectiles) {
+                this.glow(q.x - camera, q.y, 20, '#eab0d1', .3);
+                c.fillStyle = '#f3bdd6';
+                c.beginPath();
+                c.arc(q.x - camera, q.y, 5, 0, TAU);
+                c.fill();
+            }
+            if (p.ward > 0) {
+                c.strokeStyle = power.color + '88';
+                c.lineWidth = 1.5;
+                c.beginPath();
+                c.arc(p.x + p.w / 2 - camera, p.y + p.h / 2, 40, 0, TAU);
+                c.stroke();
+            }
+            // Keep the hero readable during immunity; never blink the fox out.
+            const heroAlpha = p.invuln > 0 ? (game.motion ? .75 + Math.sin(t * 10) * .12 : .85) : 1;
+            this.fox(p.x + p.w / 2 - camera, p.y + p.h, power, t, p.vx, p.facing, !p.onGround, heroAlpha, 1.2);
+            for (const pulse of game.pulses) {
+                c.save();
+                c.globalAlpha = pulse.life / .3;
+                c.strokeStyle = power.color;
+                c.lineWidth = 3;
+                c.beginPath();
+                c.arc(pulse.x - camera, pulse.y, pulse.radius * (1 - pulse.life / .38), 0, TAU);
+                c.stroke();
+                this.glow(pulse.x - camera, pulse.y, pulse.radius, power.color, .08);
+                c.restore();
+            }
+            for (const q of game.particles) {
+                c.globalAlpha = clamp(q.life * 2, 0, 1);
+                c.fillStyle = q.color;
+                c.fillRect(q.x - camera, q.y, q.size, q.size);
+            }
+            c.globalAlpha = 1;
+            for (const f of game.floats) {
+                c.globalAlpha = Math.min(1, f.life);
+                c.fillStyle = f.color;
+                c.font = '600 15px system-ui';
+                c.textAlign = 'center';
+                c.fillText(f.text, f.x - camera, f.y);
+                c.textAlign = 'left';
+            }
+            c.globalAlpha = 1;
+            if (guardian) {
+                c.fillStyle = '#0a1320cc';
+                c.fillRect(440, 98, 400, 43);
+                c.fillStyle = '#dcb5d6';
+                c.font = '11px system-ui';
+                c.textAlign = 'center';
+                c.fillText('THE HOLLOW KEEPER', 640, 114);
+                c.fillStyle = '#443147';
+                c.fillRect(455, 125, 370, 5);
+                c.fillStyle = '#d7a8c8';
+                c.fillRect(455, 125, 370 * guardian.hp / guardian.maxHp, 5);
+                c.textAlign = 'left';
+            }
+        }
+        const vignette = c.createRadialGradient(640, 330, 230, 640, 330, 800);
+        vignette.addColorStop(0, '#020b1300');
+        vignette.addColorStop(1, '#020b1399');
+        c.fillStyle = vignette;
+        c.fillRect(0, 0, VIEW_W, VIEW_H);
+        c.restore();
+    }
+}
+function foxEmblem(power) { return `<svg viewBox="0 0 180 130" aria-hidden="true"><defs><radialGradient id="g-${power.id}"><stop stop-color="${power.color}" stop-opacity=".24"/><stop offset="1" stop-color="${power.color}" stop-opacity="0"/></radialGradient></defs><ellipse cx="90" cy="72" rx="88" ry="57" fill="url(#g-${power.id})"/><path d="M77 93C45 105 20 75 19 46C34 67 44 39 54 54C48 72 67 64 82 80Z" fill="${power.color}"/><path d="M19 46L36 63L42 56L39 78C26 72 22 62 19 46Z" fill="#f6e9d3"/><path d="M63 82Q98 66 115 82L122 99H74Z" fill="${power.color}"/><path d="M108 85L106 40L124 63L137 38L144 75L161 83L140 99L116 95Z" fill="${power.color}"/><path d="M114 76L134 87L157 84L139 96L118 91Z" fill="#f6e9d3"/><path d="M111 51L116 70L121 66M137 50L136 68L141 71" fill="${power.dark}"/><path d="M75 94L70 109H79L84 96M110 95L115 109H124L120 94" fill="${power.dark}"/><path d="M131 75L137 76" stroke="#14262c" stroke-width="3"/><path d="M155 81L163 83L157 87Z" fill="#14262c"/></svg>`; }
+
+
+
+const $ = s => document.querySelector(s), panel = $('#panel'), announcer = $('#announcer'), hud = $('#hud'), hint = $('#context-hint');
+let storage;
+try {
+    storage = window.localStorage;
+}
+catch {
+    storage = null;
+}
+const loaded = loadProfile(storage);
+let profile = loaded.profile, readOnly = !!loaded.readOnly, warning = loaded.warning;
+function entropy() { try {
+    return [...crypto.getRandomValues(new Uint32Array(2))].map(x => x.toString(36)).join('-');
+}
+catch {
+    return `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e8).toString(36)}`;
+} }
+if (!profile.familySeed)
+    profile.familySeed = entropy();
+let interrupted = null;
+if (profile.active) {
+    interrupted = finishExpedition(profile, profile.active.id);
+}
+if (!storage)
+    warning = 'Browser saving is unavailable. You can still play and export your progress.';
+function save() { if (readOnly)
+    return false; if (!persistProfile(storage, profile)) {
+    warning = 'Progress is in memory only. Export a save before closing this page.';
+    $('#storage-note').textContent = warning;
+    return false;
+} return true; }
+if (interrupted)
+    save();
+const game = { mode: 'title', room: makeRoom('hearth'), player: null, heir: heirsFor(profile)[0], heirs: heirsFor(profile), stats: null, boons: {}, seed: '', runId: '', camera: 0, t: 0, visualTime: 0, particles: [], floats: [], pulses: [], afterimages: [], projectiles: [], shake: 0, light: 0, pickups: 0, xp: 0, nextBoon: 24, boonPending: false, dashSerial: 0, motion: profile.settings.motion, death: null };
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    game.motion = false;
+    profile.settings.motion = false;
+}
+const renderer = new EmberRenderer($('#world'));
+const input = { left: false, right: false, jumpPressed: false, jumpReleased: false, dashPressed: false, pulsePressed: false, interactPressed: false };
+const activeInputs = new Map();
+function clearInput() { activeInputs.clear(); for (const k in input)
+    input[k] = false; for (const b of document.querySelectorAll('.control'))
+    b.classList.remove('held'); }
+function press(action, id) { if (activeInputs.has(id))
+    return; activeInputs.set(id, action); if (action === 'left' || action === 'right')
+    input[action] = true;
+else
+    input[`${action}Pressed`] = true; }
+function release(id) { const action = activeInputs.get(id); activeInputs.delete(id); if (action === 'left' || action === 'right')
+    input[action] = [...activeInputs.values()].includes(action); if (action === 'jump' && ![...activeInputs.values()].includes('jump'))
+    input.jumpReleased = true; }
+function consumeEdges() { for (const k of ['jumpPressed', 'jumpReleased', 'dashPressed', 'pulsePressed', 'interactPressed'])
+    input[k] = false; }
+class HearthAudio {
+    constructor() { this.ctx = null; this.melody = 0; this.clock = 0; }
+    unlock() { if (!profile.settings.sound)
+        return; try {
+        this.ctx ??= new (window.AudioContext || window.webkitAudioContext)();
+        if (this.ctx.state === 'suspended')
+            this.ctx.resume().catch(() => { });
+    }
+    catch { } }
+    tone(freq, dur = .15, volume = .045, type = 'sine', slide = 1) { if (!profile.settings.sound || !this.ctx || this.ctx.state !== 'running')
+        return; try {
+        const a = this.ctx, osc = a.createOscillator(), gain = a.createGain(), now = a.currentTime;
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(30, freq * slide), now + dur);
+        gain.gain.setValueAtTime(.0001, now);
+        gain.gain.exponentialRampToValueAtTime(volume, now + .01);
+        gain.gain.exponentialRampToValueAtTime(.0001, now + dur);
+        osc.connect(gain);
+        gain.connect(a.destination);
+        osc.start();
+        osc.stop(now + dur + .01);
+    }
+    catch { } }
+    play(which) { if (which === 'coin')
+        this.tone(740 + (game.pickups % 4) * 110, .13, .028);
+    else if (which === 'jump')
+        this.tone(280, .13, .035, 'sine', 1.9);
+    else if (which === 'dash')
+        this.tone(190, .2, .035, 'triangle', 2.2);
+    else if (which === 'pulse')
+        this.tone(120, .27, .045, 'triangle', .5);
+    else if (which === 'hit')
+        this.tone(100, .22, .045, 'triangle', .5);
+    else if (which === 'boon') {
+        this.tone(440, .4, .035);
+        this.tone(660, .6, .025);
+    }
+    else
+        this.tone(330, .25, .025); }
+    tick(dt) { if (!profile.settings.sound || game.mode === 'paused' || document.hidden)
+        return; this.clock -= dt; if (this.clock <= 0) {
+        this.clock = 1.1;
+        const notes = [220, 330, 440, 392, 330, 293.66, 261.63, 330];
+        this.tone(notes[this.melody++ % notes.length], 1.6, .011);
+    } }
+}
+const audio = new HearthAudio();
+function toast(text) { announcer.textContent = text; $('#toast').textContent = text; $('#toast').classList.add('visible'); clearTimeout(toast.timer); toast.timer = setTimeout(() => $('#toast').classList.remove('visible'), 3300); }
+function setMode(mode) { game.mode = mode; document.body.dataset.mode = mode; renderer.resize(); hud.hidden = mode === 'title' || mode === 'hearth'; $('#touch-controls').hidden = mode !== 'playing'; panel.hidden = mode === 'playing'; clearInput(); hint.hidden = mode !== 'playing'; }
+function powerOf(heir = game.heir) { return POWERS.find(x => x.id === heir.power) || POWERS[0]; }
+function chrome() { $('#wallet').textContent = profile.wallet.toLocaleString(); $('#generation').textContent = String(profile.generation).padStart(2, '0'); $('#best').textContent = profile.bestDepth ? `Chamber ${profile.bestDepth}` : 'A new beginning'; $('#sound').setAttribute('aria-pressed', String(profile.settings.sound)); $('#sound').textContent = profile.settings.sound ? '♫ Sound on' : '♫ Sound off'; $('#motion').setAttribute('aria-pressed', String(game.motion)); $('#motion').textContent = game.motion ? 'Motion on' : 'Motion reduced'; $('#storage-note').textContent = warning || 'Progress stays in this browser. Your light is kept, even when an expedition ends.'; }
+function focusPanel() { requestAnimationFrame(() => panel.querySelector('button:not([disabled])')?.focus({ preventScroll: true })); }
+function showTitle() { setMode('title'); chrome(); panel.className = 'title-panel'; panel.innerHTML = `<div class="eyebrow"><span class="line"></span> A FOX. A FLICKER. AN INFINITE WORLD.</div><h1>Every ending<br>leaves a <em>spark.</em></h1><p class="lead">A different hollow with every expedition.<br>Inherit extraordinary powers. Bring the light home.</p><button class="primary" id="awaken">Awaken your lineage <span>↗</span></button><div class="micro">PROCEDURAL PLATFORMER <i>·</i> NO DOWNLOAD REQUIRED</div><div class="title-features"><span><b>01</b> A new fox every life</span><span><b>02</b> A new path every run</span><span><b>03</b> Your light lives on</span></div>${interrupted ? '<p class="restore-note">Your interrupted expedition has returned to the hearth. All saved light was kept.</p>' : ''}`; $('#awaken').onclick = () => { audio.unlock(); showHearth(); }; }
+function heirCard(h, index) { const p = powerOf(h), echo = ECHOES.find(x => x.id === h.echo); return `<button class="heir-card ${game.heir.index === index ? 'selected' : ''}" data-heir="${index}" style="--power:${p.color}" aria-pressed="${game.heir.index === index}"><span class="card-top"><span>${p.mark} ${p.name}</span><span class="selection">${game.heir.index === index ? '✓' : '○'}</span></span>${foxEmblem(p)}<span class="heir-name">${h.name}</span><span class="heir-skill">${p.skill}</span><span class="heir-detail">${p.detail}</span><span class="echo">${echo.name} <small>${echo.description}</small></span></button>`; }
+function showHearth() {
+    setMode('hearth');
+    chrome();
+    game.heirs = heirsFor(profile);
+    game.heir = game.heirs[game.heir?.generation === profile.generation ? game.heir.index : 0];
+    panel.className = 'hearth-panel';
+    panel.innerHTML = `<div class="panel-heading"><div><div class="eyebrow">THE HEARTH · GENERATION ${String(profile.generation).padStart(2, '0')}</div><h2>Who carries the <em>light?</em></h2><p>Three descendants. Only gifts. Choose the way you play.</p></div><button class="quiet" id="back-title" aria-label="Return to title">←</button></div><div class="heirs">${game.heirs.map(heirCard).join('')}</div><div class="upgrades-heading"><div><span class="eyebrow">ROOTS THAT REMAIN</span><h3>Grow the whole lineage.</h3></div><span class="bank">✧ ${profile.wallet} <small>light to spend</small></span></div><div class="upgrades">${UPGRADES.map(u => { const lv = profile.upgrades[u.id], cost = upgradeCost(u.id, lv); return `<button class="upgrade" data-upgrade="${u.id}" ${cost === null || profile.wallet < cost ? 'disabled' : ''}><span class="upgrade-icon">${u.icon}</span><span><strong>${u.name} <small>${lv}/${u.max}</small></strong><span>${u.description}</span></span><b>${cost === null ? 'MAX' : `✧ ${cost}`}</b></button>`; }).join('')}</div><div class="hearth-bottom"><label class="seed-label">WORLD SEED <input id="seed-input" maxlength="48" placeholder="Leave blank for a new world" aria-label="Optional dungeon seed"></label><button class="primary" id="begin">Enter the hollow <span>↗</span></button></div><p class="hearth-help">Move A / D · Jump Space · Dash Shift · Pulse J · Interact E<br><span>Touch controls and gamepads are supported. All heirs can complete the main route.</span></p>${profile.lineage.length ? `<details class="ancestry"><summary>${profile.lineage.length} remembered ${profile.lineage.length === 1 ? 'ancestor' : 'ancestors'} · their light is yours</summary><div>${profile.lineage.slice().reverse().map(a => `<span>${powerOf(a).mark} ${a.name} · Chamber ${a.depth} · ${a.light} light</span>`).join('')}</div></details>` : ''}`;
+    panel.querySelectorAll('[data-heir]').forEach(b => b.onclick = () => { const seed = $('#seed-input').value; game.heir = game.heirs[Number(b.dataset.heir)]; audio.play('select'); showHearth(); $('#seed-input').value = seed; panel.querySelector(`[data-heir="${game.heir.index}"]`).focus({ preventScroll: true }); });
+    panel.querySelectorAll('[data-upgrade]').forEach(b => b.onclick = () => { const result = buyUpgrade(profile, b.dataset.upgrade); if (result.ok) {
+        save();
+        audio.play('boon');
+        toast(`${UPGRADES.find(x => x.id === b.dataset.upgrade).name} awakened for every descendant.`);
+        showHearth();
+    }
+    else
+        toast(result.reason); });
+    $('#begin').onclick = () => startGame($('#seed-input').value.trim());
+    $('#back-title').onclick = showTitle;
+}
+function startGame(seed) { audio.unlock(); game.seed = seed || entropy(); game.runId = entropy(); game.boons = {}; game.stats = getStats(profile, game.heir, game.boons); game.room = makeRoom(game.seed, 1); game.player = newPlayer(game.room, game.stats); game.camera = 0; game.t = 0; game.light = 0; game.pickups = 0; game.xp = 0; game.nextBoon = 24; game.boonPending = false; game.death = null; game.dashSerial = 0; clearEffects(); if (!beginExpedition(profile, game.heir, game.runId)) {
+    toast('An expedition is already active. Return to the hearth first.');
+    return;
+} save(); setMode('playing'); updateHud(); toast(`${game.heir.name}, ${powerOf().name}. Follow the light. ${matchMedia('(pointer:coarse)').matches ? 'Tap JUMP again in the air; PULSE clears your path.' : 'Space to air jump; J to pulse.'}`); }
+function clearEffects() { game.particles = []; game.floats = []; game.pulses = []; game.afterimages = []; game.projectiles = []; game.shake = 0; }
+function updateHud() { const p = game.player; if (!p)
+    return; const power = powerOf(), b = BIOMES.find(x => x.id === game.room.biome); $('#hud-name').textContent = `${game.heir.name} · ${power.name}`; $('#hearts').textContent = '♥'.repeat(p.health) + '♡'.repeat(Math.max(0, game.stats.health - p.health)) + (p.ward ? ' ◇' : ''); $('#hearts').setAttribute('aria-label', `${p.health} of ${game.stats.health} hearts${p.ward ? ', one protective ward' : ''}`); $('#hud-biome').textContent = b.name; $('#hud-depth').textContent = `CHAMBER ${String(game.room.depth).padStart(2, '0')}`; $('#hud-light').textContent = `✧ ${game.light}`; $('#hud-bank').textContent = `${profile.wallet} banked`; $('#dash-meter').style.setProperty('--ready', `${100 * (1 - p.dashCd / game.stats.dashCooldown)}%`); $('#dash-status').textContent = p.dashCd > 0 ? `${p.dashCd.toFixed(1)}s` : 'READY'; $('#boon-progress').style.width = `${Math.min(100, game.xp / game.nextBoon * 100)}%`; $('#boon-label').textContent = `${Math.floor(game.xp)} / ${game.nextBoon} to awakening`; $('#buffs').textContent = Object.entries(game.boons).map(([k, v]) => `${BOONS.find(b => b.id === k).mark}${v > 1 ? '×' + v : ''}`).join(' '); }
+function burst(x, y, color, count = 14) { if (!game.motion)
+    return; for (let i = 0; i < count && game.particles.length < 180; i++) {
+    const ang = Math.random() * Math.PI * 2, speed = 40 + Math.random() * 145;
+    game.particles.push({ x, y, vx: Math.cos(ang) * speed, vy: Math.sin(ang) * speed - 30, life: .3 + Math.random() * .4, color, size: 1.5 + Math.random() * 2.5 });
+} }
+function floatText(text, x, y, color = '#f4deb0') { game.floats.push({ text, x, y, color, life: 1.25 }); if (game.floats.length > 20)
+    game.floats.shift(); }
+function collect(amount, x, y) { if (!awardLight(profile, game.runId, amount))
+    return; game.light += amount; game.xp += amount; game.boonPending = game.xp >= game.nextBoon; save(); audio.play('coin'); burst(x, y, '#ead49d', 6); if (amount > 1)
+    floatText(`+${amount}`, x, y - 18); }
+function enemyHit(e, damage) { if (e.dead)
+    return; e.hp -= damage; e.flash = .13; burst(e.x, e.y, powerOf().color, 12); if (e.hp <= 0) {
+    e.hp = 0;
+    e.dead = true;
+    const amount = e.type === 'guardian' ? 30 : 3;
+    collect(amount, e.x, e.y);
+    floatText(e.type === 'guardian' ? 'THE SEAL IS BROKEN' : '+3 LIGHT', e.x, e.y - 42, powerOf().color);
+    if (e.type === 'guardian') {
+        toast('The Hollow Keeper falls. The next realm is open.');
+        audio.play('boon');
+    }
+} }
+function playerHit(damage = 1) { const p = game.player; if (takeHit(p, damage)) {
+    audio.play('hit');
+    game.shake = game.motion ? 5 : 0;
+    burst(p.x + p.w / 2, p.y + 15, powerOf().color);
+    if (p.health === 0)
+        die();
+} }
+function die() { if (game.mode !== 'playing')
+    return; game.death = finishExpedition(profile, game.runId); save(); setMode('dead'); chrome(); const a = game.death; panel.className = 'modal-panel death-panel'; panel.innerHTML = `<div class="eyebrow">THE FLAME PASSES ON</div><div class="death-mark">✧</div><h2>A light never<br>truly <em>goes out.</em></h2><p>${a?.name || game.heir.name} reached chamber ${game.room.depth}.<br>Another descendant is waiting at the hearth.</p><div class="death-stats"><div><b>${game.light}</b><span>LIGHT BROUGHT HOME</span></div><div><b>${profile.wallet}</b><span>READY TO INVEST</span></div></div><button class="primary" id="reborn">Choose your descendant <span>↗</span></button><p class="small-note">All gathered light is already banked. No death penalty.</p>`; $('#reborn').onclick = () => { audio.play('boon'); showHearth(); }; focusPanel(); }
+function draftBoon(source = 'light') {
+    if (game.mode !== 'playing')
+        return;
+    if (source === 'light') {
+        game.xp -= game.nextBoon;
+        game.nextBoon = Math.ceil(game.nextBoon * 1.4);
+        game.boonPending = game.xp >= game.nextBoon;
+    }
+    const options = shuffled(BOONS, randomFrom(`${game.seed}:boon:${game.room.depth}:${Object.values(game.boons).reduce((a, b) => a + b, 0)}:${source}`)).slice(0, 3);
+    setMode('boon');
+    audio.play('boon');
+    panel.className = 'modal-panel wide-modal';
+    panel.innerHTML = `<div class="eyebrow">${source === 'shrine' ? 'AN ANCIENT GIFT' : 'THE LIGHT WITHIN AWAKENS'}</div><h2>Become a little more <em>extraordinary.</em></h2><p>Choose a gift for this expedition. All three are beneficial.</p><div class="boon-cards">${options.map(b => `<button class="boon-card" data-boon="${b.id}"><span>${b.mark}</span><strong>${b.name}</strong><p>${b.description}</p><small>CHOOSE THIS GIFT ↗</small></button>`).join('')}</div>`;
+    panel.querySelectorAll('[data-boon]').forEach(b => b.onclick = () => { const id = b.dataset.boon; game.boons[id] = (game.boons[id] || 0) + 1; game.stats = getStats(profile, game.heir, game.boons); if (id === 'heart')
+        game.player.health = Math.min(game.stats.health, game.player.health + 2); setMode('playing'); toast(`${BOONS.find(x => x.id === id).name} awakened.`); });
+    focusPanel();
+}
+function chooseRoute() {
+    if (game.mode !== 'playing')
+        return;
+    const options = shuffled([{ id: 'wild', name: 'Follow the roots', mark: '❧', description: 'A winding path. A balanced mix of light and danger.' }, { id: 'cache', name: 'Chase the lanterns', mark: '✧', description: 'A richer hidden cache. Bring more light home.' }, { id: 'trial', name: 'Wake the sentinels', mark: '◇', description: 'More guardians, more hard-earned light.' }], randomFrom(`${game.seed}:${game.room.depth}:exits`)).slice(0, 2);
+    setMode('route');
+    panel.className = 'modal-panel wide-modal';
+    panel.innerHTML = `<div class="eyebrow">CHAMBER ${game.room.depth} COMPLETE</div><h2>The hollow <em>branches.</em></h2><p>${(game.room.depth + 1) % 5 === 0 ? 'A Hollow Keeper guards the next threshold.' : 'Choose what lies beyond the threshold.'} Your light is already safe.</p><div class="route-cards">${options.map(r => `<button class="boon-card" data-route="${r.id}"><span>${r.mark}</span><strong>${r.name}</strong><p>${r.description}</p><small>CHAMBER ${game.room.depth + 1} ↗</small></button>`).join('')}</div>`;
+    panel.querySelectorAll('[data-route]').forEach(b => b.onclick = () => enterRoom(b.dataset.route));
+    focusPanel();
+}
+function enterRoom(route) { const old = game.player, depth = game.room.depth + 1; game.room = makeRoom(game.seed, depth, route); game.player = newPlayer(game.room, game.stats); game.player.health = Math.min(game.stats.health, old.health + game.stats.heal); game.camera = 0; clearEffects(); profile.active.depth = depth; profile.bestDepth = Math.max(profile.bestDepth, depth); save(); setMode('playing'); const biome = BIOMES.find(x => x.id === game.room.biome); toast(`${biome.name} · Chamber ${depth}${game.room.boss ? ' · A keeper stirs.' : ''}`); }
+function interact() {
+    const p = game.player, r = game.room, px = p.x + p.w / 2, near = (x, y, d = 85) => Math.hypot(px - x, p.y + p.h - y) < d;
+    if (!r.chest.opened && near(r.chest.x, r.chest.y)) {
+        r.chest.opened = true;
+        collect(r.chest.value, r.chest.x, r.chest.y);
+        audio.play('boon');
+        toast(`Lantern cache found. +${r.chest.value} light, safely banked.`);
+        return;
+    }
+    if (r.shrine && !r.shrine.used && near(r.shrine.x, r.shrine.y)) {
+        r.shrine.used = true;
+        draftBoon('shrine');
+        return;
+    }
+    if (near(r.portal.x, r.portal.y, 105)) {
+        if (r.enemies.some(e => e.type === 'guardian' && !e.dead)) {
+            toast('Defeat the Hollow Keeper to release the seal.');
+            return;
+        }
+        chooseRoute();
+    }
+}
+function contextualHint() { const p = game.player, r = game.room, px = p.x + p.w / 2; let text = ''; if (Math.hypot(px - r.portal.x, p.y + p.h - r.portal.y) < 105)
+    text = r.enemies.some(e => e.type === 'guardian' && !e.dead) ? 'Defeat the keeper to open the way' : 'E / ✧ · Enter the next chamber';
+else if (!r.chest.opened && Math.hypot(px - r.chest.x, p.y + p.h - r.chest.y) < 85)
+    text = 'E / ✧ · Open lantern cache';
+else if (r.shrine && !r.shrine.used && Math.hypot(px - r.shrine.x, p.y + p.h - r.shrine.y) < 85)
+    text = 'E / ✧ · Receive a shrine gift';
+else if (game.t < 9)
+    text = 'A / D to move · Space to jump twice · Shift to dash · J to pulse'; hint.textContent = text; hint.hidden = !text || game.mode !== 'playing'; }
+function update(dt) {
+    if (game.mode !== 'playing')
+        return;
+    game.t += dt;
+    const p = game.player, r = game.room, previousBottom = p.y + p.h;
+    const events = stepPlayer(p, input, r, game.stats, dt);
+    const doInteract = input.interactPressed;
+    consumeEdges();
+    for (const event of events) {
+        if (event === 'jump') {
+            audio.play('jump');
+            burst(p.x + p.w / 2, p.y + p.h, powerOf().color, 7);
+        }
+        if (event === 'dash') {
+            game.dashSerial++;
+            audio.play('dash');
+        }
+        if (event === 'pulse') {
+            audio.play('pulse');
+            const x = p.x + p.w / 2, y = p.y + p.h / 2;
+            game.pulses.push({ x, y, radius: game.stats.pulseRadius, life: .3 });
+            for (const e of r.enemies)
+                if (!e.dead && Math.hypot(e.x - x, e.y - y) < game.stats.pulseRadius + (e.type === 'guardian' ? 40 : 22))
+                    enemyHit(e, game.stats.damage);
+        }
+        if (event === 'fall') {
+            p.x = p.safeX;
+            p.y = p.safeY;
+            p.vy = 0;
+            p.vx = 0;
+            p.dashT = 0;
+            p.invuln = 0;
+            playerHit(1);
+            if (game.mode !== 'playing')
+                return;
+            toast('The hearth catches your spark. Your ward or a heart absorbs the fall.');
+        }
+    }
+    if (p.dashT > 0 && game.motion) {
+        game.afterimages.push({ x: p.x + p.w / 2, y: p.y + p.h, vx: p.vx, facing: p.facing, air: !p.onGround, life: .3 });
+        if (game.afterimages.length > 18)
+            game.afterimages.shift();
+    }
+    const px = p.x + p.w / 2, py = p.y + p.h / 2;
+    for (const coin of r.coins) {
+        if (coin.taken)
+            continue;
+        const dx = px - coin.x, dy = py - coin.y, d = Math.hypot(dx, dy);
+        if (d < game.stats.magnet && d > 1) {
+            const speed = Math.min(d, 400 * dt);
+            coin.x += dx / d * speed;
+            coin.y += dy / d * speed;
+        }
+        if (d < 25) {
+            coin.taken = true;
+            game.pickups++;
+            collect(coin.value * (game.stats.bounty && game.pickups % 4 === 0 ? 2 : 1), coin.x, coin.y);
+        }
+    }
+    for (const e of r.enemies) {
+        if (e.dead)
+            continue;
+        e.phase += dt;
+        e.flash = Math.max(0, e.flash - dt);
+        if (Math.abs(e.x - px) > 950)
+            continue;
+        if (e.type === 'crawler' || e.type === 'spitter') {
+            e.x += Math.sin(e.phase * .8) > 0 ? dt * (25 + r.difficulty * 3) : -dt * (25 + r.difficulty * 3);
+            e.x = clamp(e.x, e.lo, e.hi);
+        }
+        else {
+            e.x = clamp(e.x + Math.sin(e.phase) * dt * (e.type === 'guardian' ? 42 : 30), e.lo, e.hi);
+            e.y = e.homeY + Math.sin(e.phase * 2) * 15;
+        }
+        if (e.type === 'spitter' || e.type === 'guardian') {
+            e.cooldown -= dt;
+            if (e.cooldown <= 0 && Math.abs(e.x - px) < 740) {
+                e.cooldown = e.type === 'guardian' ? 2.4 : 3.2;
+                const angle = Math.atan2(py - e.y, px - e.x), fan = e.type === 'guardian' ? [-.25, 0, .25] : [0];
+                for (const offset of fan) {
+                    game.projectiles.push({ x: e.x, y: e.y, vx: Math.cos(angle + offset) * 180, vy: Math.sin(angle + offset) * 180, life: 4 });
+                }
+                if (game.projectiles.length > 45)
+                    game.projectiles.splice(0, game.projectiles.length - 45);
+            }
+        }
+        const rad = e.type === 'guardian' ? 58 : 28;
+        if (Math.abs(px - e.x) < rad + 12 && Math.abs(py - e.y) < rad + 14) {
+            if (p.dashT > 0) {
+                if (e.lastDash !== game.dashSerial) {
+                    e.lastDash = game.dashSerial;
+                    enemyHit(e, game.stats.damage * 1.5);
+                }
+            }
+            else if (p.vy > 80 && previousBottom < e.y - rad * .25 && e.type !== 'guardian') {
+                enemyHit(e, game.stats.damage);
+                p.vy = -470;
+                p.jumpsUsed = 1;
+                audio.play('jump');
+            }
+            else {
+                playerHit(e.type === 'guardian' ? 2 : 1);
+                if (game.mode !== 'playing')
+                    return;
+            }
+        }
+    }
+    for (const h of r.hazards)
+        if (p.x + p.w > h.x && p.x < h.x + h.w && p.y + p.h > h.y + 2 && p.y < h.y + h.h) {
+            playerHit();
+            if (game.mode !== 'playing')
+                return;
+        }
+    for (const q of game.projectiles) {
+        q.x += q.vx * dt;
+        q.y += q.vy * dt;
+        q.life -= dt;
+        if (Math.hypot(q.x - px, q.y - py) < 25) {
+            q.life = 0;
+            playerHit();
+            if (game.mode !== 'playing')
+                return;
+        }
+        if (r.platforms.some(pl => q.x > pl.x && q.x < pl.x + pl.w && q.y > pl.y && q.y < pl.y + 80))
+            q.life = 0;
+    }
+    game.projectiles = game.projectiles.filter(q => q.life > 0);
+    for (const q of game.particles) {
+        q.x += q.vx * dt;
+        q.y += q.vy * dt;
+        q.vy += 160 * dt;
+        q.life -= dt;
+    }
+    game.particles = game.particles.filter(q => q.life > 0);
+    for (const f of game.floats) {
+        f.y -= 24 * dt;
+        f.life -= dt;
+    }
+    game.floats = game.floats.filter(f => f.life > 0);
+    for (const a of game.afterimages)
+        a.life -= dt;
+    game.afterimages = game.afterimages.filter(a => a.life > 0);
+    for (const q of game.pulses)
+        q.life -= dt;
+    game.pulses = game.pulses.filter(q => q.life > 0);
+    game.shake = Math.max(0, game.shake - 30 * dt);
+    const visibleWidth = renderer.viewWidth;
+    const target = clamp(p.x - visibleWidth * .34, 0, Math.max(0, r.width - visibleWidth));
+    game.camera += (target - game.camera) * (1 - Math.exp(-7 * dt));
+    if (doInteract)
+        interact();
+    if (game.mode === 'playing' && game.boonPending && p.onGround && p.invuln <= 0)
+        draftBoon();
+}
+function pause() { if (game.mode !== 'playing')
+    return; setMode('paused'); save(); panel.className = 'modal-panel'; panel.innerHTML = `<div class="eyebrow">A MOMENT BY THE FIRE</div><h2>Catch your <em>breath.</em></h2><p>Take your time. The hollow will wait.</p><button class="primary" id="resume">Return to the hollow <span>↗</span></button><button class="secondary" id="return-hearth">End expedition & keep all light</button><div class="control-guide"><span>Move <b>A D / ← →</b></span><span>Jump / air jump <b>Space / ↑</b></span><span>Invulnerable dash <b>Shift / K</b></span><span>Light pulse <b>J / X</b></span><span>Open / enter <b>E / ↓</b></span><span>Pause <b>Esc / P</b></span></div><p class="small-note">Controller: stick / D-pad · A jump · B dash · X pulse · Y interact · Start pause<br>World seed: <span class="seed-text"></span></p>`; panel.querySelector('.seed-text').textContent = game.seed; $('#resume').onclick = () => { audio.unlock(); setMode('playing'); }; $('#return-hearth').onclick = () => { finishExpedition(profile, game.runId); save(); showHearth(); }; focusPanel(); }
+const keyActions = { KeyA: 'left', ArrowLeft: 'left', KeyD: 'right', ArrowRight: 'right', Space: 'jump', KeyW: 'jump', ArrowUp: 'jump', ShiftLeft: 'dash', ShiftRight: 'dash', KeyK: 'dash', KeyJ: 'pulse', KeyX: 'pulse', KeyE: 'interact', ArrowDown: 'interact' };
+window.addEventListener('keydown', e => { if (e.ctrlKey || e.metaKey || e.altKey || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName))
+    return; if (e.code === 'Escape' || e.code === 'KeyP') {
+    if (!e.repeat) {
+        if (game.mode === 'playing')
+            pause();
+        else if (game.mode === 'paused')
+            $('#resume')?.click();
+    }
+    e.preventDefault();
+    return;
+} const action = keyActions[e.code]; if (action && game.mode === 'playing') {
+    e.preventDefault();
+    audio.unlock();
+    press(action, e.code);
+} });
+window.addEventListener('keyup', e => release(e.code));
+for (const b of document.querySelectorAll('[data-control]')) {
+    b.addEventListener('pointerdown', e => { if (game.mode !== 'playing')
+        return; e.preventDefault(); audio.unlock(); b.setPointerCapture(e.pointerId); b.classList.add('held'); press(b.dataset.control, `pointer:${e.pointerId}`); });
+    const up = e => { release(`pointer:${e.pointerId}`); b.classList.remove('held'); };
+    b.addEventListener('pointerup', up);
+    b.addEventListener('pointercancel', up);
+    b.addEventListener('lostpointercapture', up);
+}
+let gamepadPrevious = [];
+function pollGamepad() {
+    const pad = navigator.getGamepads?.()[0];
+    if (!pad)
+        return;
+    const pressed = i => !!pad.buttons[i]?.pressed;
+    if (pressed(9) && !gamepadPrevious[9]) {
+        if (game.mode === 'playing')
+            pause();
+        else if (game.mode === 'paused')
+            $('#resume')?.click();
+    }
+    if (game.mode === 'playing') {
+        const map = [[14, 'left'], [15, 'right'], [0, 'jump'], [1, 'dash'], [2, 'pulse'], [3, 'interact']];
+        for (const [i, action] of map) {
+            const held = i === 14 ? pressed(i) || (pad.axes[0] || 0) < -.25 : i === 15 ? pressed(i) || (pad.axes[0] || 0) > .25 : pressed(i);
+            if (held)
+                press(action, `pad:${i}`);
+            else
+                release(`pad:${i}`);
+        }
+    }
+    gamepadPrevious = pad.buttons.map(x => x.pressed);
+}
+window.addEventListener('gamepaddisconnected', () => { for (const id of [...activeInputs.keys()])
+    if (id.startsWith('pad:'))
+        release(id); gamepadPrevious = []; });
+$('#pause').onclick = pause;
+$('.brand').onclick = e => { e.preventDefault(); if (!profile.active)
+    showTitle(); };
+$('#sound').onclick = () => { profile.settings.sound = !profile.settings.sound; if (profile.settings.sound)
+    audio.unlock();
+else
+    audio.ctx?.suspend().catch(() => { }); save(); chrome(); };
+$('#motion').onclick = () => { game.motion = !game.motion; profile.settings.motion = game.motion; save(); chrome(); };
+$('#export').onclick = () => { const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' }), url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = 'ember-dash-lineage-save.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); toast('Your lineage save has been exported.'); };
+$('#import').onclick = () => { if (profile.active) {
+    toast('End your expedition before importing another lineage.');
+    return;
+} $('#save-file').click(); };
+$('#save-file').onchange = async (e) => { const f = e.target.files?.[0]; e.target.value = ''; if (!f)
+    return; try {
+    if (f.size > 65536)
+        throw new Error('This save is too large.');
+    const raw = JSON.parse(await f.text());
+    if (raw.version !== 2)
+        throw new Error('This is not an Ember Dash Lineage v2 save.');
+    if (!confirm('Replace this browser’s lineage with the selected save? Export your current lineage first to keep a backup.'))
+        return;
+    profile = normalizeProfile(raw);
+    if (profile.active)
+        finishExpedition(profile, profile.active.id);
+    readOnly = false;
+    warning = '';
+    save();
+    game.heir = heirsFor(profile)[0];
+    game.motion = profile.settings.motion;
+    showHearth();
+    toast('Lineage restored.');
+}
+catch (err) {
+    toast(err.message || 'Could not read this save.');
+} };
+window.addEventListener('blur', () => { clearInput(); if (game.mode === 'playing')
+    pause(); });
+document.addEventListener('visibilitychange', () => { clearInput(); if (document.hidden) {
+    if (game.mode === 'playing')
+        pause();
+    save();
+    audio.ctx?.suspend().catch(() => { });
+} });
+window.addEventListener('pagehide', save);
+window.addEventListener('storage', e => { if (e.key !== 'ember-lineage-v2' || !e.newValue)
+    return; readOnly = true; warning = 'Another tab changed this lineage. Reload before continuing, or export this tab’s progress.'; if (game.mode === 'playing')
+    pause(); const resume = $('#resume'); if (resume) {
+    resume.disabled = true;
+    resume.textContent = 'Reload to use the updated lineage';
+} toast(warning); chrome(); });
+window.addEventListener('resize', () => { renderer.resize(); if(game.player)game.camera=clamp(game.player.x-renderer.viewWidth*.34,0,Math.max(0,game.room.width-renderer.viewWidth)); });
+let last = 0, accumulator = 0, hudClock = 0, manual = false;
+function frame(now) {
+    const dt = last ? Math.min(.1, (now - last) / 1000) : 0;
+    last = now;
+    game.visualTime += dt;
+    pollGamepad();
+    if (!manual && game.mode === 'playing') {
+        accumulator += dt;
+        let steps = 0;
+        while (accumulator >= FIXED_DT && steps++ < 12) {
+            update(FIXED_DT);
+            accumulator -= FIXED_DT;
+        }
+        if (steps >= 12)
+            accumulator = 0;
+    }
+    else
+        accumulator = 0;
+    if (!document.hidden) {
+        renderer.render(game);
+        audio.tick(dt);
+    }
+    hudClock += dt;
+    if (hudClock > .08) {
+        if (game.player) {
+            updateHud();
+            contextualHint();
+        }
+        hudClock = 0;
+    }
+    requestAnimationFrame(frame);
+}
+window.render_game_to_text = () => JSON.stringify({ mode: game.mode, seed: game.seed, depth: game.room.depth, biome: game.room.biome, heir: { ...game.heir }, stats: game.stats, player: game.player ? { ...game.player } : null, wallet: profile.wallet, runLight: game.light, generation: profile.generation, boons: game.boons, portal: game.room.portal, platforms: game.room.platforms, ledges: game.room.ledges, enemies: game.room.enemies.map(e => ({ id: e.id, type: e.type, x: e.x, y: e.y, hp: e.hp, dead: e.dead })), chest: game.room.chest, shrine: game.room.shrine, warning });
+if (new URLSearchParams(location.search).has('test') || globalThis.__EMBER_TEST_MODE__ === true) {
+    window.advanceTime = ms => { manual = true; for (let i = 0; i < Math.ceil(clamp(ms, 0, 60000) / (FIXED_DT * 1000)); i++)
+        update(FIXED_DT); renderer.render(game); updateHud(); contextualHint(); };
+    window.__emberTest = { state: () => ({ profile, game }), hit: () => { game.player.invuln = 0; playerHit(1); }, teleport: (x, y) => { game.player.x = x; game.player.y = y; game.player.vy = 0; }, award: n => collect(n, game.player.x, game.player.y), nextRoom: route => enterRoom(route || 'wild'), stopClock: () => { manual = true; }, resumeClock: () => { manual = false; }, setEnemyHP: (id, hp) => { const e = game.room.enemies.find(e => e.id === id); if (e)
+            e.hp = hp; } };
+}
+chrome();
+showTitle();
+requestAnimationFrame(frame);
+
+})();</script></body></html>

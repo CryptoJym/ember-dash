@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "exact_verified_sources": true,
+    "default_build_is_additive": true,
+    "explicit_classic_overwrite_rejected": true,
+    "classic_index_unchanged": true,
+    "rebuilt_html_matches_native_browser_receipt": true
+  },
+  "htmlSha256": "e2719789ae7f5b0b3af2391fdee3e63e9696c25ee44acac1da88705f303b9dfb"
+}

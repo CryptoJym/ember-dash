@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: seed stream is deterministic, finite, and never returns one
+ok 1 - seed stream is deterministic, finite, and never returns one
+  ---
+  duration_ms: 3.739542
+  type: 'test'
+  ...
+# Subtest: 9,000 generated chambers have a safe main-route envelope and supported placements
+ok 2 - 9,000 generated chambers have a safe main-route envelope and supported placements
+  ---
+  duration_ms: 32.794208
+  type: 'test'
+  ...
+# Subtest: same seed, depth and route replay identical geometry and encounters
+ok 3 - same seed, depth and route replay identical geometry and encounters
+  ---
+  duration_ms: 2.625542
+  type: 'test'
+  ...
+# Subtest: new seeds change the first room, not only later terrain
+ok 4 - new seeds change the first room, not only later terrain
+  ---
+  duration_ms: 4.706042
+  type: 'test'
+  ...
+# Subtest: three biomes cycle in five-chamber bands and difficulty is bounded
+ok 5 - three biomes cycle in five-chamber bands and difficulty is bounded
+  ---
+  duration_ms: 0.274416
+  type: 'test'
+  ...
+# Subtest: route choices alter content; cache route has a richer chest
+ok 6 - route choices alter content; cache route has a richer chest
+  ---
+  duration_ms: 0.12825
+  type: 'test'
+  ...
+# Subtest: every mandatory gap in 1,000 chambers can be crossed with a baseline held jump
+ok 7 - every mandatory gap in 1,000 chambers can be crossed with a baseline held jump
+  ---
+  duration_ms: 65.251542
+  type: 'test'
+  ...
+# Subtest: a corrupt or unsupported save is preserved and cannot silently overwrite its bytes
+ok 8 - a corrupt or unsupported save is preserved and cannot silently overwrite its bytes
+  ---
+  duration_ms: 0.317917
+  type: 'test'
+  ...
+# Subtest: blocked reads and writes do not prevent initialization or memory-only play
+ok 9 - blocked reads and writes do not prevent initialization or memory-only play
+  ---
+  duration_ms: 0.305167
+  type: 'test'
+  ...
+# Subtest: save normalizer bounds numbers, strips unknown upgrades, and sanitizes display names
+ok 10 - save normalizer bounds numbers, strips unknown upgrades, and sanitizes display names
+  ---
+  duration_ms: 1.119583
+  type: 'test'
+  ...
+# Subtest: earning, spending, saving and loading preserve a single currency ledger
+ok 11 - earning, spending, saving and loading preserve a single currency ledger
+  ---
+  duration_ms: 0.3105
+  type: 'test'
+  ...
+# Subtest: death settlement is idempotent: no double light and no duplicate descendants
+ok 12 - death settlement is idempotent: no double light and no duplicate descendants
+  ---
+  duration_ms: 0.050875
+  type: 'test'
+  ...
+# Subtest: stale run IDs cannot award currency or end a newer expedition
+ok 13 - stale run IDs cannot award currency or end a newer expedition
+  ---
+  duration_ms: 0.058708
+  type: 'test'
+  ...
+# Subtest: upgrade purchases cannot overspend, exceed a cap, or use an unknown identifier
+ok 14 - upgrade purchases cannot overspend, exceed a cap, or use an unknown identifier
+  ---
+  duration_ms: 0.141709
+  type: 'test'
+  ...
+# Subtest: each generation offers three distinct, deterministic positive bloodlines
+ok 15 - each generation offers three distinct, deterministic positive bloodlines
+  ---
+  duration_ms: 0.154125
+  type: 'test'
+  ...
+# Subtest: all six bloodlines have distinct colors and no below-baseline penalty
+ok 16 - all six bloodlines have distinct colors and no below-baseline penalty
+  ---
+  duration_ms: 0.208875
+  type: 'test'
+  ...
+# Subtest: every boon is a positive persistent-for-run stat increase
+ok 17 - every boon is a positive persistent-for-run stat increase
+  ---
+  duration_ms: 0.100917
+  type: 'test'
+  ...
+# Subtest: fixed-step movement matches across equivalent frame groupings
+ok 18 - fixed-step movement matches across equivalent frame groupings
+  ---
+  duration_ms: 0.300958
+  type: 'test'
+  ...
+# Subtest: jump cut creates a lower apex than a held jump
+ok 19 - jump cut creates a lower apex than a held jump
+  ---
+  duration_ms: 0.192792
+  type: 'test'
+  ...
+# Subtest: air jumps obey the inherited limit and holding does not auto-bounce
+ok 20 - air jumps obey the inherited limit and holding does not auto-bounce
+  ---
+  duration_ms: 0.197417
+  type: 'test'
+  ...
+# Subtest: coyote time preserves a jump just after leaving a ledge
+ok 21 - coyote time preserves a jump just after leaving a ledge
+  ---
+  duration_ms: 0.037666
+  type: 'test'
+  ...
+# Subtest: buffered jump fires on landing after both air jumps were spent
+ok 22 - buffered jump fires on landing after both air jumps were spent
+  ---
+  duration_ms: 0.045291
+  type: 'test'
+  ...
+# Subtest: dash cooldown prevents retrigger and grants a bounded invulnerability window
+ok 23 - dash cooldown prevents retrigger and grants a bounded invulnerability window
+  ---
+  duration_ms: 0.200917
+  type: 'test'
+  ...
+# Subtest: a Moonveil ward absorbs one hit; repeated overlap cannot drain all hearts
+ok 24 - a Moonveil ward absorbs one hit; repeated overlap cannot drain all hearts
+  ---
+  duration_ms: 0.051
+  type: 'test'
+  ...
+# Subtest: respawn checkpoint never moves onto a spike cluster
+ok 25 - respawn checkpoint never moves onto a spike cluster
+  ---
+  duration_ms: 0.052375
+  type: 'test'
+  ...
+# Subtest: ancestry is bounded to twelve remembered descendants
+ok 26 - ancestry is bounded to twelve remembered descendants
+  ---
+  duration_ms: 0.122667
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 179.792334

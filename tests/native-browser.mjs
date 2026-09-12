@@ -1,0 +1,54 @@
+/** Native-origin browser proof. Uses an installed Playwright; no user profile or account. */
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
+import assert from 'node:assert/strict';
+const { chromium } = await import(process.env.EMBER_PLAYWRIGHT || 'playwright');
+const file = resolve(process.env.EMBER_HTML || 'lineage.html');
+const bytes = readFileSync(file);
+const evidence = resolve('docs/lineage/evidence'); mkdirSync(evidence, { recursive:true });
+const server = createServer((req,res)=>{res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end(bytes);});
+await new Promise(done=>server.listen(0,'127.0.0.1',done));
+let browser;const checks=[],errors=[];
+const check=(name,value)=>{assert.ok(value,name);checks.push({name,pass:true});};
+try {
+ browser=await chromium.launch({headless:true,channel:'chrome'});
+ const context=await browser.newContext({viewport:{width:1440,height:900}});
+ const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(`http://127.0.0.1:${server.address().port}/?test`,{waitUntil:'load'});
+ await page.waitForFunction(()=>!!window.__emberTest);
+ await page.evaluate(()=>window.__emberTest.stopClock());
+ const state=()=>page.evaluate(()=>JSON.parse(window.render_game_to_text()));
+ const stored=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('ember-lineage-v2')));
+ check('native storage available with no warning',!(await state()).warning);
+ await page.click('#awaken');await page.fill('#seed-input','native-verification');await page.click('#begin');
+ await page.evaluate(()=>window.__emberTest.award(75));
+ check('native localStorage receives earned light',(await stored()).wallet===75);
+ await page.keyboard.press('KeyP');await page.click('#return-hearth');
+ await page.click('[data-upgrade="vitality"]');
+ check('end-run and upgrade spend survive in native storage',(await stored()).wallet===43&&(await stored()).upgrades.vitality===1&&(await stored()).generation===2);
+ await page.reload({waitUntil:'load'});await page.waitForFunction(()=>!!window.__emberTest);await page.evaluate(()=>window.__emberTest.stopClock());
+ check('page reload restores native saved balance and generation',(await state()).wallet===43&&(await state()).generation===2);
+ await page.click('#awaken');await page.click('#begin');await page.evaluate(()=>window.__emberTest.award(12));
+ await page.reload({waitUntil:'load'});await page.waitForFunction(()=>!!window.__emberTest);await page.evaluate(()=>window.__emberTest.stopClock());
+ check('interrupted expedition keeps banked light and becomes one ancestor',(await stored()).wallet===55&&(await stored()).generation===3&&(await stored()).lineage.length===2&&(await stored()).active===null);
+ await page.reload({waitUntil:'load'});await page.waitForFunction(()=>!!window.__emberTest);await page.evaluate(()=>window.__emberTest.stopClock());
+ check('a second reload does not duplicate settlement',(await stored()).wallet===55&&(await stored()).generation===3&&(await stored()).lineage.length===2);
+ await page.click('#awaken');await page.fill('#seed-input','starlight');await page.click('#begin');
+ const x=(await state()).player.x;await page.keyboard.down('KeyD');await page.evaluate(()=>window.advanceTime(500));await page.keyboard.up('KeyD');
+ check('real keyboard input moves through native-origin canvas',(await state()).player.x>x+100);
+ const y=(await state()).player.y;await page.keyboard.down('Space');await page.evaluate(()=>window.advanceTime(140));await page.keyboard.up('Space');
+ check('real keyboard jump works on native origin',(await state()).player.y<y-50);
+ await page.keyboard.press('ShiftLeft');await page.evaluate(()=>window.advanceTime(80));
+ check('real dash is active',(await state()).player.dashCd>0);
+ await page.screenshot({path:resolve(evidence,'native-gameplay.png')});
+ check('no uncaught native browser errors',errors.length===0);
+ // Second tab produces a genuine StorageEvent and freezes the stale writer.
+ const other=await context.newPage();await other.goto(`http://127.0.0.1:${server.address().port}/?test`,{waitUntil:'load'});
+ await page.waitForTimeout(150);
+ check('cross-tab write is detected and stale play is paused',(await state()).mode==='paused'&&await page.locator('#resume').isDisabled());
+ await other.close();await context.close();
+ const result={suite:'Native macOS Chrome over loopback HTTP',htmlSha256:createHash('sha256').update(bytes).digest('hex'),checks,passed:checks.length,errors,storage:'real browser localStorage; isolated disposable context',limitations:['Controlled light awards used to exercise persistence; not an organic balance playtest.','No physical iPhone, Safari, or gamepad hardware test.','Second-tab conflict detection is not a transactional cross-tab save database.']};
+ writeFileSync(resolve(evidence,'native-browser.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+} finally {await browser?.close();await new Promise(done=>server.close(done));}
