@@ -1,0 +1,58 @@
+{
+  "suite": "Native macOS Chrome over loopback HTTP",
+  "htmlSha256": "e2719789ae7f5b0b3af2391fdee3e63e9696c25ee44acac1da88705f303b9dfb",
+  "checks": [
+    {
+      "name": "native storage available with no warning",
+      "pass": true
+    },
+    {
+      "name": "native localStorage receives earned light",
+      "pass": true
+    },
+    {
+      "name": "end-run and upgrade spend survive in native storage",
+      "pass": true
+    },
+    {
+      "name": "page reload restores native saved balance and generation",
+      "pass": true
+    },
+    {
+      "name": "interrupted expedition keeps banked light and becomes one ancestor",
+      "pass": true
+    },
+    {
+      "name": "a second reload does not duplicate settlement",
+      "pass": true
+    },
+    {
+      "name": "real keyboard input moves through native-origin canvas",
+      "pass": true
+    },
+    {
+      "name": "real keyboard jump works on native origin",
+      "pass": true
+    },
+    {
+      "name": "real dash is active",
+      "pass": true
+    },
+    {
+      "name": "no uncaught native browser errors",
+      "pass": true
+    },
+    {
+      "name": "cross-tab write is detected and stale play is paused",
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "errors": [],
+  "storage": "real browser localStorage; isolated disposable context",
+  "limitations": [
+    "Controlled light awards used to exercise persistence; not an organic balance playtest.",
+    "No physical iPhone, Safari, or gamepad hardware test.",
+    "Second-tab conflict detection is not a transactional cross-tab save database."
+  ]
+}
