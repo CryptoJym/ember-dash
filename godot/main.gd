@@ -119,7 +119,7 @@ func label(text,size=16,color=Color("e6e6d4")):
  var l=Label.new();l.text=text;l.add_theme_font_size_override("font_size",size);l.add_theme_color_override("font_color",color);l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;l.add_theme_color_override("font_outline_color",Color(.015,.04,.06,.7));l.add_theme_constant_override("outline_size",2);return l
 
 func button(text,callback,tint=Color("e8c790")):
- var b=Button.new();b.text=text;b.custom_minimum_size.y=48;b.add_theme_font_size_override("font_size",15)
+ var b=Button.new();b.text=text;b.tooltip_text=text;b.clip_text=true;b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;b.custom_minimum_size.y=48;b.add_theme_font_size_override("font_size",15)
  b.add_theme_color_override("font_color",Color("f2eddd"));b.add_theme_stylebox_override("normal",box_style(Color("15262d"),Color(tint,.55)))
  b.add_theme_stylebox_override("hover",box_style(Color("2c3737"),tint));b.add_theme_stylebox_override("focus",box_style(Color("303c3c"),tint))
  b.add_theme_stylebox_override("pressed",box_style(Color("4c493d"),tint));b.pressed.connect(callback, CONNECT_DEFERRED);return b
@@ -152,6 +152,7 @@ func _fit_menu_height(id):
  var viewport=get_viewport_rect().size
  var content=menu.get_meta("content")
  var height=minf(viewport.y-36,content.get_combined_minimum_size().y+40)
+ if menu.get_meta("pinned_actions",false):height=viewport.y-36
  menu.size.y=height
  menu.position.y=maxf(18,(viewport.y-height)/2)
 
@@ -183,11 +184,17 @@ func open_choices():
  set_mode("choose")
  var out=make_menu("Who will you become?","Three different names. Three entirely positive gifts.",true)
  var size=get_viewport_rect().size
- var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=minf(440,maxf(90,size.y-260));scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
- var cards=VBoxContainer.new() if size.x<660 else HBoxContainer.new();cards.size_flags_horizontal=Control.SIZE_EXPAND_FILL;cards.add_theme_constant_override("separation",10);scroll.add_child(cards)
+ # The cards scroll, but Begin/Back stay in the fixed panel. Never nest a
+ # screen-height card scroller inside another scroller containing the actions.
+ var old_scroller=menu.get_child(0)
+ old_scroller.remove_child(out);menu.remove_child(old_scroller);old_scroller.queue_free();menu.add_child(out)
+ menu.set_meta("pinned_actions",true)
+ var scroll=ScrollContainer.new();scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroll.custom_minimum_size.y=72;scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
+ var three_columns=size.x>=980
+ var cards=HBoxContainer.new() if three_columns else VBoxContainer.new();cards.size_flags_horizontal=Control.SIZE_EXPAND_FILL;cards.add_theme_constant_override("separation",10);scroll.add_child(cards)
  for i in range(options.size()):
   var option=options[i];var birth=Rules.BLOODLINES[option.bloodline];var tint=Color(birth.color)
-  var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if size.x>=660 else 0
+  var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if three_columns else 0
   card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
   var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=240 if size.x>=660 else 190;v.add_child(image)
@@ -197,7 +204,7 @@ func open_choices():
  if size.y>=520:out.add_child(label("New terrain every life. Double jump and dash are available to every fox.",11,Color("a9c0b7")))
  var actions=HBoxContainer.new();actions.add_theme_constant_override("separation",8);out.add_child(actions)
  start_button=button("Begin as "+options[selection].name,func():start_life(options[selection]));start_button.size_flags_horizontal=Control.SIZE_EXPAND_FILL;actions.add_child(start_button);start_button.grab_focus()
- actions.add_child(button("Back",open_title))
+ var back=button("Back",open_title);back.custom_minimum_size.x=76;actions.add_child(back)
  fit_menu.call_deferred()
 
 func start_life(choice):
@@ -477,7 +484,13 @@ func _process(dt):
   var target_look=85.0*fox.facing if absf(fox.velocity.x)>35 else look
   look=lerpf(look,target_look,1-exp(-dt*5))
   var half_width=get_viewport_rect().size.x/(2*camera.zoom.x)
-  var target=Vector2(clampf(fox.position.x+look,half_width,room.width-half_width),minf(365,fox.position.y+120))
+  # Short landscape phone views reserve the bottom band for thumbs. Keep
+  # the platform/fox near 55% height rather than underneath the move buttons.
+  var view_size=get_viewport_rect().size
+  var resting_y=365.0
+  if view_size.x>view_size.y and view_size.y<=430:
+   resting_y=520.0-(view_size.y*.05)/camera.zoom.y
+  var target=Vector2(clampf(fox.position.x+look,half_width,room.width-half_width),minf(resting_y,fox.position.y+120))
   camera.position=camera.position.lerp(target,1-exp(-dt*10))
  else:camera.position=Vector2(620,365)
  if is_instance_valid(art):art.queue_redraw()

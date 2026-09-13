@@ -1,0 +1,171 @@
+{
+  "started": "2026-09-13T01:58:47.026Z",
+  "ended": "2026-09-13T01:59:07.601Z",
+  "url": "http://127.0.0.1:9038/",
+  "artifacts": {
+    "index.html": "6267c6cb81ac1ac592953cce569ae56dab34e869fcde4cf390b36a3e456c387c",
+    "index.pck": "49b967192eed3129a8e74eedb68514a89350f8e2dbcc6ef1147f7507cbb330fb",
+    "index.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+  },
+  "webkitExecutableInstalled": true,
+  "records": [
+    {
+      "case": "320x568",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            474,
+            168,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 63.78914277547999,
+              "y": 383.1999977827072
+            },
+            "bodyScreenRect": {
+              "left": 50.349143075887405,
+              "right": 77.22914247507258,
+              "top": 361.4399982690811,
+              "bottom": 383.1999977827072
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 21.75999951362609
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 299.290496826172
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              299.290496826172,
+              519.962646484375
+            ],
+            "after": [
+              299.290496826172,
+              519.962646484375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            34,
+            104,
+            492,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 63.78914277547999,
+            "y": 383.1999977827072
+          },
+          "bodyScreenRect": {
+            "left": 50.349143075887405,
+            "right": 77.22914247507258,
+            "top": 361.4399982690811,
+            "bottom": 383.1999977827072
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 21.75999951362609
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              488.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              488.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              275.999999046326,
+              487.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              226.000000476837,
+              420.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              167.000000953674,
+              483.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Riven Embermane",
+        "seed": 416508604,
+        "rotated": {
+          "feet": {
+            "x": 150.3702545166015,
+            "y": 176.465606689453
+          },
+          "bodyScreenRect": {
+            "left": 139.8702545166015,
+            "right": 160.8702545166015,
+            "top": 159.465606689453,
+            "bottom": 176.465606689453
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 17
+        }
+      },
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "checks": 8,
+  "passed": 8,
+  "findings": [],
+  "scope": "Actual Godot web export and real touch input in six isolated Chromium emulated viewports. Rotations change viewport dimensions; not native iOS orientation sensors. No gameplay profile fixture or production save was modified."
+}
