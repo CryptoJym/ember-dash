@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS 30Hz held jump returns to ground
+PASS 30Hz held jump retains authored height
+PASS 30Hz thumb release arrests air drift
+PASS 30Hz dash endpoint stays inside mobile envelope
+PASS 30Hz dash does not tunnel through thin wall
+PASS 60Hz held jump returns to ground
+PASS 60Hz held jump retains authored height
+PASS 60Hz thumb release arrests air drift
+PASS 60Hz dash endpoint stays inside mobile envelope
+PASS 60Hz dash does not tunnel through thin wall
+PASS 120Hz held jump returns to ground
+PASS 120Hz held jump retains authored height
+PASS 120Hz thumb release arrests air drift
+PASS 120Hz dash endpoint stays inside mobile envelope
+PASS 120Hz dash does not tunnel through thin wall
+PASS 30/60/120Hz held_rise variation stays below18px
+PASS 30/60/120Hz air_drift variation stays below18px
+PASS 30/60/120Hz dash_distance variation stays below18px
+{"checks":18,"failures":[],"runs":[{"air_drift":26.6666564941406,"dash_distance":182.666656494141,"held_rise":99.537353515625,"physics_hz":30},{"air_drift":29.3333435058594,"dash_distance":172.333343505859,"held_rise":105.870697021484,"physics_hz":60},{"air_drift":30.6666870117188,"dash_distance":167.166687011719,"held_rise":109.110290527344,"physics_hz":120}],"suite":"fixed-rate mobile physics"}

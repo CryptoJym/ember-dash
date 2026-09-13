@@ -1,0 +1,147 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS (320, 568): every control clears the starting fox, overlaps=[]
+PASS (320, 568) lap 1 thumb reversal
+PASS (320, 568) lap 1 drift-tolerant slide return
+PASS (320, 568) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (320, 568) lap 1 cancel/landing stable
+PASS (320, 568) lap 2 thumb reversal
+PASS (320, 568) lap 2 drift-tolerant slide return
+PASS (320, 568) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (320, 568) lap 2 cancel/landing stable
+PASS (320, 568) lap 3 thumb reversal
+PASS (320, 568) lap 3 drift-tolerant slide return
+PASS (320, 568) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (320, 568) lap 3 cancel/landing stable
+PASS (320, 568) lap 4 thumb reversal
+PASS (320, 568) lap 4 drift-tolerant slide return
+PASS (320, 568) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (320, 568) lap 4 cancel/landing stable
+PASS (320, 568) lap 5 thumb reversal
+PASS (320, 568) lap 5 drift-tolerant slide return
+PASS (320, 568) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (320, 568) lap 5 cancel/landing stable
+PASS (320, 568): fixture settles on one-way ledge
+PASS (320, 568): real Down touch passes through ledge
+PASS (320, 568): Down cannot fall through solid floor
+PASS (375, 667): every control clears the starting fox, overlaps=[]
+PASS (375, 667) lap 1 thumb reversal
+PASS (375, 667) lap 1 drift-tolerant slide return
+PASS (375, 667) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (375, 667) lap 1 cancel/landing stable
+PASS (375, 667) lap 2 thumb reversal
+PASS (375, 667) lap 2 drift-tolerant slide return
+PASS (375, 667) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (375, 667) lap 2 cancel/landing stable
+PASS (375, 667) lap 3 thumb reversal
+PASS (375, 667) lap 3 drift-tolerant slide return
+PASS (375, 667) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (375, 667) lap 3 cancel/landing stable
+PASS (375, 667) lap 4 thumb reversal
+PASS (375, 667) lap 4 drift-tolerant slide return
+PASS (375, 667) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (375, 667) lap 4 cancel/landing stable
+PASS (375, 667) lap 5 thumb reversal
+PASS (375, 667) lap 5 drift-tolerant slide return
+PASS (375, 667) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (375, 667) lap 5 cancel/landing stable
+PASS (375, 667): fixture settles on one-way ledge
+PASS (375, 667): real Down touch passes through ledge
+PASS (375, 667): Down cannot fall through solid floor
+PASS (390, 844): every control clears the starting fox, overlaps=[]
+PASS (390, 844) lap 1 thumb reversal
+PASS (390, 844) lap 1 drift-tolerant slide return
+PASS (390, 844) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (390, 844) lap 1 cancel/landing stable
+PASS (390, 844) lap 2 thumb reversal
+PASS (390, 844) lap 2 drift-tolerant slide return
+PASS (390, 844) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (390, 844) lap 2 cancel/landing stable
+PASS (390, 844) lap 3 thumb reversal
+PASS (390, 844) lap 3 drift-tolerant slide return
+PASS (390, 844) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (390, 844) lap 3 cancel/landing stable
+PASS (390, 844) lap 4 thumb reversal
+PASS (390, 844) lap 4 drift-tolerant slide return
+PASS (390, 844) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (390, 844) lap 4 cancel/landing stable
+PASS (390, 844) lap 5 thumb reversal
+PASS (390, 844) lap 5 drift-tolerant slide return
+PASS (390, 844) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (390, 844) lap 5 cancel/landing stable
+PASS (390, 844): fixture settles on one-way ledge
+PASS (390, 844): real Down touch passes through ledge
+PASS (390, 844): Down cannot fall through solid floor
+PASS (844, 300): every control clears the starting fox, overlaps=[]
+PASS (844, 300) lap 1 thumb reversal
+PASS (844, 300) lap 1 drift-tolerant slide return
+PASS (844, 300) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (844, 300) lap 1 cancel/landing stable
+PASS (844, 300) lap 2 thumb reversal
+PASS (844, 300) lap 2 drift-tolerant slide return
+PASS (844, 300) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (844, 300) lap 2 cancel/landing stable
+PASS (844, 300) lap 3 thumb reversal
+PASS (844, 300) lap 3 drift-tolerant slide return
+PASS (844, 300) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (844, 300) lap 3 cancel/landing stable
+PASS (844, 300) lap 4 thumb reversal
+PASS (844, 300) lap 4 drift-tolerant slide return
+PASS (844, 300) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (844, 300) lap 4 cancel/landing stable
+PASS (844, 300) lap 5 thumb reversal
+PASS (844, 300) lap 5 drift-tolerant slide return
+PASS (844, 300) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (844, 300) lap 5 cancel/landing stable
+PASS (844, 300): fixture settles on one-way ledge
+PASS (844, 300): real Down touch passes through ledge
+PASS (844, 300): Down cannot fall through solid floor
+PASS (844, 390): every control clears the starting fox, overlaps=[]
+PASS (844, 390) lap 1 thumb reversal
+PASS (844, 390) lap 1 drift-tolerant slide return
+PASS (844, 390) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (844, 390) lap 1 cancel/landing stable
+PASS (844, 390) lap 2 thumb reversal
+PASS (844, 390) lap 2 drift-tolerant slide return
+PASS (844, 390) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (844, 390) lap 2 cancel/landing stable
+PASS (844, 390) lap 3 thumb reversal
+PASS (844, 390) lap 3 drift-tolerant slide return
+PASS (844, 390) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (844, 390) lap 3 cancel/landing stable
+PASS (844, 390) lap 4 thumb reversal
+PASS (844, 390) lap 4 drift-tolerant slide return
+PASS (844, 390) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (844, 390) lap 4 cancel/landing stable
+PASS (844, 390) lap 5 thumb reversal
+PASS (844, 390) lap 5 drift-tolerant slide return
+PASS (844, 390) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (844, 390) lap 5 cancel/landing stable
+PASS (844, 390): fixture settles on one-way ledge
+PASS (844, 390): real Down touch passes through ledge
+PASS (844, 390): Down cannot fall through solid floor
+PASS (768, 1024): every control clears the starting fox, overlaps=[]
+PASS (768, 1024) lap 1 thumb reversal
+PASS (768, 1024) lap 1 drift-tolerant slide return
+PASS (768, 1024) lap 1 action-finger drift triggers no accidental dash/double jump
+PASS (768, 1024) lap 1 cancel/landing stable
+PASS (768, 1024) lap 2 thumb reversal
+PASS (768, 1024) lap 2 drift-tolerant slide return
+PASS (768, 1024) lap 2 action-finger drift triggers no accidental dash/double jump
+PASS (768, 1024) lap 2 cancel/landing stable
+PASS (768, 1024) lap 3 thumb reversal
+PASS (768, 1024) lap 3 drift-tolerant slide return
+PASS (768, 1024) lap 3 action-finger drift triggers no accidental dash/double jump
+PASS (768, 1024) lap 3 cancel/landing stable
+PASS (768, 1024) lap 4 thumb reversal
+PASS (768, 1024) lap 4 drift-tolerant slide return
+PASS (768, 1024) lap 4 action-finger drift triggers no accidental dash/double jump
+PASS (768, 1024) lap 4 cancel/landing stable
+PASS (768, 1024) lap 5 thumb reversal
+PASS (768, 1024) lap 5 drift-tolerant slide return
+PASS (768, 1024) lap 5 action-finger drift triggers no accidental dash/double jump
+PASS (768, 1024) lap 5 cancel/landing stable
+PASS (768, 1024): fixture settles on one-way ledge
+PASS (768, 1024): real Down touch passes through ledge
+PASS (768, 1024): Down cannot fall through solid floor
+{"checks":144,"cycles":30,"failures":[],"suite":"repeated mobile input"}

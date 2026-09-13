@@ -1,0 +1,49 @@
+{
+  "recorded_at_utc": "2026-09-13T03:28:42.608332+00:00",
+  "base": "bc63f7c0f01a06845ef34ccb8e60dc7c900f48bf",
+  "work": "eco-nt8oly.4.2",
+  "native_counts": {
+    "mobile_physics": 15,
+    "rules": 21,
+    "small_layout": 14,
+    "controller": 14,
+    "feel": 14,
+    "flow": 33,
+    "mobile_soak": 144,
+    "art_assets": 43,
+    "mobile_rates": 18,
+    "combat_readability": 14,
+    "physics": 6,
+    "two_thumb_journeys": 36
+  },
+  "native_total": 372,
+  "packed_native_rerun": 15,
+  "artifacts": {
+    "index.html": {
+      "bytes": 6901,
+      "sha256": "2f299a46cf553e0bdd8c88094925f1358da3ce8421ea21046b050da51859d0f8"
+    },
+    "index.js": {
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    "index.pck": {
+      "bytes": 14569028,
+      "sha256": "f01d984fb2517cb321fcfd7ace542409610e2c389cbfa8ccdc0be663754be6f0"
+    },
+    "index.wasm": {
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  },
+  "sources": {
+    "godot/main.gd": "38491dac541dd6aa24f231d85b7088a722ae3fde7410f54785a348a71b9e64a6",
+    "godot/fox.gd": "64ccae4b52f44aeccb2cf8288ca5cc9e3bf41e2a40a9a28447c16de1f12e98ff",
+    "godot/touch_feedback.gd": "483e02f48a59103ea431e99cd5b358e38a27c024a5fdeb03d29ac3c791fc7d25"
+  },
+  "browser_baseline": "14 reached, 10 passed, 4 findings; native browser gesture rerun rejected before execution",
+  "post_change_browser_pass": false,
+  "scope": "Native engine touch/collision/trajectory tests and18 fresh two-thumb native journeys. No physical-phone/iOS/Safari results or new public deployment claimed.",
+  "studio_preview": "http://127.0.0.1:9042/",
+  "preview_http_hashes_match": true
+}

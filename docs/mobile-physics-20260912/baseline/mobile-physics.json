@@ -1,0 +1,118 @@
+{
+  "url": "http://127.0.0.1:9042/",
+  "rounds": 1,
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "checks": [
+        {
+          "label": "mobile has a deliberate drop-through control",
+          "pass": false
+        },
+        {
+          "label": "round 1: sliding movement thumb reverses without lifting",
+          "pass": false,
+          "detail": {
+            "rightVx": 320,
+            "afterSlideVx": 320
+          }
+        },
+        {
+          "label": "round 1: lifting movement thumb brakes",
+          "pass": true
+        },
+        {
+          "label": "round 1: short touch jump lands without auto-bounce",
+          "pass": true,
+          "detail": {
+            "rise": 107.54577636718699
+          }
+        },
+        {
+          "label": "round 1: two-finger jump retains left steering",
+          "pass": true
+        },
+        {
+          "label": "round 1: cancel never leaves steering stuck",
+          "pass": true
+        },
+        {
+          "label": "held touch has useful extra jump height",
+          "pass": true,
+          "detail": {
+            "rise": 108.65255737304699
+          }
+        }
+      ],
+      "measurements": [
+        {
+          "round": 0,
+          "x": 129.228424072266,
+          "y": 519.989990234375,
+          "health": 6
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "checks": [
+        {
+          "label": "mobile has a deliberate drop-through control",
+          "pass": false
+        },
+        {
+          "label": "round 1: sliding movement thumb reverses without lifting",
+          "pass": false,
+          "detail": {
+            "rightVx": 320,
+            "afterSlideVx": 320
+          }
+        },
+        {
+          "label": "round 1: lifting movement thumb brakes",
+          "pass": true
+        },
+        {
+          "label": "round 1: short touch jump lands without auto-bounce",
+          "pass": true,
+          "detail": {
+            "rise": 107.79229736328102
+          }
+        },
+        {
+          "label": "round 1: two-finger jump retains left steering",
+          "pass": true
+        },
+        {
+          "label": "round 1: cancel never leaves steering stuck",
+          "pass": true
+        },
+        {
+          "label": "held touch has useful extra jump height",
+          "pass": true,
+          "detail": {
+            "rise": 108.91296386718699
+          }
+        }
+      ],
+      "measurements": [
+        {
+          "round": 0,
+          "x": 137.228515625,
+          "y": 519.989990234375,
+          "health": 5
+        }
+      ]
+    }
+  ],
+  "checks": 14,
+  "passed": 10,
+  "errors": [],
+  "scope": "Actual game controlled only by browser touch events; desktop Chromium emulation, not physical phone timing or balance certification."
+}

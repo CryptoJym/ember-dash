@@ -463,15 +463,25 @@ func build_hud():
  var pause=button("II",play_pause);pause.name="Pause";pause.custom_minimum_size=Vector2(48,48);hud.add_child(pause)
  hint=label("",13,Color("f1d5a4"));hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;ui.add_child(hint)
  touch_root=Node2D.new();ui.add_child(touch_root)
- var icons={"move_left":"M48 23L28 40L48 57","move_right":"M32 23L52 40L32 57","jump":"M24 44L40 25L56 44M40 25V60","dash":"M22 30H50L42 20M27 43H60L50 54","pulse":"M40 18V62M18 40H62M25 25L55 55M25 55L55 25","interact":"M27 20H52V60H27M18 40H44M35 31L44 40L35 49"}
+ var icons={"move_left":"M48 23L28 40L48 57","move_right":"M32 23L52 40L32 57","jump":"M24 44L40 25L56 44M40 25V60","drop":"M24 37L40 54L56 37M40 54V20M22 66H58","dash":"M22 30H50L42 20M27 43H60L50 54","pulse":"M40 18V62M18 40H62M25 25L55 55M25 55L55 25","interact":"M27 20H52V60H27M18 40H44M35 31L44 40L35 49"}
  for action in icons:
   var svg='<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><circle cx="40" cy="40" r="36" fill="#112c37" fill-opacity=".80" stroke="#e7cc9f" stroke-width="2"/><path d="'+icons[action]+'" fill="none" stroke="#f6dfb5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   var image=Image.new();image.load_svg_from_string(svg)
   var tb=TouchScreenButton.new();tb.texture_normal=ImageTexture.create_from_image(image);tb.action=action;tb.visibility_mode=TouchScreenButton.VISIBILITY_ALWAYS
   var shape=CircleShape2D.new();shape.radius=37;tb.shape=shape;tb.shape_centered=true;touch_root.add_child(tb);touch_buttons.append(tb)
-  var text=label({"move_left":"","move_right":"","jump":"JUMP","dash":"DASH","pulse":"PULSE","interact":"ENTER"}[action],10);text.position=Vector2(0,78);text.size=Vector2(80,16);text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;tb.add_child(text)
+  # Use native sliding capture only for the direction pad. Jump/dash stay
+  # finger-owned so drifting across an action cannot create an accidental press.
+  if action in ["move_left","move_right"]:
+   tb.passby_press=true;var thumb_shape=RectangleShape2D.new();thumb_shape.size=Vector2(80,112);tb.shape=thumb_shape
+  var active_image=Image.new();active_image.load_svg_from_string(svg.replace("#112c37","#426270"));tb.texture_pressed=ImageTexture.create_from_image(active_image)
+  var text=label({"move_left":"","move_right":"","jump":"JUMP","drop":"DOWN","dash":"DASH","pulse":"PULSE","interact":"ENTER"}[action],10);text.position=Vector2(0,78);text.size=Vector2(80,16);text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;tb.add_child(text)
+ var feedback=preload("res://touch_feedback.gd").new();feedback.game=self;touch_root.add_child(feedback)
 
 func resize_ui():
+ # Rotating/resizing invalidates held thumb coordinates; hiding releases native buttons.
+ var restore_touch=touch_root.visible
+ touch_root.hide();clear_input()
+ if is_instance_valid(fox):fox.jump_buffer=0;fox.dash_buffer=0;fox.buffered_jump_released=false
  var s=get_viewport_rect().size
  background.position=Vector2(-s.x*.03,-s.y*.02);background.size=s*Vector2(1.06,1.04)
  var portrait=s.x<s.y
@@ -485,9 +495,10 @@ func resize_ui():
  hud.get_node("Pause").position=Vector2(s.x-68,14 if portrait else 65);hud.get_node("Pause").size=Vector2(48,48)
  hint.position=Vector2(20,185 if portrait else s.y-155);hint.size=Vector2(s.x-40,50)
  var bottom=s.y-80
- var specs={"move_left":[Vector2(40,bottom),58.0],"move_right":[Vector2(106,bottom),58.0],"pulse":[Vector2(s.x-153,bottom-5),58.0],"dash":[Vector2(s.x-94,bottom-68),54.0],"jump":[Vector2(s.x-44,bottom),72.0],"interact":[Vector2(s.x*.5,bottom-55),44.0]}
+ var specs={"move_left":[Vector2(40,bottom),58.0],"move_right":[Vector2(106,bottom),58.0],"drop":[Vector2(174,bottom) if not portrait else Vector2(73,bottom-68),44.0],"pulse":[Vector2(s.x-153,bottom-5),58.0],"dash":[Vector2(s.x-94,bottom-68),54.0],"jump":[Vector2(s.x-44,bottom),72.0],"interact":[Vector2(s.x*.5,bottom-55),44.0]}
  for tb in touch_buttons:
   var spec=specs[tb.action];tb.scale=Vector2.ONE*(spec[1]/80.0);tb.position=spec[0]-Vector2.ONE*(spec[1]/2.0)
+ touch_root.visible=restore_touch
  if is_instance_valid(menu):fit_menu.call_deferred()
 
 func update_hud():
@@ -538,7 +549,7 @@ func _process(dt):
    var state=snapshot();JavaScriptBridge.eval("window.emberStatus="+JSON.stringify(state)+";document.body.dataset.ember="+JSON.stringify(mode)+";",true)
 
 func snapshot():
- return {"engine":"Godot 4.7.2","build":"feel-refinement-20260912","startupStage":startup_stage,"mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[]),"airJumps":fox.air_jumps_remaining() if is_instance_valid(fox) else 0,"animation":fox.sprite.animation if is_instance_valid(fox) else "","animationPlaying":fox.sprite.is_playing() if is_instance_valid(fox) else false,"reducedMotion":reduced_motion,"selectedFox":options[selection].name if not options.is_empty() else "","lastDeath":last_dead,"hudHealth":hud_health.text,"hudLight":hud_light.text}
+ return {"engine":"Godot 4.7.2","build":"mobile-physics-20260912","startupStage":startup_stage,"mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[]),"dashSerial":fox.dash_serial if is_instance_valid(fox) else 0,"jumpsUsed":fox.jumps_used if is_instance_valid(fox) else 0,"inputAxis":Input.get_axis("move_left","move_right"),"airJumps":fox.air_jumps_remaining() if is_instance_valid(fox) else 0,"animation":fox.sprite.animation if is_instance_valid(fox) else "","animationPlaying":fox.sprite.is_playing() if is_instance_valid(fox) else false,"reducedMotion":reduced_motion,"selectedFox":options[selection].name if not options.is_empty() else "","lastDeath":last_dead,"hudHealth":hud_health.text,"hudLight":hud_light.text}
 
 func _unhandled_input(event):
  if event.is_action_pressed("pause_game") and not event.is_echo() and mode in ["playing","paused"]:

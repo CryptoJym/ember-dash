@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS movement begins from the actual touch button
+PASS movement thumb slides right-to-left without a lift
+PASS same movement thumb slides back to the right
+PASS OS touch cancellation releases movement
+PASS 31px vertical thumb drift keeps intended direction
+PASS release after thumb drift leaves no stuck input
+PASS mobile has an explicit one-way-platform drop control
+PASS jump finger does not steal movement finger
+PASS pause/resume while fingers held cannot stick movement
+PASS air dash plus release stops within190px rather than a long uncontrolled coast
+PASS early jump tap is retained until landing
+PASS released buffered jump stays a short hop, not an unwanted full-height leap
+PASS layout change cancels stale thumb coordinates
+{"checks":13,"failures":[],"observations":{"air_dash_total":167.166687011719,"buffered_tap_rise":56.1000061035156},"suite":"mobile thumb and physics"}

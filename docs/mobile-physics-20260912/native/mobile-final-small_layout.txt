@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS (320, 568): Begin stays fully inside viewport
+PASS (320, 568): selection panel respects screen bounds
+PASS (375, 667): Begin stays fully inside viewport
+PASS (375, 667): selection panel respects screen bounds
+PASS (390, 664): Begin stays fully inside viewport
+PASS (390, 664): selection panel respects screen bounds
+PASS (844, 300): Begin stays fully inside viewport
+PASS (844, 300): selection panel respects screen bounds
+PASS (844, 300): landscape fox is above movement controls
+PASS (844, 390): Begin stays fully inside viewport
+PASS (844, 390): selection panel respects screen bounds
+PASS (844, 390): landscape fox is above movement controls
+PASS (768, 1024): Begin stays fully inside viewport
+PASS (768, 1024): selection panel respects screen bounds
+{"checks":14,"failures":[],"suite":"small-screen layout"}

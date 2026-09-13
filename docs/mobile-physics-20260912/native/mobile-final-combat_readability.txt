@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS offscreen enemy cannot fire or silently charge
+PASS newly visible ready enemy begins a visible wind-up rather than firing immediately
+PASS player has time to read and dodge the wind-up
+PASS released shot follows telegraphed aim, not a last-instant homing correction
+PASS ranged attack resets its full recovery
+PASS a hit interrupts enemy wind-up
+PASS keeper retains three-projectile volley after visible wind-up
+PASS death recap reports the actual lethal cause
+PASS death recap does not retain a persistent character profile
+PASS actual game pause freezes fox animation
+PASS reduced motion keeps authored sprite proportions
+PASS actual hit produces enemy stagger and damage feedback
+PASS guardian is not stun-locked by repeated pulse attacks
+PASS guardian keeps its visible wind-up after taking damage
+{"checks":14,"failures":[],"suite":"combat readability"}

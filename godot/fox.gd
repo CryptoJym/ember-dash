@@ -12,7 +12,7 @@ var active=false:
  set(value):
   active=value
   if not value:
-   jump_buffer=0.0;dash_buffer=0.0
+   jump_buffer=0.0;dash_buffer=0.0;buffered_jump_released=false
   if is_instance_valid(sprite):
    if value:sprite.play()
    else:sprite.pause()
@@ -26,6 +26,7 @@ var attack_cooldown=0.0
 var invulnerability=0.0
 var coyote=0.0
 var jump_buffer=0.0
+var buffered_jump_released=false
 var jumps_used=0
 var drop_time=0.0
 var dash_serial=0
@@ -91,7 +92,9 @@ func _physics_process(dt):
  coyote=0.12 if grounded else maxf(0,coyote-dt)
  if grounded:jumps_used=0
  var axis=Input.get_axis("move_left","move_right")
- if Input.is_action_just_pressed("jump"):jump_buffer=0.14
+ if Input.is_action_just_pressed("jump"):
+  jump_buffer=0.14;buffered_jump_released=false
+ if Input.is_action_just_released("jump") and jump_buffer>0:buffered_jump_released=true
  if Input.is_action_just_pressed("drop") and grounded:
   drop_time=0.24;set_collision_mask_value(3,false);position.y+=2;velocity.y=80
  if Input.is_action_just_pressed("dash"):
@@ -103,10 +106,12 @@ func _physics_process(dt):
  if jump_buffer>0 and (grounded or coyote>0 or jumps_used<attributes.jumps):
   if not grounded and coyote<=0:jumps_used=maxi(1,jumps_used)
   if jumps_used<attributes.jumps:
-   hit_recovery=0;velocity.y=-690;jumps_used+=1;coyote=0;jump_buffer=0;dash_time=0;squash=Vector2(.96,1.055);jumped.emit()
+   if dash_time>0:velocity.x=clampf(velocity.x,-attributes.speed,attributes.speed)
+   hit_recovery=0;velocity.y=-500 if buffered_jump_released else -690;jumps_used+=1;coyote=0;jump_buffer=0;buffered_jump_released=false;dash_time=0;squash=Vector2(.96,1.055);jumped.emit()
  if Input.is_action_just_released("jump") and velocity.y < -500:velocity.y=-500
  if Input.is_action_pressed("pulse") and attack_cooldown<=0:
   attack_cooldown=.42;pulse.emit()
+ var dash_finishing=dash_time>0 and dash_time<=dt
  if dash_time>0:
   dash_time=maxf(0,dash_time-dt);velocity.x=dash_direction*780;velocity.y=0
  else:
@@ -121,6 +126,8 @@ func _physics_process(dt):
   velocity.y=minf(1120,velocity.y+gravity*dt)
  var impact_speed=velocity.y
  move_and_slide()
+ # End a burst at ordinary run momentum, not 780px/s of accidental airborne coast.
+ if dash_finishing:velocity.x=clampf(velocity.x,-attributes.speed,attributes.speed)
  if is_on_wall() and dash_time>0:dash_time=0;velocity.x=0
  if is_on_ceiling():jump_buffer=0
  if is_on_floor() and not grounded:

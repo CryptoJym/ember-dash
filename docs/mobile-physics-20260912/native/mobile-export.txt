@@ -1,0 +1,112 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/bloom.png-416306f831f6da71217d1f2f1fc9846c.ctex[39m[0m
+[   1% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/bloom.png.import[39m[0m
+[   3% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/ember.png-6be61e5e4e83cefa7173cc16f0a7c2db.ctex[39m[0m
+[   3% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/ember.png.import[39m[0m
+[   5% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/gale.png-131c7cdd068d79d870f04576fdca8296.ctex[39m[0m
+[   5% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/gale.png.import[39m[0m
+[   7% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/sun.png-e46f49aacf6b4628356b2d4766429d1f.ctex[39m[0m
+[   7% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/sun.png.import[39m[0m
+[   9% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/tide.png-730dae3dc855fe0f9d1219c177b2fddc.ctex[39m[0m
+[   9% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/tide.png.import[39m[0m
+[  11% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/void.png-53842a5acc3dde4c02b8124526693aaf.ctex[39m[0m
+[  11% ] [90m[1msavepack[22m | Storing File: res://assets/atlases/void.png.import[39m[0m
+[  13% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/dash.wav-c732fa599cfe157dd4267b88c75a825a.sample[39m[0m
+[  13% ] [90m[1msavepack[22m | Storing File: res://assets/audio/dash.wav.import[39m[0m
+[  15% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/hurt.wav-e638edfaf88190ba3ffee0adc26b7375.sample[39m[0m
+[  15% ] [90m[1msavepack[22m | Storing File: res://assets/audio/hurt.wav.import[39m[0m
+[  17% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/jump.wav-7ea4d93114fa52c0b9979f6b2117f13f.sample[39m[0m
+[  17% ] [90m[1msavepack[22m | Storing File: res://assets/audio/jump.wav.import[39m[0m
+[  19% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/level.wav-5ce5e39cbd899481c66220f27724e372.sample[39m[0m
+[  19% ] [90m[1msavepack[22m | Storing File: res://assets/audio/level.wav.import[39m[0m
+[  21% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/mote.wav-778a3fd47ee995a59d0fc7615a48f05a.sample[39m[0m
+[  21% ] [90m[1msavepack[22m | Storing File: res://assets/audio/mote.wav.import[39m[0m
+[  23% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/pulse.wav-2767f1702d87630aca6f39d522402577.sample[39m[0m
+[  23% ] [90m[1msavepack[22m | Storing File: res://assets/audio/pulse.wav.import[39m[0m
+[  25% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/cinder.jpg-476c9a66b64766a7c38d9504b22ebfcb.ctex[39m[0m
+[  25% ] [90m[1msavepack[22m | Storing File: res://assets/backdrops/cinder.jpg.import[39m[0m
+[  27% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/frost.jpg-fa1e461c5f878e28ca6a418771fd5bc8.ctex[39m[0m
+[  27% ] [90m[1msavepack[22m | Storing File: res://assets/backdrops/frost.jpg.import[39m[0m
+[  29% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/grove.jpg-cbba73f255d1c9b9b03ec421f8fa7706.ctex[39m[0m
+[  29% ] [90m[1msavepack[22m | Storing File: res://assets/backdrops/grove.jpg.import[39m[0m
+[  31% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/crawler.png-a2f0502bf3ce5ab736ecd7682c44b340.ctex[39m[0m
+[  31% ] [90m[1msavepack[22m | Storing File: res://assets/enemies/crawler.png.import[39m[0m
+[  33% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/keeper.png-552e21c266ab7e033e3e8fac666d052d.ctex[39m[0m
+[  33% ] [90m[1msavepack[22m | Storing File: res://assets/enemies/keeper.png.import[39m[0m
+[  34% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/spitter.png-e6d6924c7acc5f037f508aea4081c4ef.ctex[39m[0m
+[  34% ] [90m[1msavepack[22m | Storing File: res://assets/enemies/spitter.png.import[39m[0m
+[  36% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/wisp.png-9e0c77d34f6ce294837d7e9f700afce3.ctex[39m[0m
+[  36% ] [90m[1msavepack[22m | Storing File: res://assets/enemies/wisp.png.import[39m[0m
+[  38% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/bloom.png-3f952e2a315a8ca78fbad1d931614d76.ctex[39m[0m
+[  38% ] [90m[1msavepack[22m | Storing File: res://assets/heads/bloom.png.import[39m[0m
+[  40% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/ember.png-b6a8bf786bf9c5f640d90a407379cf0c.ctex[39m[0m
+[  40% ] [90m[1msavepack[22m | Storing File: res://assets/heads/ember.png.import[39m[0m
+[  42% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/gale.png-4e7b78fe06bfa74841d7e66edfe1944f.ctex[39m[0m
+[  42% ] [90m[1msavepack[22m | Storing File: res://assets/heads/gale.png.import[39m[0m
+[  44% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/sun.png-82a9403d89641c6ac5cb6b60f94a7ef9.ctex[39m[0m
+[  44% ] [90m[1msavepack[22m | Storing File: res://assets/heads/sun.png.import[39m[0m
+[  46% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/tide.png-89e622d9c987a739b353a864481334da.ctex[39m[0m
+[  46% ] [90m[1msavepack[22m | Storing File: res://assets/heads/tide.png.import[39m[0m
+[  48% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/void.png-622e9db2c13b55a87212ff4521939edb.ctex[39m[0m
+[  48% ] [90m[1msavepack[22m | Storing File: res://assets/heads/void.png.import[39m[0m
+[  51% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/cinder.png-3487905f77c01a03482f2670a275954f.ctex[39m[0m
+[  51% ] [90m[1msavepack[22m | Storing File: res://assets/portals/cinder.png.import[39m[0m
+[  53% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/frost.png-961764a5f7185f173e3ca15fa0bb7438.ctex[39m[0m
+[  53% ] [90m[1msavepack[22m | Storing File: res://assets/portals/frost.png.import[39m[0m
+[  55% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/grove.png-5e8319bba2966231dcdff9e1de957d92.ctex[39m[0m
+[  55% ] [90m[1msavepack[22m | Storing File: res://assets/portals/grove.png.import[39m[0m
+[  57% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/bloom.png-a65bcaff849087a0e6e51480d32c7552.ctex[39m[0m
+[  57% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/bloom.png.import[39m[0m
+[  59% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/ember.png-7d1d41336d6b0a5c5372131dbfde3901.ctex[39m[0m
+[  59% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/ember.png.import[39m[0m
+[  61% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/gale.png-c45e66baa9ac09f939044aace95ba99e.ctex[39m[0m
+[  61% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/gale.png.import[39m[0m
+[  63% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/sun.png-891f43118b9f57f9fd3b8209a7d6918d.ctex[39m[0m
+[  63% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/sun.png.import[39m[0m
+[  65% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/tide.png-7655154da17c3edca61fc09cd7b1194a.ctex[39m[0m
+[  65% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/tide.png.import[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/void.png-d6785217d1409c04f3a33492a4885b73.ctex[39m[0m
+[  66% ] [90m[1msavepack[22m | Storing File: res://assets/portraits/void.png.import[39m[0m
+[  68% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/cinder.png-102ae9cb330a64c32d8a7c91d1ef329b.ctex[39m[0m
+[  68% ] [90m[1msavepack[22m | Storing File: res://assets/terrain/cinder.png.import[39m[0m
+[  70% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/frost.png-b1fc0cea96dc4c917cbfadf12bf741cb.ctex[39m[0m
+[  70% ] [90m[1msavepack[22m | Storing File: res://assets/terrain/frost.png.import[39m[0m
+[  72% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/grove.png-d573d914517598ea0aafc8fadd91dfce.ctex[39m[0m
+[  72% ] [90m[1msavepack[22m | Storing File: res://assets/terrain/grove.png.import[39m[0m
+[  74% ] [90m[1msavepack[22m | Storing File: res://assets/atlas-receipt.json[39m[0m
+[  76% ] [90m[1msavepack[22m | Storing File: res://assets/atlas.json[39m[0m
+[  78% ] [90m[1msavepack[22m | Storing File: res://assets/props.json[39m[0m
+[  80% ] [90m[1msavepack[22m | Storing File: res://encounter.gdc[39m[0m
+[  82% ] [90m[1msavepack[22m | Storing File: res://presentation.gdc[39m[0m
+[  84% ] [90m[1msavepack[22m | Storing File: res://main.gdc[39m[0m
+[  86% ] [90m[1msavepack[22m | Storing File: res://fox.gdc[39m[0m
+[  88% ] [90m[1msavepack[22m | Storing File: res://atmosphere.gdc[39m[0m
+[  90% ] [90m[1msavepack[22m | Storing File: res://rules.gdc[39m[0m
+[  92% ] [90m[1msavepack[22m | Storing File: res://world_art.gdc[39m[0m
+[  94% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://bloodline_portrait.gdc[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://encounter.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://presentation.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://main.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://fox.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://atmosphere.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://rules.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://world_art.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://main.tscn.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://bloodline_portrait.gd.remap[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://.godot/global_script_class_cache.cfg[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://.godot/uid_cache.bin[39m[0m
+[  96% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+[92m[ DONE ][39m [1msavepack[22m
+[0m

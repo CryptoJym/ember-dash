@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS air release stops inside forty world pixels without removing jump height
+PASS dash pressed shortly before ready fires once when cooldown expires
+PASS buffered dash does not repeat on a held or released key
+PASS paused fox freezes its animated sprite as well as its physics
+PASS paused physics position remains exact
+PASS resuming the fox resumes its animation
+PASS enemy knockback remains readable for the first forty milliseconds
+PASS knockback does not change damage amount
+PASS recovery window prevents duplicate contact damage
+PASS takeoff briefly stretches only the painted sprite
+PASS sprite refinement never changes the collision box
+PASS landing produces a bounded paw-anchored compression
+PASS landing compression settles back to authored proportions
+PASS animation playback obeys approved atlas clip timing
+{"airReleaseDriftPx":30.6666717529297,"checks":14,"failures":[],"suite":"controller feel and sprite"}
