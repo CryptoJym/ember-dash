@@ -1,0 +1,241 @@
+{
+  "airJumps": 1,
+  "alive": true,
+  "animation": "idle",
+  "animationPlaying": false,
+  "build": "legacy-replayability-20260913",
+  "camera": [
+    2115,
+    365
+  ],
+  "candidateNames": [
+    "Cirrus Dawngleam",
+    "Luma Starstep",
+    "Juniper Moonveil"
+  ],
+  "dash": 0,
+  "dashSerial": 0,
+  "depth": 1,
+  "engine": "Godot 4.7.2",
+  "generation": 1,
+  "grounded": true,
+  "health": 4,
+  "hudHealth": "HEARTS 4 / 5",
+  "hudLight": "LIGHT 62",
+  "inputAxis": 0,
+  "jumpsUsed": 0,
+  "lastDeath": {},
+  "legacyGeneration": 1,
+  "legacyRuns": 0,
+  "level": 2,
+  "light": 62,
+  "menuButtons": [
+    {
+      "rect": [
+        1212,
+        65,
+        48,
+        58
+      ],
+      "text": "II"
+    },
+    {
+      "rect": [
+        150,
+        252,
+        321,
+        80
+      ],
+      "text": "Heartwood · +1 heart\n24 light"
+    },
+    {
+      "rect": [
+        479,
+        252,
+        321,
+        80
+      ],
+      "text": "Inner flame · +15% strength\n18 light"
+    },
+    {
+      "rect": [
+        808,
+        252,
+        322,
+        80
+      ],
+      "text": "Quickening · faster dash\n20 light"
+    },
+    {
+      "rect": [
+        150,
+        344,
+        980,
+        58
+      ],
+      "text": "Awaken a new gift  ·  1 available"
+    },
+    {
+      "rect": [
+        150,
+        443,
+        980,
+        58
+      ],
+      "text": "Living build · Bright-tail · 0 relics"
+    },
+    {
+      "rect": [
+        150,
+        513,
+        485,
+        80
+      ],
+      "text": "Follow the roots\nA balanced path"
+    },
+    {
+      "rect": [
+        645,
+        513,
+        485,
+        80
+      ],
+      "text": "Chase the lanterns\nA richer cache"
+    },
+    {
+      "rect": [
+        150,
+        633,
+        980,
+        58
+      ],
+      "text": "Save and rest here"
+    }
+  ],
+  "menus": 1,
+  "mode": "camp",
+  "mutation": "bright_tail",
+  "name": "Cirrus Dawngleam",
+  "opponents": [
+    {
+      "cooldown": -2.67499999999999,
+      "flash": 0.17,
+      "hi": 1192,
+      "home": 465,
+      "hp": 0,
+      "id": "enemy2",
+      "level": 1,
+      "lo": 983,
+      "max_hp": 9.5,
+      "phase": 4.64157581142686,
+      "stagger": 0.12,
+      "type": "crawler",
+      "windup": 0,
+      "x": 1186.605043218,
+      "y": 465
+    },
+    {
+      "cooldown": -4.80000000000002,
+      "flash": 0.17,
+      "hi": 1667,
+      "home": 460,
+      "hp": 0,
+      "id": "enemy3",
+      "level": 1,
+      "lo": 1389,
+      "max_hp": 9.5,
+      "phase": 10.0894618636545,
+      "stagger": 0.12,
+      "type": "crawler",
+      "windup": 0,
+      "x": 1553.01785540546,
+      "y": 460
+    },
+    {
+      "cooldown": -6.92500000000013,
+      "flash": 0.17,
+      "hi": 2080,
+      "home": 473,
+      "hp": 0,
+      "id": "enemy4",
+      "level": 1,
+      "lo": 1858,
+      "max_hp": 9.5,
+      "phase": 8.69169655939099,
+      "stagger": 0.12,
+      "type": "crawler",
+      "windup": 0,
+      "x": 2007.1995787309,
+      "y": 473
+    }
+  ],
+  "reducedMotion": false,
+  "relics": [],
+  "roomArchetype": "crossroads",
+  "roomReward": {
+    "amount": 12,
+    "kind": "light",
+    "label": "12 bonus light"
+  },
+  "seed": 1387781087,
+  "selectedFox": "Cirrus Dawngleam",
+  "spirit": 3,
+  "startupStage": "ready",
+  "synergies": [],
+  "terrain": [
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 480,
+      "x": 0,
+      "y": 520
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 304,
+      "x": 552,
+      "y": 516
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 334,
+      "x": 918,
+      "y": 487
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 403,
+      "x": 1324,
+      "y": 482
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 347,
+      "x": 1793,
+      "y": 495
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 430,
+      "x": 2210,
+      "y": 497
+    }
+  ],
+  "touch": [],
+  "viewport": [
+    1280,
+    800
+  ],
+  "vx": 0,
+  "vy": 0,
+  "warning": "",
+  "x": 2505.99267578125,
+  "xp": 50,
+  "y": 496.962615966797,
+  "zoom": 1.21904766559601
+}

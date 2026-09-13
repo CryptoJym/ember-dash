@@ -1,0 +1,151 @@
+{
+  "url": "http://127.0.0.1:9044/",
+  "checks": [
+    {
+      "name": "legacy build starts in browser",
+      "pass": true
+    },
+    {
+      "name": "generation one starts with a positive mutation",
+      "pass": true
+    },
+    {
+      "name": "room director is visible in exported state",
+      "pass": true
+    },
+    {
+      "name": "chamber 1 reward is persisted once",
+      "pass": true
+    },
+    {
+      "name": "living relic changes are persisted by chamber 1",
+      "pass": true
+    },
+    {
+      "name": "chamber 2 reward is persisted once",
+      "pass": true
+    },
+    {
+      "name": "living relic changes are persisted by chamber 2",
+      "pass": true
+    },
+    {
+      "name": "chamber 3 reward is persisted once",
+      "pass": true
+    },
+    {
+      "name": "living relic changes are persisted by chamber 3",
+      "pass": true
+    },
+    {
+      "name": "chamber 4 reward is persisted once",
+      "pass": true
+    },
+    {
+      "name": "living relic changes are persisted by chamber 4",
+      "pass": true
+    },
+    {
+      "name": "four-room run guarantees at least one living relic",
+      "pass": true
+    },
+    {
+      "name": "fourth chamber remains a guardian encounter",
+      "pass": true
+    },
+    {
+      "name": "living build panel is reachable from sanctuary",
+      "pass": true
+    },
+    {
+      "name": "actual death keeps the original two-field living tombstone",
+      "pass": true
+    },
+    {
+      "name": "death writes one separate lineage ancestor",
+      "pass": true
+    },
+    {
+      "name": "ancestor remembers mutation and relic discoveries",
+      "pass": true
+    },
+    {
+      "name": "descendant begins generation two with a fresh living build",
+      "pass": true
+    },
+    {
+      "name": "lineage archive is reachable in exported browser game",
+      "pass": true
+    },
+    {
+      "name": "older Ember Dash keys remain untouched",
+      "pass": true
+    },
+    {
+      "name": "no GDScript or uncaught browser errors",
+      "pass": true
+    }
+  ],
+  "passed": 21,
+  "errors": [],
+  "rooms": [
+    {
+      "depth": 1,
+      "archetype": "shrine",
+      "reward": {
+        "id": "ancestor_bell",
+        "kind": "relic",
+        "label": "Ancestor Bell"
+      },
+      "relics": [
+        "ancestor_bell"
+      ],
+      "spirit": 3,
+      "light": 39
+    },
+    {
+      "depth": 2,
+      "archetype": "crossroads",
+      "reward": {
+        "amount": 14,
+        "kind": "light",
+        "label": "14 bonus light"
+      },
+      "relics": [
+        "ancestor_bell"
+      ],
+      "spirit": 9,
+      "light": 100
+    },
+    {
+      "depth": 3,
+      "archetype": "ascent",
+      "reward": {
+        "amount": 20,
+        "kind": "light",
+        "label": "20 bonus light"
+      },
+      "relics": [
+        "ancestor_bell"
+      ],
+      "spirit": 18,
+      "light": 157
+    },
+    {
+      "depth": 4,
+      "archetype": "boss",
+      "reward": {
+        "id": "echo_fang",
+        "kind": "relic",
+        "label": "Echo Fang"
+      },
+      "relics": [
+        "ancestor_bell",
+        "echo_fang"
+      ],
+      "spirit": 30,
+      "light": 210
+    }
+  ],
+  "scope": "Exact exported Godot WebGL candidate. Room traversal/combat/relic earning/death/archive/rebirth used real browser inputs. Isolated browser context; not physical iPhone/Safari."
+}

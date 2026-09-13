@@ -1,0 +1,64 @@
+{
+  "recorded_at_utc": "2026-09-13T12:22:35.007639+00:00",
+  "base": "7078d1b64391ba1b07ef7b510857a06674a4e32c",
+  "work": "eco-nt8oly.5",
+  "native": {
+    "suites": {
+      "art_assets": 43,
+      "combat_readability": 14,
+      "controller": 14,
+      "feel": 14,
+      "flow": 33,
+      "legacy_flow": 17,
+      "legacy_systems": 38,
+      "mobile_physics": 15,
+      "mobile_rates": 18,
+      "mobile_soak": 144,
+      "physics": 6,
+      "rules": 21,
+      "small_layout": 14,
+      "two_thumb_journeys": 36
+    },
+    "total": 427
+  },
+  "browser": {
+    "smoke": {
+      "passed": 13,
+      "errors": []
+    },
+    "compat_journey": {
+      "passed": 24,
+      "errors": []
+    },
+    "legacy_journey": {
+      "passed": 21,
+      "errors": []
+    }
+  },
+  "browser_total": 58,
+  "artifacts": {
+    "index.html": {
+      "bytes": 6901,
+      "sha256": "7c6a69bd577404f2ef9ed10de541406e60385fcf9ae04ac7ec7e3a78b22d43f0"
+    },
+    "index.js": {
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    "index.pck": {
+      "bytes": 14582304,
+      "sha256": "627083588cc943e6447756382ca3341d513c15a0d0a51689bb8f4e5ef9b33bfc"
+    },
+    "index.wasm": {
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  },
+  "sources": {
+    "godot/legacy.gd": "d7c373feab69ed28191291a9a336239f48104414221e59a309ccc9cf6162ba82",
+    "godot/rules.gd": "ac0bdae1cb283ac8251bdb2418ea9dd4295b0ac6929d57cd1dffa0d5fe0bc6c2",
+    "godot/main.gd": "de6943e4c44d3dbfe4142dfaf1443b432c105166fdcbe1a0aaa6aaca1d81bb90",
+    "scripts/ironflame-legacy-journey.mjs": "cb5e9d9953118010d4c18e8c42f2df25231d8671309b824900a1d7b704f5372c"
+  },
+  "scope": "Exact local WebGL candidate; public deployment and physical iPhone/Safari/gamepad remain unverified."
+}

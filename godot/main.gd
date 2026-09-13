@@ -1,9 +1,12 @@
 extends Node2D
 const Rules=preload("res://rules.gd")
+const Legacy=preload("res://legacy.gd")
 const Fox=preload("res://fox.gd")
 const WorldArt=preload("res://world_art.gd")
 const Encounter=preload("res://encounter.gd")
 var profile={}
+var legacy=Legacy.fresh_archive()
+var legacy_raw=null
 var room={}
 var mode="title"
 var world:Node2D
@@ -31,6 +34,7 @@ var clock=0.0
 var particles=[]
 var rings=[]
 var combat_text=[]
+var last_room_reward=""
 var reduced_motion=false
 var startup_stage="created"
 var shots=[]
@@ -75,9 +79,11 @@ func _ready():
  startup_stage="HUD"
  build_hud()
  startup_stage="profile load"
- if not test_mode:load_life()
+ if not test_mode:
+  load_life();load_legacy()
+ else:legacy=Legacy.fresh_archive()
  startup_stage="fox candidates"
- options=Rules.candidates(menu_seed)
+ options=Legacy.decorate_candidates(Rules.candidates(menu_seed),menu_seed,legacy)
  set_background(0)
  room=Rules.room(menu_seed,1)
  startup_stage="title"
@@ -111,7 +117,7 @@ func set_mode(next):
  clear_input()
  if is_instance_valid(fox):fox.active=mode=="playing"
  background.modulate=Color(.93,.95,1,1) if mode in ["playing","paused","camp"] else Color(.86,.90,.96,1)
- hud.visible=mode not in ["title","choose","dead","confirm","conflict"]
+ hud.visible=mode not in ["title","choose","dead","confirm","conflict","archive"]
  touch_root.visible=mode=="playing" and (DisplayServer.is_touchscreen_available() or (OS.has_feature("web") and JavaScriptBridge.eval("matchMedia('(pointer:coarse)').matches",true)==true))
  # Clear every menu panel, including any deferred/orphaned panel from a button callback.
  for child in menu_layer.get_children():
@@ -179,16 +185,40 @@ func open_title():
   out.add_child(button("Begin a different life",confirm_new))
  else:
   var begin=button("Choose your fox",open_choices);out.add_child(begin);begin.grab_focus()
- out.add_child(label("ONE LIFE · Levels, light and upgrades belong to this fox.\nDeath ends its profile. Your next fox begins at level 1.",12,Color("c2b3a2")))
+ if legacy.runs>0:out.add_child(button("Lineage archive · %d lives"%legacy.runs,open_archive,Color("c4b1f0")))
+ out.add_child(label("GENERATION %d · ONE LIFE · Levels, light, relics and upgrades belong to this fox.\nDeath ends its living profile. The archive remembers the story, never the stats."%legacy.generation,12,Color("c2b3a2")))
  out.add_child(label("Move A/D · Jump Space · Dash Shift · Pulse J\nTouch controls on phones. Sound can be muted in pause.",11,Color("9bb2af")))
  if not warning.is_empty():out.add_child(label(warning,12,Color("ffc799")))
  fit_menu.call_deferred()
 
+func open_archive():
+ set_mode("archive")
+ var out=make_menu("The Fox Archive","Every life leaves a story. None of its combat power carries into the next fox.",true)
+ out.add_child(label("GENERATION %d · %d completed lives · deepest chamber %d"%[legacy.generation,legacy.runs,legacy.best_depth],14,Color("e8c790")))
+ if legacy.archive.is_empty():out.add_child(label("No ancestors have been recorded yet.",13))
+ else:
+  var start=maxi(0,legacy.archive.size()-8)
+  for i in range(legacy.archive.size()-1,start-1,-1):
+   var entry=legacy.archive[i];var birth=Rules.BLOODLINES[clampi(int(entry.get("bloodline",0)),0,5)]
+   var line="GEN %d · %s · Lv.%d · chamber %d\n%s · %d spirits · %s"%[entry.get("generation",1),entry.get("name","Unknown"),entry.get("level",1),entry.get("depth",1),Legacy.mutation_name(entry.get("mutation","")),entry.get("spirit",0),entry.get("cause","the unknown")]
+   out.add_child(label(line,12,Color(birth.color)))
+ var discovered=legacy.discoveries
+ out.add_child(label("DISCOVERED · %d/%d relics · %d/%d mutations · %d guardians"%[discovered.relics.size(),Legacy.RELICS.size(),discovered.mutations.size(),Legacy.MUTATIONS.size(),discovered.bosses.size()],12,Color("b3c6c1")))
+ out.add_child(button("Back",open_title));fit_menu.call_deferred()
+
+func archive_current_life(cause):
+ if not profile.get("alive",false):return
+ legacy=Legacy.record_death(legacy,profile,cause);save_legacy()
+
+func refresh_birth_candidates(excluded=""):
+ menu_seed=randi()&0x7fffffff
+ options=Legacy.decorate_candidates(Rules.candidates(menu_seed,excluded),menu_seed,legacy);selection=0
+
 func confirm_new():
  set_mode("confirm")
- var out=make_menu("Leave this life behind?","This ends only the current Ironflame fox. Its levels, light and upgrades will be lost. The original Ember Dash saves are untouched.")
+ var out=make_menu("Leave this life behind?","This ends the living fox. Its combat progression is lost, but its story is recorded in the lineage archive.")
  out.add_child(button("Keep my fox",open_title))
- out.add_child(button("End this profile and choose again",func():profile={"version":1,"alive":false};save_life();open_choices(),Color("df9999")))
+ out.add_child(button("End this life and choose a descendant",func():archive_current_life("left the trail");profile={"version":1,"alive":false};save_life();refresh_birth_candidates();open_choices(),Color("df9999")))
  fit_menu.call_deferred()
 
 func open_choices():
@@ -210,7 +240,7 @@ func open_choices():
   card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
   var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=240 if size.x>=660 else 190;v.add_child(image)
-  v.add_child(label(option.name,20,tint));v.add_child(label((birth.founder+"'S "+birth.name+" · "+birth.gift).to_upper(),10,tint));v.add_child(label(birth.tagline+"  "+birth.detail,12))
+  v.add_child(label(option.name,20,tint));v.add_child(label((birth.founder+"'S "+birth.name+" · "+birth.gift).to_upper(),10,tint));v.add_child(label(birth.tagline+"  "+birth.detail,12));v.add_child(label("GEN %d · %s\n%s"%[option.generation,Legacy.mutation_name(option.mutation),Legacy.mutation_text(option.mutation)],11,Color("d8c9f0")))
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
  if size.y>=520:out.add_child(label("New terrain every life. Double jump and dash are available to every fox.",11,Color("a9c0b7")))
@@ -283,15 +313,17 @@ func play_pause():
 
 func on_death():
  if mode!="playing":return
- last_dead={"name":profile.name,"level":Rules.level_info(profile.xp).level,"depth":profile.depth,"slain":profile.slain,"spirit":profile.get("spirit",0),"cause":fox.death_cause}
+ last_dead={"generation":profile.get("generation",legacy.generation),"name":profile.name,"level":Rules.level_info(profile.xp).level,"depth":profile.depth,"slain":profile.slain,"spirit":profile.get("spirit",0),"cause":fox.death_cause,"mutation":profile.get("mutation",""),"relics":profile.get("relics",[]).duplicate()}
+ archive_current_life(last_dead.cause)
  profile={"version":1,"alive":false};save_life()
  if storage_conflict:return
  set_mode("dead");sound("hurt")
- var out=make_menu("Every flame\nhas its moment.","%s reached level %d and chamber %d."%[last_dead.name,last_dead.level,last_dead.depth])
+ var out=make_menu("Every flame\nhas its moment.","Generation %d · %s reached level %d and chamber %d."%[last_dead.generation,last_dead.name,last_dead.level,last_dead.depth])
  out.add_child(label("Lost to "+last_dead.cause+".  "+str(last_dead.slain)+" spirits defeated · "+str(last_dead.spirit)+" Spirit absorbed.",13,Color("e9cfaa")))
- out.add_child(label("This character's profile has ended. Its experience, light, upgrades and talents are gone. A new fox starts fresh.",14,Color("d9b6a1")))
- var retry=button("Start a new life",func():menu_seed=randi()&0x7fffffff;options=Rules.candidates(menu_seed,last_dead.name);selection=0;open_choices())
- out.add_child(retry);retry.grab_focus();fit_menu.call_deferred()
+ out.add_child(label("Legacy recorded: "+Legacy.mutation_name(last_dead.mutation)+(" · "+str(last_dead.relics.size())+" relics" if not last_dead.relics.is_empty() else ""),12,Color("c4b1f0")))
+ out.add_child(label("This fox's XP, light, Spirit, relics, upgrades and talents are gone. Only its story and discoveries remain in the archive.",14,Color("d9b6a1")))
+ var retry=button("Start a new life · Generation "+str(legacy.generation),func():refresh_birth_candidates(last_dead.name);open_choices())
+ out.add_child(retry);out.add_child(button("View lineage archive",open_archive,Color("c4b1f0")));retry.grab_focus();fit_menu.call_deferred()
 
 func notify(text,time=3.5):
  hint.text=text;hint.visible=true;hint_timer=time
@@ -381,6 +413,9 @@ func damage_enemy(e,amount):
  if e.hp<=0:
   if e.id in profile.defeated:return
   profile.defeated.append(e.id);profile.slain+=1
+  if e.type=="keeper":
+   var guardian=["rootbound_sentinel","choir_of_glass","ashen_regent"][clampi(int(room.biome),0,2)]
+   if guardian not in profile.bosses:profile.bosses.append(guardian)
   var xp=(55+e.level*12) if e.type=="keeper" else (7+e.level*5)
   var absorbed=maxi(1,int(e.level));profile.spirit=mini(1000000,int(profile.get("spirit",0))+absorbed)
   var levels=Rules.award_xp(profile,xp)
@@ -407,8 +442,11 @@ func keeper_alive():
 
 func open_camp():
  if mode!="playing":return
+ last_room_reward=""
  if not profile.get("cleared",false):
-  Rules.award_xp(profile,12+profile.depth*2);profile.cleared=true;fox.attributes=Rules.stats(profile);fox.health=mini(fox.attributes.health,fox.health+1+fox.attributes.heal)
+  Rules.award_xp(profile,12+profile.depth*2);profile.cleared=true
+  var reward=Legacy.claim_room_reward(profile,room);last_room_reward=str(reward.get("message",""))
+  fox.attributes=Rules.stats(profile);fox.health=mini(fox.attributes.health,fox.health+1+fox.attributes.heal);fox.ward=maxi(fox.ward,int(fox.attributes.ward))
  save_life()
  if storage_conflict:return
  set_mode("camp");show_camp()
@@ -428,6 +466,8 @@ func show_camp():
   )
   purchase.size_flags_horizontal=Control.SIZE_EXPAND_FILL;purchase.disabled=cost<0 or profile.light<cost;shop.add_child(purchase)
  if profile.tokens>0:out.add_child(button("Awaken a new gift  ·  %d available"%profile.tokens,show_talents,Color("c4b1f0")))
+ if not last_room_reward.is_empty():out.add_child(label(last_room_reward,12,Color("f2d7a0")))
+ out.add_child(button("Living build · %s · %d relics"%[Legacy.mutation_name(profile.get("mutation","")),profile.get("relics",[]).size()],show_build,Color("c4b1f0")))
  var paths=VBoxContainer.new() if get_viewport_rect().size.x<660 else HBoxContainer.new();paths.add_theme_constant_override("separation",10);out.add_child(paths)
  var roots=button("Follow the roots\nA balanced path",func():next_room("roots"));roots.size_flags_horizontal=Control.SIZE_EXPAND_FILL;paths.add_child(roots)
  var route="cache" if profile.depth%2==1 else "trial"
@@ -447,10 +487,22 @@ func show_talents():
   b.disabled=int(profile.talents.get(key,0))>=5;out.add_child(b)
  fit_menu.call_deferred()
 
+func show_build():
+ var mutation=str(profile.get("mutation",""))
+ var out=make_menu("This fox's living build",Legacy.mutation_name(mutation)+" · "+Legacy.mutation_text(mutation),true)
+ if profile.get("relics",[]).is_empty():out.add_child(label("No relics yet. Treasure, shrines and guardians can reveal them.",12,Color("b3c6c1")))
+ else:
+  for id in profile.relics:out.add_child(label("RELIC · "+Legacy.relic_name(id)+"\n"+Legacy.relic_text(id),12,Color("e8c790")))
+ var synergies=Legacy.synergies_for(profile)
+ if not synergies.is_empty():
+  for id in synergies:out.add_child(label("SYNERGY · "+Legacy.SYNERGIES[id].name+"\n"+Legacy.SYNERGIES[id].text,12,Color("c4b1f0")))
+ out.add_child(label("All of this power belongs to this life. Death archives the story, then clears the build.",11,Color("c1afa2")))
+ out.add_child(button("Back to the lantern",show_camp));fit_menu.call_deferred()
+
 func next_room(route):
  profile.depth+=1;profile.route=route;profile.taken=[];profile.defeated=[];profile.chest=false;profile.cleared=false;profile.position=[100.0,520.0]
  profile.health=fox.health;profile.ward=Rules.stats(profile).ward
- build_room(false);set_mode("playing");save_life();notify(Rules.BIOMES[room.biome].name+" · Chamber "+str(profile.depth))
+ build_room(false);set_mode("playing");save_life();notify(room.get("archetype_name","Wandering Roots")+" · "+Rules.BIOMES[room.biome].name+" · Chamber "+str(profile.depth))
 
 func build_hud():
  hud=Control.new();hud.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);hud.mouse_filter=Control.MOUSE_FILTER_IGNORE;ui.add_child(hud)
@@ -507,7 +559,7 @@ func update_hud():
  hud_name.text=profile.name
  hud_health.text="HEARTS %d / %d%s"%[fox.health,fox.attributes.health,"  WARD" if fox.ward else ""]
  hud_level.text="LEVEL %d  ·  SPIRIT %d  ·  %s"%[level.level,profile.get("spirit",0),"DASH READY" if fox.dash_cooldown<=0 else "DASH %.1fs"%fox.dash_cooldown]
- hud_place.text="CHAMBER %02d\n%s"%[profile.depth,Rules.BIOMES[room.biome].name];hud_light.text="LIGHT "+str(profile.light)
+ hud_place.text="CHAMBER %02d · %s\n%s"%[profile.depth,room.get("archetype_name","Wandering Roots"),Rules.BIOMES[room.biome].name];hud_light.text="LIGHT "+str(profile.light)
  xp_bar.max_value=level.next;xp_bar.value=level.into
  for tb in touch_buttons:
   if tb.action=="interact":tb.visible=fox.position.distance_to(room.portal)<140
@@ -549,7 +601,7 @@ func _process(dt):
    var state=snapshot();JavaScriptBridge.eval("window.emberStatus="+JSON.stringify(state)+";document.body.dataset.ember="+JSON.stringify(mode)+";",true)
 
 func snapshot():
- return {"engine":"Godot 4.7.2","build":"mobile-physics-20260912","startupStage":startup_stage,"mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[]),"dashSerial":fox.dash_serial if is_instance_valid(fox) else 0,"jumpsUsed":fox.jumps_used if is_instance_valid(fox) else 0,"inputAxis":Input.get_axis("move_left","move_right"),"airJumps":fox.air_jumps_remaining() if is_instance_valid(fox) else 0,"animation":fox.sprite.animation if is_instance_valid(fox) else "","animationPlaying":fox.sprite.is_playing() if is_instance_valid(fox) else false,"reducedMotion":reduced_motion,"selectedFox":options[selection].name if not options.is_empty() else "","lastDeath":last_dead,"hudHealth":hud_health.text,"hudLight":hud_light.text}
+ return {"engine":"Godot 4.7.2","build":"legacy-replayability-20260913","startupStage":startup_stage,"mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[]),"dashSerial":fox.dash_serial if is_instance_valid(fox) else 0,"jumpsUsed":fox.jumps_used if is_instance_valid(fox) else 0,"inputAxis":Input.get_axis("move_left","move_right"),"airJumps":fox.air_jumps_remaining() if is_instance_valid(fox) else 0,"animation":fox.sprite.animation if is_instance_valid(fox) else "","animationPlaying":fox.sprite.is_playing() if is_instance_valid(fox) else false,"reducedMotion":reduced_motion,"selectedFox":options[selection].name if not options.is_empty() else "","generation":profile.get("generation",legacy.generation),"mutation":profile.get("mutation",""),"relics":profile.get("relics",[]),"synergies":Legacy.synergies_for(profile),"roomArchetype":room.get("archetype",""),"roomReward":room.get("reward",{}),"legacyRuns":legacy.runs,"legacyGeneration":legacy.generation,"lastDeath":last_dead,"hudHealth":hud_health.text,"hudLight":hud_light.text}
 
 func _unhandled_input(event):
  if event.is_action_pressed("pause_game") and not event.is_echo() and mode in ["playing","paused"]:
@@ -557,6 +609,40 @@ func _unhandled_input(event):
 
 func _notification(what):
  if what==NOTIFICATION_APPLICATION_FOCUS_OUT and not ignore_focus and mode=="playing":play_pause()
+
+func load_legacy():
+ var raw=null
+ if OS.has_feature("web"):
+  raw=JavaScriptBridge.eval("(()=>{try{return localStorage.getItem('"+Legacy.META_KEY+"')}catch(e){return '__unavailable__'}})()",true)
+ else:
+  if FileAccess.file_exists("user://lineage.json"):raw=FileAccess.get_file_as_string("user://lineage.json")
+ legacy_raw=raw
+ if raw==null:return
+ if not raw is String or raw=="__unavailable__" or raw.length()>524288:
+  warning=(warning+"  " if not warning.is_empty() else "")+"Lineage archive storage is unavailable; this run can continue."
+  return
+ var parsed=JSON.parse_string(raw);legacy=Legacy.normalize_archive(parsed)
+
+func save_legacy():
+ if test_mode:return true
+ var raw=JSON.stringify(legacy)
+ if OS.has_feature("web"):
+  var current=JavaScriptBridge.eval("(()=>{try{return localStorage.getItem('"+Legacy.META_KEY+"')}catch(e){return '__unavailable__'}})()",true)
+  if current=="__unavailable__":
+   warning=(warning+"  " if not warning.is_empty() else "")+"Lineage archive could not be saved."
+   return false
+  if current!=legacy_raw and current is String and current.length()>0:
+   var other=JSON.parse_string(current)
+   legacy=Legacy.merge_archives(legacy,other);raw=JSON.stringify(legacy)
+  var result=JavaScriptBridge.eval("(()=>{try{localStorage.setItem("+JSON.stringify(Legacy.META_KEY)+","+JSON.stringify(raw)+");return 'ok'}catch(e){return 'unavailable'}})()",true)
+  if result!="ok":return false
+ else:
+  var file=FileAccess.open("user://lineage.tmp",FileAccess.WRITE)
+  if not file:return false
+  file.store_string(raw);file.close()
+  if DirAccess.rename_absolute("user://lineage.tmp","user://lineage.json")!=OK:return false
+ legacy_raw=raw
+ return true
 
 func load_life():
  var raw=null
