@@ -355,8 +355,11 @@ func damage_enemy(e,amount):
   var absorbed=maxi(1,int(e.level));profile.spirit=mini(1000000,int(profile.get("spirit",0))+absorbed)
   var levels=Rules.award_xp(profile,xp)
   profile.light+=16 if e.type=="keeper" else 3
+  # Spirit changes capabilities on every defeat, not only at an XP level boundary.
+  var old_max=fox.attributes.health
+  fox.attributes=Rules.stats(profile)
   if levels>0:
-   var old_max=fox.attributes.health;fox.attributes=Rules.stats(profile);fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
+   fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
    notify("LEVEL %d · Absorbed %d enemy levels · +%d experience."%[fox.attributes.level,absorbed,xp]);sound("level")
   else:notify("Absorbed %d enemy levels · +%d experience"%[absorbed,xp],1.6)
   burst(Vector2(e.x,e.y),fox.color,20);save_life()

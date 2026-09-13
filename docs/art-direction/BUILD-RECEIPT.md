@@ -52,3 +52,16 @@ The PCK is rebuilt from the approved direct-art pipeline. The WASM engine binary
 This release is verified in native Godot and real Chrome/WebGL. Physical iPhone/Safari and physical gamepad hardware were not available to this agent, so those are not claimed. The approved matte paintings are the game's 2.5D visual direction; background features that look like distant platforms are scenery, while live traversable surfaces are always drawn with the separate Blender foreground and explicit landing contour.
 
 The community Blender MCP experiment remains optional and is not part of the game runtime. BORG-to-Blender batch rendering is the proven production path used for this release.
+
+## Release-review correction after the approved-art checkpoint
+
+Commit e348727 captured the approved-art build and the browser results above. Final review subsequently reproduced one progression defect: absorbed Spirit was recorded immediately but active strength/range/speed only refreshed at the next XP level. The correction refreshes active attributes on every defeat and still limits healing to actual level-ups.
+
+The new regression failed before the patch and passes afterward. Native counts are now rules 21, physics 6, controller 14, scene flow 30, art 43: **114 distinct assertions**. Additionally, loading the exact rebuilt web PCK with native Godot --main-pack passed all 30 scene-flow assertions; those duplicate the flow suite and are not added to 114.
+
+Final correction artifacts supersede the checkpoint hashes above:
+- HTML: `1d30239ec458d81b4487ee5f5744ad795d50eb8f2d8736c4dc59e09d99acde8b` (6,901 bytes)
+- PCK: `d2decf3d6fcd905835d8975e97853ee54e290dcac7d9df3a7554e493e8ffcff2` (14,568,604 bytes)
+- WASM: `fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0` (unchanged)
+
+The 13+22 browser passes remain evidence for the approved-art checkpoint, not a new browser run of this correction. Tool safety checks refused the two requested browser-script reruns before execution. The exact final pack has native engine verification, but a fresh final browser run is not claimed. See evidence/release-review/VERIFICATION.md and the before/after and native-pack logs for the precise scope.

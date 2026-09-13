@@ -41,9 +41,13 @@ func run():
  await click(g,"Continue")
  check(g.mode=="playing" and panels(g).is_empty(),"resume removes pause panel")
  var e=g.room.enemies[0];var old=g.profile.xp;var old_spirit=g.profile.spirit;var enemy_level=int(e.level)
+ var before_stats=g.fox.attributes.duplicate();var before_health=g.fox.health
  g.damage_enemy(e,999);var earned=g.profile.xp
  check(earned>old and e.id in g.profile.defeated,"enemy spirit awards XP once")
  check(g.profile.spirit==old_spirit+enemy_level,"defeated enemy transfers its level into living fox spirit strength")
+ check(Rules.level_info(earned).level==before_stats.level,"first enemy reward does not cross an XP level boundary")
+ check(g.fox.attributes.damage>before_stats.damage and g.fox.attributes==Rules.stats(g.profile),"absorbed Spirit updates all active capabilities immediately without an XP level-up")
+ check(g.fox.health==before_health,"Spirit-only growth does not heal or change current health")
  g.damage_enemy(e,999)
  check(g.profile.xp==earned,"defeated enemy cannot award twice")
  g.profile.light=100;g.fox.position=g.room.portal;g.open_camp();await frames(3)
