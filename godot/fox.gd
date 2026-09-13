@@ -8,7 +8,14 @@ signal hurt
 signal died
 const Rules=preload("res://rules.gd")
 var attributes={"speed":320.0,"jumps":2,"dash_time":0.17,"dash_cooldown":1.25}
-var active=false
+var active=false:
+ set(value):
+  active=value
+  if not value:
+   jump_buffer=0.0;dash_buffer=0.0
+  if is_instance_valid(sprite):
+   if value:sprite.play()
+   else:sprite.pause()
 var health=5
 var ward=0
 var facing=1
@@ -22,6 +29,16 @@ var jump_buffer=0.0
 var jumps_used=0
 var drop_time=0.0
 var dash_serial=0
+var dash_buffer=0.0
+var buffered_dash_direction=1
+var squash=Vector2.ONE
+var reduced_motion=false
+var death_cause="an enemy"
+var hit_recovery=0.0
+var animation_clips={"idle":[0,4,5.0],"run":[4,8,14.0],"rise":[12,1,1.0],"fall":[13,1,1.0],"dash":[14,1,1.0],"pulse":[15,1,1.0]}
+const AIR_ACCELERATION=3200.0
+const AIR_BRAKING=1600.0
+const DASH_BUFFER_SECONDS=.10
 var previous_y=0.0
 var safe_position=Vector2(100,520)
 var sprite:AnimatedSprite2D
@@ -44,6 +61,7 @@ func _ready():
  var meta=JSON.parse_string(FileAccess.get_file_as_string("res://assets/atlas.json"))
  if meta is Dictionary:
   frame_size=Vector2(meta.get("frameWidth",256),meta.get("frameHeight",192));art_scale=float(meta.get("drawScale",.63));anchor=Vector2(meta.anchor[0],meta.anchor[1])
+  animation_clips=meta.get("clips",animation_clips)
  sprite=AnimatedSprite2D.new();sprite.centered=false;sprite.offset=-frame_size*anchor;sprite.scale=Vector2.ONE*art_scale;add_child(sprite)
  set_art(atlas_path)
 
@@ -54,7 +72,7 @@ func set_art(path):
  var texture=load(path)
  if not texture:return
  var frames=SpriteFrames.new()
- var clips={"idle":[0,4,5.0],"run":[4,8,14.0],"rise":[12,1,1.0],"fall":[13,1,1.0],"dash":[14,1,1.0],"pulse":[15,1,1.0]}
+ var clips=animation_clips
  for clip in clips:
   frames.add_animation(clip);frames.set_animation_speed(clip,clips[clip][2]);frames.set_animation_loop(clip,true)
   for i in range(clips[clip][0],clips[clip][0]+clips[clip][1]):
@@ -65,6 +83,9 @@ func _physics_process(dt):
  if not active:return
  var grounded=is_on_floor()
  previous_y=position.y
+ dash_buffer=maxf(0,dash_buffer-dt)
+ hit_recovery=maxf(0,hit_recovery-dt)
+ squash=squash.lerp(Vector2.ONE,1-exp(-dt*18))
  invulnerability=maxf(0,invulnerability-dt);dash_cooldown=maxf(0,dash_cooldown-dt);attack_cooldown=maxf(0,attack_cooldown-dt);jump_buffer=maxf(0,jump_buffer-dt);drop_time=maxf(0,drop_time-dt)
  set_collision_mask_value(3,drop_time<=0)
  coyote=0.12 if grounded else maxf(0,coyote-dt)
@@ -73,13 +94,16 @@ func _physics_process(dt):
  if Input.is_action_just_pressed("jump"):jump_buffer=0.14
  if Input.is_action_just_pressed("drop") and grounded:
   drop_time=0.24;set_collision_mask_value(3,false);position.y+=2;velocity.y=80
- if Input.is_action_just_pressed("dash") and dash_cooldown<=0:
-  dash_direction=int(signf(axis)) if absf(axis)>0.1 else facing
+ if Input.is_action_just_pressed("dash"):
+  dash_buffer=DASH_BUFFER_SECONDS
+  buffered_dash_direction=int(signf(axis)) if absf(axis)>0.1 else facing
+ if dash_buffer>0 and dash_cooldown<=0:
+  dash_buffer=0;hit_recovery=0;dash_direction=buffered_dash_direction
   facing=dash_direction;dash_time=attributes.dash_time;dash_cooldown=attributes.dash_cooldown;dash_serial+=1;velocity=Vector2(dash_direction*780,0);invulnerability=maxf(invulnerability,dash_time+0.07);dashed.emit()
  if jump_buffer>0 and (grounded or coyote>0 or jumps_used<attributes.jumps):
   if not grounded and coyote<=0:jumps_used=maxi(1,jumps_used)
   if jumps_used<attributes.jumps:
-   velocity.y=-690;jumps_used+=1;coyote=0;jump_buffer=0;dash_time=0;jumped.emit()
+   hit_recovery=0;velocity.y=-690;jumps_used+=1;coyote=0;jump_buffer=0;dash_time=0;squash=Vector2(.96,1.055);jumped.emit()
  if Input.is_action_just_released("jump") and velocity.y < -500:velocity.y=-500
  if Input.is_action_pressed("pulse") and attack_cooldown<=0:
   attack_cooldown=.42;pulse.emit()
@@ -88,32 +112,39 @@ func _physics_process(dt):
  else:
   if absf(axis)>0.1:
    facing=int(signf(axis))
-   var acceleration=5100.0 if grounded else 2700.0
+   var acceleration=5100.0 if grounded else AIR_ACCELERATION
    if signf(axis)!=signf(velocity.x):acceleration*=1.4
    velocity.x=move_toward(velocity.x,axis*attributes.speed,acceleration*dt)
-  else:velocity.x=move_toward(velocity.x,0,(6500.0 if grounded else 600.0)*dt)
+  else:velocity.x=move_toward(velocity.x,0,(900.0 if hit_recovery>0 else 6500.0 if grounded else AIR_BRAKING)*dt)
   var gravity=2500.0 if velocity.y>0 else 2150.0
   if absf(velocity.y)<105 and Input.is_action_pressed("jump"):gravity=1400.0
   velocity.y=minf(1120,velocity.y+gravity*dt)
+ var impact_speed=velocity.y
  move_and_slide()
  if is_on_wall() and dash_time>0:dash_time=0;velocity.x=0
  if is_on_ceiling():jump_buffer=0
- if is_on_floor():
-  if not grounded:landed.emit()
- sprite.scale.x=absf(sprite.scale.x)*facing
+ if is_on_floor() and not grounded:
+  var impact=clampf(impact_speed/1000.0,.35,1.0)
+  squash=Vector2(1.0+.13*impact,1.0-.10*impact);landed.emit()
+ # Presentation changes are isolated from CharacterBody2D and keep the paw pivot.
+ sprite.scale=Vector2(facing,1)*art_scale*(Vector2.ONE if reduced_motion else squash)
+ var tilt=0.0 if is_on_floor() or reduced_motion else (-.035 if velocity.y<0 else .035)*facing
+ sprite.rotation=lerp_angle(sprite.rotation,tilt,1-exp(-dt*16))
+ sprite.speed_scale=1.0
  if dash_time>0:sprite.play("dash")
  elif attack_cooldown>.30:sprite.play("pulse")
  elif not is_on_floor():sprite.play("rise" if velocity.y<0 else "fall")
  elif absf(velocity.x)>25:
-  sprite.play("run");sprite.speed_scale=clampf(absf(velocity.x)/attributes.speed,.7,1.3)
+  sprite.play("run");sprite.speed_scale=clampf(absf(velocity.x)/320.0,.65,1.35)
  else:sprite.play("idle");sprite.speed_scale=1.0
  sprite.modulate=Color(1.3,1.3,1.3,.82) if invulnerability>0 else Color.WHITE
  queue_redraw()
  if position.y>1100:
-  health=0;active=false;died.emit()
+  death_cause="a fall into the depths";health=0;active=false;died.emit()
 
-func hit(amount=1,origin=Vector2.ZERO):
+func hit(amount=1,origin=Vector2.ZERO,cause="an enemy"):
  if not active or invulnerability>0:return false
+ death_cause=cause;hit_recovery=.10
  if ward>0:ward-=1
  else:health=maxi(0,health-amount)
  invulnerability=1.0
@@ -130,7 +161,7 @@ func _process(dt):
   echoes[i].life-=dt
   if echoes[i].life<=0:echoes.remove_at(i)
  trail_age+=dt
- if dash_time>0 and trail_age>.025 and sprite and sprite.sprite_frames:
+ if not reduced_motion and dash_time>0 and trail_age>.025 and sprite and sprite.sprite_frames:
   trail_age=0
   var texture=sprite.sprite_frames.get_frame_texture(sprite.animation,sprite.frame)
   echoes.append({"pos":global_position,"face":facing,"life":.17,"texture":texture})
@@ -139,6 +170,13 @@ func _process(dt):
 
 func _draw():
  if sprite==null:return
+ # One dot for each remaining extra air jump; a thin bar communicates dash recovery.
+ if active and not is_on_floor():
+  var capacity=maxi(0,int(attributes.jumps)-1)
+  for i in range(capacity):draw_circle(Vector2((i-(capacity-1)*.5)*7,-82),2.0,Color(color,.95 if i<air_jumps_remaining() else .20))
+ if active and dash_cooldown>0:
+  draw_line(Vector2(-15,7),Vector2(15,7),Color(color,.18),2,true)
+  draw_line(Vector2(-15,7),Vector2(-15+30*(1-dash_cooldown/attributes.dash_cooldown),7),Color(color,.8),2,true)
  for echo in echoes:
   draw_set_transform(echo.pos-global_position,0,Vector2(echo.face*art_scale,art_scale))
   draw_texture(echo.texture,-frame_size*anchor,Color(color,echo.life*1.9))
@@ -174,3 +212,6 @@ func _draw():
  if ward>0:draw_arc(Vector2(0,-27),42,0,TAU,44,Color(color,.52),1.8,true)
  if dash_time>0:
   for i in range(3):draw_line(Vector2(-facing*(25+i*12),-20+i*9),Vector2(-facing*(65+i*10),-20+i*9),Color(color,.4-i*.1),2,true)
+
+func air_jumps_remaining():
+ return maxi(0,int(attributes.get("jumps",2))-maxi(1,jumps_used))

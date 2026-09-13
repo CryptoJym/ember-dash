@@ -7,7 +7,7 @@ const url=process.env.EMBER_URL||'http://127.0.0.1:9017/';
 const out=process.env.EMBER_EVIDENCE||'docs/ironflame/evidence';mkdirSync(out,{recursive:true});
 const checks=[],errors=[];const ok=(name,value)=>{assert.ok(value,name);checks.push({name,pass:true});console.log('PASS',name);};
 console.log('BROWSER_LAUNCH');
-const browser=await chromium.launch({channel:'chrome',headless:true,timeout:120000});
+const browser=await chromium.launch({channel:process.env.EMBER_BROWSER==='bundled'?undefined:'chrome',headless:true,timeout:45000});
 console.log('BROWSER_READY');
 try{
  const context=await browser.newContext({viewport:{width:1280,height:800}});

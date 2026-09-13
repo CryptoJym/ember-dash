@@ -57,11 +57,13 @@ func run():
  check(Rules.level_info(g.profile.xp).level>level_before_reward and g.fox.health==mini(g.fox.attributes.health,health_before_level+1),"an actual XP level-up still heals the wounded fox once")
  g.profile.light=100;g.fox.position=g.room.portal;g.open_camp();await frames(3)
  check(g.mode=="camp" and panels(g).size()==1,"chamber transition opens one sanctuary")
+ check(g.hud_health.text.begins_with("HEARTS %d /"%g.fox.health) and g.hud_light.text=="LIGHT "+str(g.profile.light),"sanctuary HUD immediately agrees with healed health and current light")
  var level=Rules.level_info(g.profile.xp).level
  check(level>1 and g.fox.attributes.level==level,"sanctuary levels apply to active stats")
  var wallet=g.profile.light;var cost=Rules.price(g.profile,"power")
  await click(g,"Inner flame")
  check(g.profile.upgrades.power==1 and g.profile.light==wallet-cost,"shop spends exact light and raises strength")
+ check(g.hud_light.text=="LIGHT "+str(g.profile.light),"paused sanctuary purchase refreshes the HUD wallet immediately")
  await click(g,"Follow the roots")
  check(g.profile.depth==2 and g.mode=="playing" and g.fox.active and panels(g).is_empty(),"new chamber retains level and clears menus")
  check(g.profile.upgrades.power==1 and Rules.level_info(g.profile.xp).level>=level,"same fox keeps abilities between rooms")

@@ -1,0 +1,936 @@
+{
+  "started": "2026-09-13T02:59:09.084Z",
+  "ended": "2026-09-13T03:00:41.231Z",
+  "url": "http://127.0.0.1:9041/",
+  "artifacts": {
+    "index.html": "8c51a1d90f868b3bbecc93abe9826ab103869b1a6410a1b1c837cccc063ee591",
+    "index.pck": "49a5caa39f9674950306e2d0e0cb1005166317e25c7ee0c4d0fd492575b4761d",
+    "index.wasm": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+  },
+  "webkitExecutableInstalled": true,
+  "records": [
+    {
+      "case": "320x568",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            474,
+            168,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 63.98656464606759,
+              "y": 383.1999977827072
+            },
+            "bodyScreenRect": {
+              "left": 50.54656494647501,
+              "right": 77.42656434566018,
+              "top": 361.4399982690811,
+              "bottom": 383.1999977827072
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 21.75999951362609
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 261.5751953125
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              261.5751953125,
+              519.989990234375
+            ],
+            "after": [
+              261.5751953125,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            34,
+            104,
+            492,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 63.98656464606759,
+            "y": 383.1999977827072
+          },
+          "bodyScreenRect": {
+            "left": 50.54656494647501,
+            "right": 77.42656434566018,
+            "top": 361.4399982690811,
+            "bottom": 383.1999977827072
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 21.75999951362609
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              488.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              488.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              275.999999046326,
+              487.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              226.000000476837,
+              420.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              167.000000953674,
+              483.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Briar Starstep",
+        "seed": 683512740,
+        "rotated": {
+          "feet": {
+            "x": 131.418670654297,
+            "y": 176.3443603515625
+          },
+          "bodyScreenRect": {
+            "left": 120.91867065429699,
+            "right": 141.918670654297,
+            "top": 159.3443603515625,
+            "bottom": 176.3443603515625
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 17
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "375x667",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            573,
+            223,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 74.9267578125,
+              "y": 449.75
+            },
+            "bodyScreenRect": {
+              "left": 59.1767578125,
+              "right": 90.6767578125,
+              "top": 424.25,
+              "bottom": 449.75
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 25.5
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 250.908569335938
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              250.908569335938,
+              519.989990234375
+            ],
+            "after": [
+              250.908569335938,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            83.5,
+            104,
+            492,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 74.9267578125,
+            "y": 449.75
+          },
+          "bodyScreenRect": {
+            "left": 59.1767578125,
+            "right": 90.6767578125,
+            "top": 424.25,
+            "bottom": 449.75
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 25.5
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              587.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              587.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              330.999999046326,
+              586.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              281.000000476837,
+              519.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              222.000000953674,
+              582.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Astra Starstep",
+        "seed": 495456001,
+        "rotated": {
+          "feet": {
+            "x": 147.70928239822405,
+            "y": 206.60750269889826
+          },
+          "bodyScreenRect": {
+            "left": 135.40459489822405,
+            "right": 160.01396989822405,
+            "top": 186.68562769889826,
+            "bottom": 206.60750269889826
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 19.921875
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "390x664",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            570,
+            238,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 77.9253201512075,
+              "y": 452.8999955654145
+            },
+            "bodyScreenRect": {
+              "left": 61.545320752022306,
+              "right": 94.3053195503927,
+              "top": 426.3799965381623,
+              "bottom": 452.8999955654145
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 26.51999902725221
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 240.24186706543
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              240.24186706543,
+              519.989990234375
+            ],
+            "after": [
+              240.24186706543,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            82,
+            104,
+            492,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 77.9253201512075,
+            "y": 452.8999955654145
+          },
+          "bodyScreenRect": {
+            "left": 61.545320752022306,
+            "right": 94.3053195503927,
+            "top": 426.3799965381623,
+            "bottom": 452.8999955654145
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 26.51999902725221
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              584.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              584.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              345.999999046326,
+              583.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              296.000000476837,
+              516.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              237.000000953674,
+              579.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Rune Dawngleam",
+        "seed": 802434804,
+        "rotated": {
+          "feet": {
+            "x": 146.87269139289876,
+            "y": 214.75843763351435
+          },
+          "bodyScreenRect": {
+            "left": 134.07581639289876,
+            "right": 159.66956639289876,
+            "top": 194.03968763351435,
+            "bottom": 214.75843763351435
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 20.71875
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "844x300",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            210,
+            692,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 47.319175720214844,
+              "y": 165.08668899536156
+            },
+            "bodyScreenRect": {
+              "left": 37.475425720214844,
+              "right": 57.162925720214844,
+              "top": 149.14918899536156,
+              "bottom": 165.08668899536156
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 15.9375
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 245.575241088867
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              245.575241088867,
+              519.989990234375
+            ],
+            "after": [
+              245.575241088867,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            34,
+            283,
+            232,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 47.319175720214844,
+            "y": 165.08668899536156
+          },
+          "bodyScreenRect": {
+            "left": 37.475425720214844,
+            "right": 57.162925720214844,
+            "top": 149.14918899536156,
+            "bottom": 165.08668899536156
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 15.9375
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              220.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              220.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              799.999999046326,
+              219.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              750.000000476837,
+              152.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              691.000000953674,
+              215.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Perrin Moonveil",
+        "seed": 1790006073,
+        "rotated": {
+          "feet": {
+            "x": 97.429603013579,
+            "y": 514.5314367823374
+          },
+          "bodyScreenRect": {
+            "left": 84.82960251289998,
+            "right": 110.02960351425801,
+            "top": 494.13143597171427,
+            "bottom": 514.5314367823374
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 20.400000810623172
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "844x390",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            296,
+            692,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 61.52467250823963,
+              "y": 214.67094039916992
+            },
+            "bodyScreenRect": {
+              "left": 48.72779750823963,
+              "right": 74.32154750823963,
+              "top": 193.95219039916992,
+              "bottom": 214.67094039916992
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 20.71875
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 277.575256347656
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              277.575256347656,
+              519.989990234375
+            ],
+            "after": [
+              277.575256347656,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            34,
+            298,
+            322,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 61.52467250823963,
+            "y": 214.67094039916992
+          },
+          "bodyScreenRect": {
+            "left": 48.72779750823963,
+            "right": 74.32154750823963,
+            "top": 193.95219039916992,
+            "bottom": 214.67094039916992
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 20.71875
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              310.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              310.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              799.999999046326,
+              309.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              750.000000476837,
+              242.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              691.000000953674,
+              305.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Zephra Moonveil",
+        "seed": 1728162741,
+        "rotated": {
+          "feet": {
+            "x": 126.93807561661326,
+            "y": 542.0219005048494
+          },
+          "bodyScreenRect": {
+            "left": 110.55807621742807,
+            "right": 143.31807501579846,
+            "top": 515.5019014775972,
+            "bottom": 542.0219005048494
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 26.51999902725221
+        }
+      },
+      "errors": []
+    },
+    {
+      "case": "768x1024",
+      "checks": [
+        {
+          "id": "begin button fully onscreen",
+          "pass": true,
+          "detail": [
+            34,
+            930,
+            616,
+            58
+          ]
+        },
+        {
+          "id": "hero collision body not covered by touch controls at spawn",
+          "pass": true,
+          "detail": {
+            "feet": {
+              "x": 153.52551362163598,
+              "y": 750.0800020694733
+            },
+            "bodyScreenRect": {
+              "left": 121.26951334125573,
+              "right": 185.78151390201623,
+              "top": 697.8560016155243,
+              "bottom": 750.0800020694733
+            },
+            "overlappingControls": [],
+            "approxBodyHeightPx": 52.22400045394896
+          }
+        },
+        {
+          "id": "all active touch circles onscreen",
+          "pass": true
+        },
+        {
+          "id": "two-finger movement and jumping",
+          "pass": true
+        },
+        {
+          "id": "released touch stops grounded movement",
+          "pass": true,
+          "detail": {
+            "vx": 0,
+            "x": 268.441925048828
+          }
+        },
+        {
+          "id": "rotation preserves living fox without unsolicited movement",
+          "pass": true,
+          "detail": {
+            "before": [
+              268.441925048828,
+              519.989990234375
+            ],
+            "after": [
+              268.441925048828,
+              519.989990234375
+            ],
+            "mode": "playing"
+          }
+        },
+        {
+          "id": "resume button reachable after rotation",
+          "pass": true,
+          "detail": [
+            262,
+            270,
+            500,
+            58
+          ]
+        },
+        {
+          "id": "no GDScript or browser errors",
+          "pass": true
+        }
+      ],
+      "observations": {
+        "start": {
+          "feet": {
+            "x": 153.52551362163598,
+            "y": 750.0800020694733
+          },
+          "bodyScreenRect": {
+            "left": 121.26951334125573,
+            "right": 185.78151390201623,
+            "top": 697.8560016155243,
+            "bottom": 750.0800020694733
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 52.22400045394896
+        },
+        "touch": [
+          {
+            "action": "move_left",
+            "center": [
+              40.0000009536743,
+              944.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "move_right",
+            "center": [
+              106.000000953674,
+              944.000000953674
+            ],
+            "size": 58.0000019073486
+          },
+          {
+            "action": "jump",
+            "center": [
+              723.999999046326,
+              943.999999046326
+            ],
+            "size": 71.9999980926514
+          },
+          {
+            "action": "dash",
+            "center": [
+              674.000000476837,
+              876.000000476837
+            ],
+            "size": 54.0000009536743
+          },
+          {
+            "action": "pulse",
+            "center": [
+              615.000000953674,
+              939.000000953674
+            ],
+            "size": 58.0000019073486
+          }
+        ],
+        "name": "Perrin Swiftfern",
+        "seed": 355124200,
+        "rotated": {
+          "feet": {
+            "x": 263.24366337851785,
+            "y": 535.1521412382717
+          },
+          "bodyScreenRect": {
+            "left": 242.76366359786294,
+            "right": 283.72366315917276,
+            "top": 501.99404635530664,
+            "bottom": 535.1521412382717
+          },
+          "overlappingControls": [],
+          "approxBodyHeightPx": 33.158094882965095
+        }
+      },
+      "errors": []
+    }
+  ],
+  "errors": [],
+  "checks": 48,
+  "passed": 48,
+  "findings": [],
+  "scope": "Actual Godot web export and real touch input in six isolated Chromium emulated viewports. Rotations change viewport dimensions; not native iOS orientation sensors. No gameplay profile fixture or production save was modified."
+}

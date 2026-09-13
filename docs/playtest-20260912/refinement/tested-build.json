@@ -1,0 +1,53 @@
+{
+  "recorded_at_utc": "2026-09-13T03:04:01.863240+00:00",
+  "source_base": "2d0ea90f78bac8c6a0b7b48f7dd5c6d7016ece66",
+  "artifacts": {
+    "index.html": {
+      "bytes": 6901,
+      "sha256": "da2f605163d184821285c2be45597c90eaf485e6a8ea87b61563dd9c2f690e20"
+    },
+    "index.js": {
+      "bytes": 279815,
+      "sha256": "33c94cb3175f3333b82e2a3be5e8e86f77986f0aa2042b1631f6367a4e5bb6ba"
+    },
+    "index.pck": {
+      "bytes": 14566840,
+      "sha256": "355a0c6a08feb6c9a11d9997b2e96cbab5511f69a843e3500af873600c6962ee"
+    },
+    "index.wasm": {
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  },
+  "http_readback_all_four_exact": true,
+  "canonical_forge_updated": true,
+  "source": {
+    "godot/main.gd": "7e24fac6e11fe9fd85d09aa77a014a2a726945b781170abb50992661bf0e2a9e",
+    "godot/fox.gd": "69769f4965126bc5e0edd6ece726e8431eb09ac365977511750c3e5e9d9f3d80",
+    "godot/encounter.gd": "bbee981de97533af3ed2228123a1de62bc6b35dbacb9c556a3cb645a2af6f07d",
+    "godot/world_art.gd": "61022b1ce093841e5b5730997095ac7546279f12ebda7eb4cd108ee9dae383c5",
+    "godot/rules.gd": "381d3a7931a304d486866b5ff2bf269d560d35f63f00c3e11e7ee09624187f3a"
+  },
+  "native_checks": {
+    "rules": 21,
+    "physics": 6,
+    "controller": 14,
+    "flow": 33,
+    "art_assets": 43,
+    "small_layout": 14,
+    "feel": 14,
+    "combat_readability": 14
+  },
+  "native_total": 159,
+  "final_browser_smoke": 13,
+  "final_browser_journey": 24,
+  "pre_hud_checkpoint": {
+    "mobile_matrix": 48,
+    "four_chamber_and_guardian_run": 8,
+    "pck_sha256": "49a5caa39f9674950306e2d0e0cb1005166317e25c7ee0c4d0fd492575b4761d",
+    "only_later_game_change": "Refresh HUD health/light on entering sanctuary and after purchases; add read-only HUD observations. Affected native and browser assertions passed again."
+  },
+  "owner_preview": "http://127.0.0.1:9042/",
+  "public_deployed": false,
+  "independent_review": "pending; installed router did not admit shipping"
+}

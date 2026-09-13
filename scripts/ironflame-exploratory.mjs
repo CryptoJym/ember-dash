@@ -9,8 +9,8 @@ const url=process.env.EMBER_URL||'http://127.0.0.1:9037/';
 assert.equal(new URL(url).hostname,'127.0.0.1','Only the owned loopback test export is allowed');
 const out=process.env.EMBER_EVIDENCE||'docs/playtest-20260912/exploratory';mkdirSync(out,{recursive:true});
 const records=[],errors=[];const hash=b=>createHash('sha256').update(b).digest('hex');
-const artifacts=Object.fromEntries(['index.html','index.pck','index.wasm'].map(f=>[f,hash(readFileSync('forge/'+f))]));
-const browser=await pw.chromium.launch({channel:'chrome',headless:true,timeout:120000});
+const artifacts=Object.fromEntries(['index.html','index.pck','index.wasm'].map(f=>[f,hash(readFileSync((process.env.EMBER_WEB_DIR||'forge')+'/'+f))]));
+const browser=await pw.chromium.launch({channel:process.env.EMBER_BROWSER==='bundled'?undefined:'chrome',headless:true,timeout:45000});
 const started=new Date().toISOString();
 const viewports=[{width:320,height:568},{width:375,height:667},{width:390,height:664},{width:844,height:300},{width:844,height:390},{width:768,height:1024}];
 function colliding(s){

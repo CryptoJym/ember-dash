@@ -1,0 +1,205 @@
+=== rules ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS three candidates
+PASS candidate names unique
+PASS fresh fox starts clean
+PASS spirit XP raises level
+PASS leveling awards talent tokens
+PASS living fox can buy strength
+PASS living fox can awaken talent
+PASS profile round-trip preserves living progression and absorbed levels
+PASS absorbed enemy levels increase living fox strength
+PASS death tombstone contains no progression
+PASS boss chamber generated
+PASS generated room has traversal length
+PASS room generation deterministic
+PASS unknown save version is not adopted
+PASS non-object save rejected
+PASS zero health cannot resume as living
+PASS dead profile cannot gain or spend progression
+PASS insufficient funds leave profile unchanged
+PASS unknown upgrade cannot mutate state
+PASS 1000 deterministic choices have no duplicate candidate names
+PASS 1000 generated chambers retain the tested geometry envelope
+RULE_TESTS_OK
+
+
+=== physics ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS fox lands on engine floor
+PASS solid wall blocks horizontal movement
+PASS jump produces meaningful airtime; min_y=452.848052978516
+PASS fox returns to floor
+PASS dash direction stays locked against opposite input
+PASS wall collision remains stable after dash
+PHYSICS_TESTS_OK
+
+
+=== controller ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS real CharacterBody2D settles on solid floor
+PASS ground acceleration reaches full speed within 84ms
+PASS release brakes within twelve world pixels
+PASS brief tap clears a useful height and lands
+PASS holding jump rises higher than tapping
+PASS second press performs exactly one air jump
+PASS third jump is unavailable without inherited upgrade
+PASS dash direction cannot reverse mid-burst
+PASS 780px per second dash cannot tunnel through a two-pixel wall
+PASS solid ceiling stops upward motion without clipping
+PASS one-way ledge allows ascent and catches descent
+PASS drop input passes through a one-way ledge to solid ground
+PASS jump buffered before landing fires on landing
+PASS 200 seeded required gaps traversed by actual engine collision with baseline fox
+{"checks":14,"failures":[],"gaps":200,"heldRise":109.110290527344,"missed":[],"suite":"engine controller and generated traversal","tapRise":67.1519470214844}
+
+
+=== flow ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS one title panel
+PASS single actionable button: Choose your fox
+PASS one selection panel
+PASS single actionable button: Begin as
+PASS begin enables physics
+PASS no menu overlay survives begin callback
+PASS animated fox loaded
+PASS pause disables gameplay with one panel
+PASS single actionable button: Continue
+PASS resume removes pause panel
+PASS enemy spirit awards XP once
+PASS defeated enemy transfers its level into living fox spirit strength
+PASS first enemy reward does not cross an XP level boundary
+PASS absorbed Spirit updates all active capabilities immediately without an XP level-up
+PASS Spirit-only growth does not heal or change current health
+PASS defeated enemy cannot award XP or Spirit twice
+PASS an actual XP level-up still heals the wounded fox once
+PASS chamber transition opens one sanctuary
+PASS sanctuary HUD immediately agrees with healed health and current light
+PASS sanctuary levels apply to active stats
+PASS single actionable button: Inner flame
+PASS shop spends exact light and raises strength
+PASS paused sanctuary purchase refreshes the HUD wallet immediately
+PASS single actionable button: Follow the roots
+PASS new chamber retains level and clears menus
+PASS same fox keeps abilities between rooms
+PASS actual lethal hit ends gameplay
+PASS death discards every character progression field
+PASS single actionable button: Start a new life
+PASS single actionable button: Begin as
+PASS next fox starts with no XP or currency
+PASS next fox inherits no dead-character upgrades
+PASS next fox inherits none of the dead character absorbed enemy levels
+{"checks":33,"failures":[],"suite":"actual Godot scene flow"}
+
+
+=== art_assets ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS 512x384 approved-art metadata matches the rendered cells
+PASS stable shared foot pivot is inside every frame
+PASS ember atlas has sixteen complete cells
+PASS ember frames contain art with no boundary clipping
+PASS ember visible feet remain near the physics anchor
+PASS ember run contains eight distinct rendered poses
+PASS ember portrait and HUD head are imported
+PASS tide atlas has sixteen complete cells
+PASS tide frames contain art with no boundary clipping
+PASS tide visible feet remain near the physics anchor
+PASS tide run contains eight distinct rendered poses
+PASS tide portrait and HUD head are imported
+PASS gale atlas has sixteen complete cells
+PASS gale frames contain art with no boundary clipping
+PASS gale visible feet remain near the physics anchor
+PASS gale run contains eight distinct rendered poses
+PASS gale portrait and HUD head are imported
+PASS void atlas has sixteen complete cells
+PASS void frames contain art with no boundary clipping
+PASS void visible feet remain near the physics anchor
+PASS void run contains eight distinct rendered poses
+PASS void portrait and HUD head are imported
+PASS sun atlas has sixteen complete cells
+PASS sun frames contain art with no boundary clipping
+PASS sun visible feet remain near the physics anchor
+PASS sun run contains eight distinct rendered poses
+PASS sun portrait and HUD head are imported
+PASS bloom atlas has sixteen complete cells
+PASS bloom frames contain art with no boundary clipping
+PASS bloom visible feet remain near the physics anchor
+PASS bloom run contains eight distinct rendered poses
+PASS bloom portrait and HUD head are imported
+PASS six bloodlines have distinct image assets
+PASS grove landing projection has ordered finite bounds
+PASS grove foreground and portal textures are imported
+PASS frost landing projection has ordered finite bounds
+PASS frost foreground and portal textures are imported
+PASS cinder landing projection has ordered finite bounds
+PASS cinder foreground and portal textures are imported
+PASS crawler rendered enemy and anchor exist
+PASS wisp rendered enemy and anchor exist
+PASS spitter rendered enemy and anchor exist
+PASS keeper rendered enemy and anchor exist
+{"checks":43,"failures":[],"frames":96,"suite":"rendered art and projection contracts"}
+
+
+=== small_layout ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS (320, 568): Begin stays fully inside viewport
+PASS (320, 568): selection panel respects screen bounds
+PASS (375, 667): Begin stays fully inside viewport
+PASS (375, 667): selection panel respects screen bounds
+PASS (390, 664): Begin stays fully inside viewport
+PASS (390, 664): selection panel respects screen bounds
+PASS (844, 300): Begin stays fully inside viewport
+PASS (844, 300): selection panel respects screen bounds
+PASS (844, 300): landscape fox is above movement controls
+PASS (844, 390): Begin stays fully inside viewport
+PASS (844, 390): selection panel respects screen bounds
+PASS (844, 390): landscape fox is above movement controls
+PASS (768, 1024): Begin stays fully inside viewport
+PASS (768, 1024): selection panel respects screen bounds
+{"checks":14,"failures":[],"suite":"small-screen layout"}
+
+
+=== feel ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS air release stops inside forty world pixels without removing jump height
+PASS dash pressed shortly before ready fires once when cooldown expires
+PASS buffered dash does not repeat on a held or released key
+PASS paused fox freezes its animated sprite as well as its physics
+PASS paused physics position remains exact
+PASS resuming the fox resumes its animation
+PASS enemy knockback remains readable for the first forty milliseconds
+PASS knockback does not change damage amount
+PASS recovery window prevents duplicate contact damage
+PASS takeoff briefly stretches only the painted sprite
+PASS sprite refinement never changes the collision box
+PASS landing produces a bounded paw-anchored compression
+PASS landing compression settles back to authored proportions
+PASS animation playback obeys approved atlas clip timing
+{"airReleaseDriftPx":30.6666717529297,"checks":14,"failures":[],"suite":"controller feel and sprite"}
+
+
+=== combat_readability ===
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS offscreen enemy cannot fire or silently charge
+PASS newly visible ready enemy begins a visible wind-up rather than firing immediately
+PASS player has time to read and dodge the wind-up
+PASS released shot follows telegraphed aim, not a last-instant homing correction
+PASS ranged attack resets its full recovery
+PASS a hit interrupts enemy wind-up
+PASS keeper retains three-projectile volley after visible wind-up
+PASS death recap reports the actual lethal cause
+PASS death recap does not retain a persistent character profile
+PASS actual game pause freezes fox animation
+PASS reduced motion keeps authored sprite proportions
+PASS actual hit produces enemy stagger and damage feedback
+PASS guardian is not stun-locked by repeated pulse attacks
+PASS guardian keeps its visible wind-up after taking damage
+{"checks":14,"failures":[],"suite":"combat readability"}

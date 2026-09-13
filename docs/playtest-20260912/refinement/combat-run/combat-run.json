@@ -1,0 +1,98 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "reduced-motion preference does not prevent browser startup",
+      "pass": true
+    },
+    {
+      "name": "real-input chamber 1 clears",
+      "pass": true
+    },
+    {
+      "name": "real-input chamber 2 clears",
+      "pass": true
+    },
+    {
+      "name": "real-input chamber 3 clears",
+      "pass": true
+    },
+    {
+      "name": "real-input chamber 4 clears",
+      "pass": true
+    },
+    {
+      "name": "guardian defeated without profile mutation",
+      "pass": true
+    },
+    {
+      "name": "multi-room progression accumulates Spirit",
+      "pass": true
+    },
+    {
+      "name": "no script or uncaught browser errors",
+      "pass": true
+    }
+  ],
+  "rooms": [
+    {
+      "depth": 1,
+      "seed": 2056818491,
+      "name": "Flint Dawngleam",
+      "health": 5,
+      "level": 2,
+      "spirit": 3,
+      "light": 50,
+      "defeated": [
+        "crawler",
+        "wisp",
+        "crawler"
+      ]
+    },
+    {
+      "depth": 2,
+      "seed": 2056818491,
+      "name": "Flint Dawngleam",
+      "health": 5,
+      "level": 3,
+      "spirit": 9,
+      "light": 100,
+      "defeated": [
+        "crawler",
+        "crawler",
+        "crawler"
+      ]
+    },
+    {
+      "depth": 3,
+      "seed": 2056818491,
+      "name": "Flint Dawngleam",
+      "health": 5,
+      "level": 4,
+      "spirit": 15,
+      "light": 150,
+      "defeated": [
+        "crawler",
+        "crawler",
+        "wisp"
+      ]
+    },
+    {
+      "depth": 4,
+      "seed": 2056818491,
+      "name": "Flint Dawngleam",
+      "health": 3,
+      "level": 5,
+      "spirit": 27,
+      "light": 216,
+      "defeated": [
+        "wisp",
+        "crawler",
+        "crawler",
+        "keeper"
+      ]
+    }
+  ],
+  "errors": [],
+  "scope": "One state-aware real-input bot life across four random rooms and first keeper, reduced-motion Chromium desktop. Not human balance certification."
+}

@@ -2,6 +2,7 @@ extends Node2D
 const Rules=preload("res://rules.gd")
 const Fox=preload("res://fox.gd")
 const WorldArt=preload("res://world_art.gd")
+const Encounter=preload("res://encounter.gd")
 var profile={}
 var room={}
 var mode="title"
@@ -29,6 +30,9 @@ var menu_seed=0
 var clock=0.0
 var particles=[]
 var rings=[]
+var combat_text=[]
+var reduced_motion=false
+var startup_stage="created"
 var shots=[]
 var last_dead={}
 var save_raw=null
@@ -54,6 +58,9 @@ func _ready():
  randomize()
  menu_seed=randi()&0x7fffffff
  configure_input()
+ startup_stage="motion preference"
+ if OS.has_feature("web"):reduced_motion=bool(JavaScriptBridge.eval("window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 0",true))
+ startup_stage="background layers"
  var bg_layer=CanvasLayer.new();bg_layer.layer=-5;add_child(bg_layer)
  background=TextureRect.new();background.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;background.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;bg_layer.add_child(background)
  var atmosphere_layer=CanvasLayer.new();atmosphere_layer.layer=-4;add_child(atmosphere_layer)
@@ -65,14 +72,19 @@ func _ready():
  var presentation=preload("res://presentation.gd").new();presentation.game=self;art_ui.add_child(presentation)
  ui=CanvasLayer.new();ui.layer=10;add_child(ui)
  menu_layer=CanvasLayer.new();menu_layer.layer=20;add_child(menu_layer)
+ startup_stage="HUD"
  build_hud()
+ startup_stage="profile load"
  if not test_mode:load_life()
+ startup_stage="fox candidates"
  options=Rules.candidates(menu_seed)
  set_background(0)
  room=Rules.room(menu_seed,1)
+ startup_stage="title"
  open_title()
  get_viewport().size_changed.connect(resize_ui)
  resize_ui()
+ startup_stage="ready"
  for i in range(6):
   var audio=AudioStreamPlayer.new();audio.volume_db=-19;audio.bus="Master";add_child(audio);audio_players.append(audio)
  for key in ["jump","pulse","mote","hurt","level","dash"]:
@@ -134,7 +146,7 @@ func make_menu(title,subtitle,wide=false):
  var scroller=ScrollContainer.new();scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;menu.add_child(scroller)
  var outer=VBoxContainer.new();outer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;outer.add_theme_constant_override("separation",8 if get_viewport_rect().size.y<520 else 12);scroller.add_child(outer);menu.set_meta("content",outer);outer.minimum_size_changed.connect(_queue_menu_height.bind(menu.get_instance_id()))
  if get_viewport_rect().size.y>=520:outer.add_child(label("EMBER DASH  /  LINEAGE",10,Color("e8c790")))
- outer.add_child(label(title,24 if get_viewport_rect().size.y<520 else 32))
+ outer.add_child(label(title,24 if get_viewport_rect().size.y<600 or get_viewport_rect().size.x<380 else 32))
  outer.add_child(label(subtitle,13,Color("b3c6c1")))
  menu.set_meta("wide",wide)
  return outer
@@ -202,6 +214,9 @@ func open_choices():
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
  if size.y>=520:out.add_child(label("New terrain every life. Double jump and dash are available to every fox.",11,Color("a9c0b7")))
+ if not three_columns:
+  var selected_birth=Rules.BLOODLINES[options[selection].bloodline]
+  var summary=label(options[selection].name+" · "+selected_birth.gift,13,Color(selected_birth.color));out.add_child(summary);menu.set_meta("selected_summary",summary)
  var actions=HBoxContainer.new();actions.add_theme_constant_override("separation",8);out.add_child(actions)
  start_button=button("Begin as "+options[selection].name,func():start_life(options[selection]));start_button.size_flags_horizontal=Control.SIZE_EXPAND_FILL;actions.add_child(start_button);start_button.grab_focus()
  var back=button("Back",open_title);back.custom_minimum_size.x=76;actions.add_child(back)
@@ -222,7 +237,7 @@ func build_room(restoring):
  for n in world.get_children():
   if n!=art:world.remove_child(n);n.queue_free()
  room=Rules.room(profile.seed,profile.depth,profile.route)
- set_background(room.biome);shots.clear();particles.clear();rings.clear()
+ set_background(room.biome);shots.clear();particles.clear();rings.clear();combat_text.clear()
  for pl in room.platforms+room.ledges:
   var body=StaticBody2D.new();body.collision_layer=4 if pl.kind=="oneway" else 1;body.collision_mask=0
   var shape=CollisionShape2D.new();var rect=RectangleShape2D.new();rect.size=Vector2(pl.w,pl.h);shape.shape=rect;shape.position=Vector2(pl.x+pl.w/2,pl.y+pl.h/2)
@@ -232,7 +247,7 @@ func build_room(restoring):
  fox.atlas_path="res://assets/atlases/"+birth.id+".png";fox.color=Color(birth.color)
  var meta=JSON.parse_string(FileAccess.get_file_as_string("res://assets/atlas.json"))
  if meta is Dictionary:fox.anchor=Vector2(meta.anchor[0],meta.anchor[1])
- fox.attributes=Rules.stats(profile);fox.health=profile.health;fox.ward=profile.ward;fox.position=Vector2(100,520)
+ fox.attributes=Rules.stats(profile);fox.health=profile.health;fox.ward=profile.ward;fox.position=Vector2(100,520);fox.reduced_motion=reduced_motion
  if restoring:
   var requested=Vector2(profile.position[0],profile.position[1])
   for pl in room.platforms+room.ledges:
@@ -260,6 +275,7 @@ func play_pause():
  var out=make_menu("Catch your breath.","Your living profile is saved. Quitting is not a death.")
  var resume=button("Continue",func():set_mode("playing"));out.add_child(resume);resume.grab_focus()
  out.add_child(button("Sound: "+("off" if muted else "on"),func():muted=not muted;set_mode("playing");play_pause()))
+ out.add_child(button("Reduced motion: "+("on" if reduced_motion else "off"),func():reduced_motion=not reduced_motion;fox.reduced_motion=reduced_motion;set_mode("playing");play_pause()))
  out.add_child(button("Save and return to title",func():save_life();open_title()))
  out.add_child(label("Hold jump for height. Tap again to air jump.\nDash direction locks until the burst ends.\nS / Down drops through a thin ledge. E enters the portal.",12))
  if not warning.is_empty():out.add_child(label(warning,12,Color("ffbd94")))
@@ -267,11 +283,12 @@ func play_pause():
 
 func on_death():
  if mode!="playing":return
- last_dead={"name":profile.name,"level":Rules.level_info(profile.xp).level,"depth":profile.depth,"slain":profile.slain}
+ last_dead={"name":profile.name,"level":Rules.level_info(profile.xp).level,"depth":profile.depth,"slain":profile.slain,"spirit":profile.get("spirit",0),"cause":fox.death_cause}
  profile={"version":1,"alive":false};save_life()
  if storage_conflict:return
  set_mode("dead");sound("hurt")
  var out=make_menu("Every flame\nhas its moment.","%s reached level %d and chamber %d."%[last_dead.name,last_dead.level,last_dead.depth])
+ out.add_child(label("Lost to "+last_dead.cause+".  "+str(last_dead.slain)+" spirits defeated · "+str(last_dead.spirit)+" Spirit absorbed.",13,Color("e9cfaa")))
  out.add_child(label("This character's profile has ended. Its experience, light, upgrades and talents are gone. A new fox starts fresh.",14,Color("d9b6a1")))
  var retry=button("Start a new life",func():menu_seed=randi()&0x7fffffff;options=Rules.candidates(menu_seed,last_dead.name);selection=0;open_choices())
  out.add_child(retry);retry.grab_focus();fit_menu.call_deferred()
@@ -304,31 +321,30 @@ func _physics_process(dt):
   profile.chest=true;var gain=int((18 if profile.route=="cache" else 10)*attributes.bounty);profile.light+=gain;burst(room.chest,Color("ffcc76"),20);notify("Lantern cache · +%d light. Spend it at the next sanctuary."%gain);save_life()
  for e in room.enemies:
   if e.hp<=0:continue
-  e.flash=maxf(0,e.flash-dt);e.phase+=dt;e.cooldown-=dt
+  e.flash=maxf(0,e.flash-dt);e.phase+=dt;e.cooldown-=dt;e.stagger=maxf(0,float(e.get("stagger",0))-dt)
   var speed=28.0 if e.type=="keeper" else 32.0
-  e.x=clampf(e.x+sin(e.phase*.8)*speed*dt,e.lo,e.hi)
+  if e.stagger<=0:e.x=clampf(e.x+sin(e.phase*.8)*speed*dt,e.lo,e.hi)
   if e.type=="wisp":e.y=e.home+sin(e.phase*2)*13
   var pos=Vector2(e.x,e.y)
   var distance=pos.distance_to(fox.position+Vector2(0,-18))
-  if e.type in ["keeper","spitter"] and e.cooldown<=0 and distance<560:
-   var aim=(fox.position+Vector2(0,-22)-pos).normalized()
-   for angle in ([-.20,0,.20] if e.type=="keeper" else [0]):shots.append({"pos":pos,"v":aim.rotated(angle)*175,"age":4.0})
-   e.cooldown=3.1 if e.type=="keeper" else 2.3
+  var visible=absf(pos.x-camera.position.x)<get_viewport_rect().size.x/(2*camera.zoom.x)-24 and distance<560
+  for velocity in Encounter.ranged_step(e,fox.position+Vector2(0,-22),dt,visible):
+   shots.append({"pos":pos,"v":velocity,"age":4.0,"cause":"a keeper's volley" if e.type=="keeper" else "a spitter's ember"})
   var radius=46 if e.type=="keeper" else 25
   if distance<radius+25:
    if fox.dash_time>0:
     if e.get("last_dash",-1)!=fox.dash_serial:e.last_dash=fox.dash_serial;damage_enemy(e,attributes.damage*1.15)
    elif fox.previous_y<=e.y-radius*.5 and fox.velocity.y>80:
     damage_enemy(e,attributes.damage);fox.velocity.y=-470;fox.jumps_used=1
-   else:fox.hit(1,pos)
+   elif e.stagger<=0:fox.hit(1,pos,"a "+str(e.type))
    if mode!="playing":return
  for h in room.hazards:
-  if Rect2(fox.position-Vector2(18,33),Vector2(36,33)).intersects(h):fox.hit(1,Vector2(h.position.x,fox.position.y))
+  if Rect2(fox.position-Vector2(18,33),Vector2(36,33)).intersects(h):fox.hit(1,Vector2(h.position.x,fox.position.y),"crystal spikes")
   if mode!="playing":return
  for i in range(shots.size()-1,-1,-1):
   var shot=shots[i];shot.pos+=shot.v*dt;shot.age-=dt
   if shot.pos.distance_to(fox.position+Vector2(0,-20))<22:
-   fox.hit(1,shot.pos);shots.remove_at(i)
+   fox.hit(1,shot.pos,shot.get("cause","an enemy projectile"));shots.remove_at(i)
    if mode!="playing":return
   elif shot.age<=0:shots.remove_at(i)
  var distance=fox.position.distance_to(room.portal)
@@ -354,7 +370,14 @@ func attack():
 
 func damage_enemy(e,amount):
  if e.hp<=0:return
- e.hp=maxf(0,e.hp-amount);e.flash=.17;burst(Vector2(e.x,e.y),Color("d7b1ee"),7)
+ var dealt=minf(e.hp,amount)
+ e.hp=maxf(0,e.hp-amount);e.flash=.17
+ # Ordinary creatures can be interrupted; a guardian cannot be permanently
+ # stun-locked by simply holding PULSE. Its visible volley remains dodgeable.
+ e.stagger=0.0 if e.type=="keeper" else .12
+ if e.type!="keeper":e.windup=0.0
+ burst(Vector2(e.x,e.y),Color("d7b1ee"),7)
+ float_text(Vector2(e.x,e.y-35),"−"+str(snappedf(dealt,.1)),Color("fff1d6"))
  if e.hp<=0:
   if e.id in profile.defeated:return
   profile.defeated.append(e.id);profile.slain+=1
@@ -364,12 +387,18 @@ func damage_enemy(e,amount):
   profile.light+=16 if e.type=="keeper" else 3
   # Spirit changes capabilities on every defeat, not only at an XP level boundary.
   var old_max=fox.attributes.health
+  var old_damage=fox.attributes.damage
   fox.attributes=Rules.stats(profile)
+  float_text(fox.position-Vector2(0,90),"+%d SPIRIT  ·  +%.1f%% STRENGTH"%[absorbed,100*(fox.attributes.damage/old_damage-1)],fox.color)
   if levels>0:
    fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
    notify("LEVEL %d · Absorbed %d enemy levels · +%d experience."%[fox.attributes.level,absorbed,xp]);sound("level")
   else:notify("Absorbed %d enemy levels · +%d experience"%[absorbed,xp],1.6)
   burst(Vector2(e.x,e.y),fox.color,20);save_life()
+
+func float_text(pos,text,tint):
+ if combat_text.size()>=24:combat_text.pop_front()
+ combat_text.append({"pos":pos,"text":text,"tint":tint,"life":.85})
 
 func keeper_alive():
  for e in room.enemies:
@@ -385,6 +414,9 @@ func open_camp():
  set_mode("camp");show_camp()
 
 func show_camp():
+ # Sanctuary healing and purchases happen while physics is paused; refresh the
+ # HUD here too so it agrees with the shop rather than showing pre-heal health.
+ update_hud()
  var out=make_menu("A moment by the lantern.","Chamber %d complete. Heal, grow, then choose your next path."%profile.depth,true)
  out.add_child(label("LEVEL %d   ·   %d LIGHT   ·   %d / %d HEARTS"%[Rules.stats(profile).level,profile.light,fox.health,fox.attributes.health],15,Color("e8c790")))
  var shop=HBoxContainer.new() if get_viewport_rect().size.x>660 else VBoxContainer.new();shop.add_theme_constant_override("separation",8);out.add_child(shop)
@@ -473,6 +505,11 @@ func _process(dt):
  # Modal UI has its own render layer, derived from authoritative game state.
  menu_layer.visible=mode!="playing"
  clock+=minf(dt,.05)
+ if mode=="playing":
+  for i in range(combat_text.size()-1,-1,-1):
+   combat_text[i].life-=dt
+   if not reduced_motion:combat_text[i].pos.y-=dt*22
+   if combat_text[i].life<=0:combat_text.remove_at(i)
  if hint_timer>0:hint_timer=maxf(0,hint_timer-dt)
  for i in range(particles.size()-1,-1,-1):
   var p=particles[i];p.age-=dt;p.pos+=p.v*dt;p.v.y+=140*dt
@@ -501,7 +538,7 @@ func _process(dt):
    var state=snapshot();JavaScriptBridge.eval("window.emberStatus="+JSON.stringify(state)+";document.body.dataset.ember="+JSON.stringify(mode)+";",true)
 
 func snapshot():
- return {"engine":"Godot 4.7.2","mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[])}
+ return {"engine":"Godot 4.7.2","build":"feel-refinement-20260912","startupStage":startup_stage,"mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[]),"airJumps":fox.air_jumps_remaining() if is_instance_valid(fox) else 0,"animation":fox.sprite.animation if is_instance_valid(fox) else "","animationPlaying":fox.sprite.is_playing() if is_instance_valid(fox) else false,"reducedMotion":reduced_motion,"selectedFox":options[selection].name if not options.is_empty() else "","lastDeath":last_dead,"hudHealth":hud_health.text,"hudLight":hud_light.text}
 
 func _unhandled_input(event):
  if event.is_action_pressed("pause_game") and not event.is_echo() and mode in ["playing","paused"]:

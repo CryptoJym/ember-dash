@@ -6,7 +6,7 @@ const url=process.env.EMBER_URL||'http://127.0.0.1:9017/';
 const out=process.env.EMBER_EVIDENCE||'docs/ironflame/evidence';mkdirSync(out,{recursive:true});
 const checks=[],errors=[];let organic=null;
 function ok(name,value){assert.ok(value,name);checks.push({name,pass:true});console.log('PASS',name);}
-const browser=await chromium.launch({channel:'chrome',headless:true,timeout:120000});
+const browser=await chromium.launch({channel:process.env.EMBER_BROWSER==='bundled'?undefined:'chrome',headless:true,timeout:45000});
 const KEY='ember-ironflame-godot-v1';
 async function beginContext(options={}){
  const context=await browser.newContext({viewport:{width:1280,height:800},...options});const page=await context.newPage();
@@ -36,9 +36,9 @@ try{
   await page.waitForTimeout(35);
  }
  await page.keyboard.up('KeyD');await page.keyboard.up('KeyJ');await page.keyboard.up('Space');
- let s=await state();organic=s;writeFileSync(out+'/traversal-state.json',JSON.stringify(s,null,2));await page.screenshot({path:out+'/traversal-finish.png'});ok('real keyboard traversal completes a seeded chamber',s.mode==='camp');ok('defeated enemies raise the living fox above level one',s.level>=2&&s.xp>0);ok('defeated enemy levels are absorbed into living spirit strength',s.spirit>0);ok('collecting and defeating enemies earns spendable light',s.light>=18);
+ let s=await state();organic=s;writeFileSync(out+'/traversal-state.json',JSON.stringify(s,null,2));await page.screenshot({path:out+'/traversal-finish.png'});ok('real keyboard traversal completes a seeded chamber',s.mode==='camp');ok('defeated enemies raise the living fox above level one',s.level>=2&&s.xp>0);ok('defeated enemy levels are absorbed into living spirit strength',s.spirit>0);ok('collecting and defeating enemies earns spendable light',s.light>=18);ok('sanctuary HUD matches current health and wallet',s.hudHealth.startsWith(`HEARTS ${s.health} /`)&&s.hudLight===`LIGHT ${s.light}`);
  await page.screenshot({path:out+'/sanctuary-earned.png'});
- const wallet=s.light;await click('Inner flame');await page.waitForFunction(k=>{const v=JSON.parse(localStorage.getItem(k)||'null');return v?.upgrades?.power===1},KEY,{timeout:7000});let saved=JSON.parse(await page.evaluate(k=>localStorage.getItem(k),KEY));ok('earned currency buys a real stat upgrade',saved.upgrades.power===1&&saved.light===wallet-18);
+ const wallet=s.light;await click('Inner flame');await page.waitForFunction(k=>{const v=JSON.parse(localStorage.getItem(k)||'null');return v?.upgrades?.power===1},KEY,{timeout:7000});let saved=JSON.parse(await page.evaluate(k=>localStorage.getItem(k),KEY));ok('earned currency buys a real stat upgrade',saved.upgrades.power===1&&saved.light===wallet-18);await page.waitForFunction(k=>window.emberStatus.hudLight===`LIGHT ${JSON.parse(localStorage.getItem(k)).light}`,KEY);ok('purchase immediately updates the visible HUD wallet',true);
  if((await state()).menuButtons.some(b=>b.text.startsWith('Awaken a new gift'))){await click('Awaken a new gift');await click('Feather soul');await page.waitForFunction(k=>{const v=JSON.parse(localStorage.getItem(k)||'null');return v?.talents?.wings===1},KEY,{timeout:7000});saved=JSON.parse(await page.evaluate(k=>localStorage.getItem(k),KEY));ok('earned level grants a chosen extra air jump',saved.talents.wings===1&&saved.tokens===0);}
  await click('Save and rest');await page.reload();await d.ready();await click('Resume your living');await page.waitForFunction(()=>window.emberStatus.mode==='playing');s=await state();ok('earned XP and level survive a browser reload',s.xp===saved.xp&&s.name===saved.name);ok('absorbed enemy levels survive while this fox lives',s.spirit===saved.spirit&&s.spirit>0);
  await press('KeyE');await page.waitForFunction(()=>window.emberStatus.mode==='camp');ok('reopening cleared sanctuary cannot farm experience',(await state()).xp===saved.xp);

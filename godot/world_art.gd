@@ -80,6 +80,8 @@ func _draw():
   draw_line(Vector2(445,410),Vector2(472,445),Color("ead3aa",.7),1.2,true)
  for enemy_data in room.enemies:
   if enemy_data.hp>0 and view.grow(100).has_point(Vector2(enemy_data.x,enemy_data.y)):enemy(enemy_data,t,room.biome)
+ for text in game.combat_text:
+  text_at(text.pos-Vector2(text.text.length()*2.8,0),text.text,11,Color(text.tint,clampf(text.life*3,0,1)))
  for shot in game.shots:
   halo(shot.pos,22,Color("f4a7bd"),.42);draw_circle(shot.pos,4.8,Color("ffe1e2"))
   draw_line(shot.pos,shot.pos-shot.v.normalized()*15,Color("f4a7bd",.55),2,true)
@@ -128,7 +130,7 @@ func enemy(e,t,biome):
  var bob=sin(t*(3 if e.type=="wisp" else 7)+e.phase)*(2.0 if e.type=="wisp" else .7)
  draw_texture_rect(enemies[e.type],Rect2(pos+Vector2(0,bob)-anchor*size,size),false,Color(1.8,1.6,1.7) if e.flash>0 else Color.WHITE)
  if e.type in ["spitter","keeper"]:
-  var telegraph=clampf(1-e.cooldown/.7,0,1)
+  var windup=float(e.get("windup",0));var telegraph=clampf(1-windup/(.70 if boss else .55),0,1) if windup>0 else 0
   if telegraph>0:
    draw_arc(pos+Vector2(0,22 if not boss else 46),30 if not boss else 53,0,TAU,48,Color("ffb6bc",telegraph*.8),2,true)
    halo(pos,32,Color("ffc1c9"),telegraph*.65)
