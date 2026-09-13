@@ -1,0 +1,200 @@
+{
+  "alive": true,
+  "camera": [
+    2209,
+    365
+  ],
+  "candidateNames": [
+    "Oriel Wildbloom",
+    "Lyra Embermane",
+    "Aster Swiftfern"
+  ],
+  "dash": 0,
+  "depth": 1,
+  "engine": "Godot 4.7.2",
+  "grounded": true,
+  "health": 6,
+  "level": 2,
+  "light": 35,
+  "menuButtons": [
+    {
+      "rect": [
+        1212,
+        65,
+        50,
+        58
+      ],
+      "text": "II"
+    },
+    {
+      "rect": [
+        150,
+        301.5,
+        321,
+        80
+      ],
+      "text": "Heartwood · +1 heart\n24 light"
+    },
+    {
+      "rect": [
+        479,
+        301.5,
+        321,
+        80
+      ],
+      "text": "Inner flame · +15% strength\n18 light"
+    },
+    {
+      "rect": [
+        808,
+        301.5,
+        322,
+        80
+      ],
+      "text": "Quickening · faster dash\n20 light"
+    },
+    {
+      "rect": [
+        150,
+        393.5,
+        980,
+        58
+      ],
+      "text": "Awaken a new gift  ·  1 available"
+    },
+    {
+      "rect": [
+        150,
+        463.5,
+        485,
+        80
+      ],
+      "text": "Follow the roots\nA balanced path"
+    },
+    {
+      "rect": [
+        645,
+        463.5,
+        485,
+        80
+      ],
+      "text": "Chase the lanterns\nA richer cache"
+    },
+    {
+      "rect": [
+        150,
+        583.5,
+        980,
+        58
+      ],
+      "text": "Save and rest here"
+    }
+  ],
+  "menus": 1,
+  "mode": "camp",
+  "name": "Oriel Wildbloom",
+  "opponents": [
+    {
+      "cooldown": -2.24999999999999,
+      "flash": 0.17,
+      "hi": 1286,
+      "home": 446,
+      "hp": 0,
+      "id": "enemy2",
+      "level": 1,
+      "lo": 1040,
+      "max_hp": 9.5,
+      "phase": 8.74374950876024,
+      "type": "crawler",
+      "x": 1158.98250617971,
+      "y": 446
+    },
+    {
+      "cooldown": -4.80000000000002,
+      "flash": 0.17,
+      "hi": 1714,
+      "home": 441,
+      "hp": 0,
+      "id": "enemy3",
+      "level": 1,
+      "lo": 1472,
+      "max_hp": 9.5,
+      "phase": 12.4777403709604,
+      "type": "crawler",
+      "x": 1686.01723569538,
+      "y": 441
+    },
+    {
+      "cooldown": -6.92500000000013,
+      "flash": 0.17,
+      "hi": 2170,
+      "home": 430,
+      "hp": 0,
+      "id": "enemy4",
+      "level": 1,
+      "lo": 1917,
+      "max_hp": 9.5,
+      "phase": 9.77570252411046,
+      "type": "crawler",
+      "x": 2124.38542948633,
+      "y": 430
+    }
+  ],
+  "seed": 1117208007,
+  "terrain": [
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 480,
+      "x": 0,
+      "y": 520
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 355,
+      "x": 540,
+      "y": 490
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 371,
+      "x": 975,
+      "y": 468
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 367,
+      "x": 1407,
+      "y": 463
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 378,
+      "x": 1852,
+      "y": 452
+    },
+    {
+      "h": 400,
+      "kind": "solid",
+      "w": 430,
+      "x": 2304,
+      "y": 440
+    }
+  ],
+  "touch": [],
+  "viewport": [
+    1280,
+    800
+  ],
+  "vx": 103.333335876465,
+  "vy": 0,
+  "warning": "",
+  "x": 2597.07080078125,
+  "xp": 50,
+  "y": 439.962615966797,
+  "zoom": 1.21904766559601
+}

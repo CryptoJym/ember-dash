@@ -1,14 +1,11 @@
 {
   "clipping": [],
-  "clips": [
-    "idle",
-    "run",
-    "rise",
-    "fall",
-    "dash",
-    "pulse"
-  ],
+  "drawScale": 0.38,
   "frames": 96,
+  "resolution": [
+    512,
+    384
+  ],
   "variants": [
     "ember",
     "tide",

@@ -1,0 +1,23 @@
+{
+  "blender": "5.2.1 LTS",
+  "preview": false,
+  "groomObjects": 44,
+  "groomStrands": 28126,
+  "variants": [
+    "ember",
+    "tide",
+    "gale",
+    "void",
+    "sun",
+    "bloom"
+  ],
+  "frameCount": 96,
+  "ornamentObjects": {
+    "ember": 12,
+    "tide": 9,
+    "gale": 27,
+    "void": 26,
+    "sun": 14,
+    "bloom": 64
+  }
+}

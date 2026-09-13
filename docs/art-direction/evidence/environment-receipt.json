@@ -1,0 +1,17 @@
+[
+  {
+    "biome": "grove",
+    "objects": 420,
+    "render": "/Users/studio6/Projects/ember-art-direction-20260912/worlds/backdrops/grove.jpg"
+  },
+  {
+    "biome": "frost",
+    "objects": 405,
+    "render": "/Users/studio6/Projects/ember-art-direction-20260912/worlds/backdrops/frost.jpg"
+  },
+  {
+    "biome": "cinder",
+    "objects": 333,
+    "render": "/Users/studio6/Projects/ember-art-direction-20260912/worlds/backdrops/cinder.jpg"
+  }
+]

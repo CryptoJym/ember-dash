@@ -3,12 +3,12 @@ extends RefCounted
 const VERSION = 1
 const SAVE_KEY = "ember-ironflame-godot-v1"
 const BLOODLINES = [
- {"id":"ember","name":"Embermane","color":"ffad67","gift":"Fireburst","detail":"Stronger spirit pulse. A fearless fighter.","damage":1.35},
- {"id":"tide","name":"Moonveil","color":"9adff6","gift":"Moonward","detail":"A ward absorbs the first hit in each chamber.","ward":1},
- {"id":"gale","name":"Swiftfern","color":"b2dfb2","gift":"Skybound","detail":"Triple jump and a quicker stride.","speed":1.10,"jumps":1},
- {"id":"void","name":"Starstep","color":"c7adff","gift":"Rift dash","detail":"Longer dashes. Faster recovery.","dash":1.2,"cooldown":0.7},
- {"id":"sun","name":"Dawngleam","color":"f5dc96","gift":"Lightkeeper","detail":"Twice the light attraction. Richer caches.","magnet":2.0,"bounty":1.3},
- {"id":"bloom","name":"Wildbloom","color":"efaec4","gift":"Renewal","detail":"Extra vitality. Heal on each chamber clear.","health":1,"heal":1}
+ {"id":"ember","name":"Embermane","founder":"Caldera","color":"ffad67","gift":"Fireburst","tagline":"Burn brighter. Go further.","detail":"Stronger spirit pulse. A fearless fighter.","damage":1.35},
+ {"id":"tide","name":"Moonveil","founder":"Mira","color":"9adff6","gift":"Moonward","tagline":"Guard what matters.","detail":"A ward absorbs the first hit in each chamber.","ward":1},
+ {"id":"gale","name":"Swiftfern","founder":"Zephra","color":"b2dfb2","gift":"Skybound","tagline":"Higher. Lighter. Freer.","detail":"Triple jump and a quicker stride.","speed":1.10,"jumps":1},
+ {"id":"void","name":"Starstep","founder":"Astra","color":"c7adff","gift":"Rift dash","tagline":"Beyond every limit.","detail":"Longer dashes. Faster recovery.","dash":1.2,"cooldown":0.7},
+ {"id":"sun","name":"Dawngleam","founder":"Solen","color":"f5dc96","gift":"Lightkeeper","tagline":"Attract hope. Illuminate the way.","detail":"Twice the light attraction. Richer caches.","magnet":2.0,"bounty":1.3},
+ {"id":"bloom","name":"Wildbloom","founder":"Briar","color":"efaec4","gift":"Renewal","tagline":"Heal. Grow. Belong.","detail":"Extra vitality. Heal on each chamber clear.","health":1,"heal":1}
 ]
 const NAMES = ["Caldera","Mira","Zephra","Astra","Solen","Briar","Rowan","Thistle","Aster","Lyra","Kestrel","Luma","Sora","Vale","Orin","Wren","Juniper","Rune","Neri","Eira","Flint","Ilyra","Mica","Quill","Cirrus","Hollis","Yara","Vesper","Oriel","Iskra","Fable","Nyx","Cael","Riven","Perrin","Tarin"]
 const BIOMES = [
@@ -44,7 +44,7 @@ static func candidates(seed_value, excluded = ""):
  return out
 
 static func fresh(choice, seed_value):
- return {"version":VERSION,"alive":true,"name":choice.name,"bloodline":choice.bloodline,"seed":seed_value,"depth":1,"route":"roots","xp":0,"light":0,"slain":0,"seconds":0.0,"health":5+int(BLOODLINES[choice.bloodline].get("health",0)),"ward":int(BLOODLINES[choice.bloodline].get("ward",0)),"tokens":0,"upgrades":{"vitality":0,"power":0,"haste":0},"talents":{},"taken":[],"defeated":[],"chest":false,"cleared":false,"position":[100.0,520.0]}
+ return {"version":VERSION,"alive":true,"name":choice.name,"bloodline":choice.bloodline,"seed":seed_value,"depth":1,"route":"roots","xp":0,"light":0,"spirit":0,"slain":0,"seconds":0.0,"health":5+int(BLOODLINES[choice.bloodline].get("health",0)),"ward":int(BLOODLINES[choice.bloodline].get("ward",0)),"tokens":0,"upgrades":{"vitality":0,"power":0,"haste":0},"talents":{},"taken":[],"defeated":[],"chest":false,"cleared":false,"position":[100.0,520.0]}
 
 static func level_info(xp):
  var level = 1
@@ -58,7 +58,10 @@ static func stats(profile):
  var b = BLOODLINES[int(profile.bloodline)]
  var level = level_info(profile.xp).level
  var u = profile.upgrades; var t = profile.talents
- return {"level":level,"health":5+int(b.get("health",0))+int((level-1)/4)+int(u.vitality)+int(t.get("vitality",0)),"speed":320.0*float(b.get("speed",1.0)),"jumps":2+int(b.get("jumps",0))+mini(2,int(t.get("wings",0))),"damage":4.0*float(b.get("damage",1.0))*(1.0+(level-1)*0.12+int(u.power)*0.15+int(t.get("power",0))*0.2),"radius":104.0,"dash_time":0.17*float(b.get("dash",1.0)),"dash_cooldown":maxf(0.42,1.25*float(b.get("cooldown",1.0))*(1.0-int(u.haste)*0.08)),"magnet":65.0*float(b.get("magnet",1.0))*(1+int(t.get("magnet",0))*0.3),"ward":int(b.get("ward",0)),"heal":int(b.get("heal",0)),"bounty":float(b.get("bounty",1.0))}
+ var spirit=mini(250,int(profile.get("spirit",0)))
+ var spirit_strength=1.0+spirit*0.004
+ var spirit_speed=1.0+spirit*0.0005
+ return {"level":level,"health":5+int(b.get("health",0))+int((level-1)/4)+int(u.vitality)+int(t.get("vitality",0)),"speed":320.0*float(b.get("speed",1.0))*spirit_speed,"jumps":2+int(b.get("jumps",0))+mini(2,int(t.get("wings",0))),"damage":4.0*float(b.get("damage",1.0))*(1.0+(level-1)*0.12+int(u.power)*0.15+int(t.get("power",0))*0.2)*spirit_strength,"radius":104.0*(1.0+spirit*0.001),"dash_time":0.17*float(b.get("dash",1.0)),"dash_cooldown":maxf(0.42,1.25*float(b.get("cooldown",1.0))*(1.0-int(u.haste)*0.08)),"magnet":65.0*float(b.get("magnet",1.0))*(1+int(t.get("magnet",0))*0.3)*(1.0+spirit*0.001),"ward":int(b.get("ward",0)),"heal":int(b.get("heal",0)),"bounty":float(b.get("bounty",1.0)),"spirit":spirit}
 
 static func award_xp(profile, amount):
  if not profile.get("alive",false):return 0
@@ -97,7 +100,7 @@ static func normalize(raw):
  if bloodline < 0: return {}
  var p = fresh({"name":str(raw.get("name","Wren")).strip_edges().left(48),"bloodline":bloodline},bounded(raw.get("seed"),0,2147483647))
  p.depth=bounded(raw.get("depth"),1,10000,1);p.xp=bounded(raw.get("xp"),0,10000000)
- p.light=bounded(raw.get("light"),0,10000000);p.slain=bounded(raw.get("slain"),0,100000)
+ p.light=bounded(raw.get("light"),0,10000000);p.spirit=bounded(raw.get("spirit"),0,1000000);p.slain=bounded(raw.get("slain"),0,100000)
  p.seconds=bounded(raw.get("seconds"),0,31536000);p.tokens=bounded(raw.get("tokens"),0,30)
  p.route=raw.get("route","roots") if raw.get("route","roots") in ["roots","cache","trial"] else "roots"
  for id in UPGRADE_IDS:p.upgrades[id]=bounded(raw.get("upgrades",{}).get(id,0) if raw.get("upgrades",{}) is Dictionary else 0,0,6)

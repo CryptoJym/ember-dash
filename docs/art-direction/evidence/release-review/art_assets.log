@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS 512x384 approved-art metadata matches the rendered cells
+PASS stable shared foot pivot is inside every frame
+PASS ember atlas has sixteen complete cells
+PASS ember frames contain art with no boundary clipping
+PASS ember visible feet remain near the physics anchor
+PASS ember run contains eight distinct rendered poses
+PASS ember portrait and HUD head are imported
+PASS tide atlas has sixteen complete cells
+PASS tide frames contain art with no boundary clipping
+PASS tide visible feet remain near the physics anchor
+PASS tide run contains eight distinct rendered poses
+PASS tide portrait and HUD head are imported
+PASS gale atlas has sixteen complete cells
+PASS gale frames contain art with no boundary clipping
+PASS gale visible feet remain near the physics anchor
+PASS gale run contains eight distinct rendered poses
+PASS gale portrait and HUD head are imported
+PASS void atlas has sixteen complete cells
+PASS void frames contain art with no boundary clipping
+PASS void visible feet remain near the physics anchor
+PASS void run contains eight distinct rendered poses
+PASS void portrait and HUD head are imported
+PASS sun atlas has sixteen complete cells
+PASS sun frames contain art with no boundary clipping
+PASS sun visible feet remain near the physics anchor
+PASS sun run contains eight distinct rendered poses
+PASS sun portrait and HUD head are imported
+PASS bloom atlas has sixteen complete cells
+PASS bloom frames contain art with no boundary clipping
+PASS bloom visible feet remain near the physics anchor
+PASS bloom run contains eight distinct rendered poses
+PASS bloom portrait and HUD head are imported
+PASS six bloodlines have distinct image assets
+PASS grove landing projection has ordered finite bounds
+PASS grove foreground and portal textures are imported
+PASS frost landing projection has ordered finite bounds
+PASS frost foreground and portal textures are imported
+PASS cinder landing projection has ordered finite bounds
+PASS cinder foreground and portal textures are imported
+PASS crawler rendered enemy and anchor exist
+PASS wisp rendered enemy and anchor exist
+PASS spitter rendered enemy and anchor exist
+PASS keeper rendered enemy and anchor exist
+{"checks":43,"failures":[],"frames":96,"suite":"rendered art and projection contracts"}

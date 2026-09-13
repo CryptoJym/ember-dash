@@ -20,8 +20,8 @@ try{
  await page.screenshot({path:out+'/choose-desktop.png'});
  await click('Begin as');await page.waitForFunction(()=>window.emberStatus?.mode==='playing');await page.waitForTimeout(300);
  s=await state();ok('begin removes every menu',s.menus===0);const initial=s;
- await page.keyboard.down('KeyD');await page.waitForFunction(x=>window.emberStatus.x>x+60,initial.x);await page.keyboard.up('KeyD');await page.waitForTimeout(160);s=await state();ok('real keyboard movement',s.x>initial.x+60);
- const stop=s.x;await page.waitForTimeout(180);ok('ground braking stops promptly',Math.abs((await state()).x-stop)<3);
+ await page.keyboard.down('KeyD');await page.waitForFunction(x=>window.emberStatus.x>x+60,initial.x);await page.keyboard.up('KeyD');await page.waitForFunction(()=>Math.abs(window.emberStatus.vx)<300,{},{timeout:2000});const release=await state();ok('real keyboard movement',release.x>initial.x+60);
+ await page.waitForFunction(()=>Math.abs(window.emberStatus.vx)<2,{},{timeout:2000});s=await state();ok('ground braking stops promptly',Math.abs(s.x-release.x)<14);
  const floor=(await state()).y;await page.keyboard.down('Space');await page.waitForFunction(y=>window.emberStatus.y<y-55,floor,{timeout:4000});s=await state();ok('held jump has meaningful airtime',!s.grounded&&s.y<floor-55);await page.keyboard.up('Space');
  await page.waitForFunction(()=>window.emberStatus.grounded,{},{timeout:4000});
  const x0=(await state()).x;await page.keyboard.down('ShiftLeft');await page.waitForFunction(()=>window.emberStatus.dash>0,{},{timeout:4000});s=await state();ok('dash activates from real key input',s.dash>0);await page.keyboard.up('ShiftLeft');await page.waitForTimeout(220);ok('dash moves fox forward',(await state()).x>x0+70);

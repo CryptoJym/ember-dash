@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS one title panel
+PASS single actionable button: Choose your fox
+PASS one selection panel
+PASS single actionable button: Begin as
+PASS begin enables physics
+PASS no menu overlay survives begin callback
+PASS animated fox loaded
+PASS pause disables gameplay with one panel
+PASS single actionable button: Continue
+PASS resume removes pause panel
+PASS enemy spirit awards XP once
+PASS defeated enemy transfers its level into living fox spirit strength
+PASS defeated enemy cannot award twice
+PASS chamber transition opens one sanctuary
+PASS sanctuary levels apply to active stats
+PASS single actionable button: Inner flame
+PASS shop spends exact light and raises strength
+PASS single actionable button: Follow the roots
+PASS new chamber retains level and clears menus
+PASS same fox keeps abilities between rooms
+PASS actual lethal hit ends gameplay
+PASS death discards every character progression field
+PASS single actionable button: Start a new life
+PASS single actionable button: Begin as
+PASS next fox starts with no XP or currency
+PASS next fox inherits no dead-character upgrades
+PASS next fox inherits none of the dead character absorbed enemy levels
+{"checks":27,"failures":[],"suite":"actual Godot scene flow"}

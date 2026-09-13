@@ -1,0 +1,203 @@
+{
+  "baselineMain": "aeca864c11cfde739aad77489f19f29301cf4993",
+  "artifacts": {
+    "forge/index.html": {
+      "bytes": 6901,
+      "sha256": "c4117bcfa11c5fcb57e1b703b5c698c8b7a6de841dfb5d0d58a0ed7ba4d05072"
+    },
+    "forge/index.pck": {
+      "bytes": 14568556,
+      "sha256": "f4f7777cfbd101292f9ee9d707be19bd8bc913e9e2410210d374dc315ad2d671"
+    },
+    "forge/index.wasm": {
+      "bytes": 39514754,
+      "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+    }
+  },
+  "native": {
+    "rules": 21,
+    "physics": 6,
+    "controller": 14,
+    "flow": 27,
+    "art": 43,
+    "totalNonDuplicated": 111
+  },
+  "browserSmoke": {
+    "url": "http://127.0.0.1:9034/",
+    "checks": [
+      {
+        "name": "Godot web runtime starts",
+        "pass": true
+      },
+      {
+        "name": "three distinct fox names",
+        "pass": true
+      },
+      {
+        "name": "begin removes every menu",
+        "pass": true
+      },
+      {
+        "name": "real keyboard movement",
+        "pass": true
+      },
+      {
+        "name": "ground braking stops promptly",
+        "pass": true
+      },
+      {
+        "name": "held jump has meaningful airtime",
+        "pass": true
+      },
+      {
+        "name": "dash activates from real key input",
+        "pass": true
+      },
+      {
+        "name": "dash moves fox forward",
+        "pass": true
+      },
+      {
+        "name": "pause has exactly one menu",
+        "pass": true
+      },
+      {
+        "name": "resume clears the pause menu",
+        "pass": true
+      },
+      {
+        "name": "real localStorage has living profile",
+        "pass": true
+      },
+      {
+        "name": "reload restores same living fox",
+        "pass": true
+      },
+      {
+        "name": "no script errors in browser",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "passed": 13,
+    "scope": "Godot WebGL build; actual mouse/keyboard inputs and native browser localStorage. No test mutator used."
+  },
+  "browserJourney": {
+    "url": "http://127.0.0.1:9034/",
+    "checks": [
+      {
+        "name": "real keyboard traversal completes a seeded chamber",
+        "pass": true
+      },
+      {
+        "name": "defeated enemies raise the living fox above level one",
+        "pass": true
+      },
+      {
+        "name": "defeated enemy levels are absorbed into living spirit strength",
+        "pass": true
+      },
+      {
+        "name": "collecting and defeating enemies earns spendable light",
+        "pass": true
+      },
+      {
+        "name": "earned currency buys a real stat upgrade",
+        "pass": true
+      },
+      {
+        "name": "earned level grants a chosen extra air jump",
+        "pass": true
+      },
+      {
+        "name": "earned XP and level survive a browser reload",
+        "pass": true
+      },
+      {
+        "name": "absorbed enemy levels survive while this fox lives",
+        "pass": true
+      },
+      {
+        "name": "reopening cleared sanctuary cannot farm experience",
+        "pass": true
+      },
+      {
+        "name": "actual fall death writes only a dead-profile tombstone",
+        "pass": true
+      },
+      {
+        "name": "new character starts at level one with zero XP, light, and absorbed spirit",
+        "pass": true
+      },
+      {
+        "name": "dead character upgrades and talents do not carry over",
+        "pass": true
+      },
+      {
+        "name": "earlier Ember Dash save keys remain unchanged",
+        "pass": true
+      },
+      {
+        "name": "stale tab cannot overwrite a newer saved life",
+        "pass": true
+      },
+      {
+        "name": "conflicting tombstone remains intact",
+        "pass": true
+      },
+      {
+        "name": "390px mobile enters unobstructed play",
+        "pass": true
+      },
+      {
+        "name": "390px mobile has touch movement and jump",
+        "pass": true
+      },
+      {
+        "name": "390px simultaneous touch movement and jump work",
+        "pass": true
+      },
+      {
+        "name": "844px mobile enters unobstructed play",
+        "pass": true
+      },
+      {
+        "name": "844px mobile has touch movement and jump",
+        "pass": true
+      },
+      {
+        "name": "844px simultaneous touch movement and jump work",
+        "pass": true
+      },
+      {
+        "name": "no GDScript or uncaught browser errors",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "passed": 22,
+    "organic": {
+      "name": "Sora Moonveil",
+      "seed": 1025328755,
+      "xp": 50,
+      "level": 2,
+      "light": 35,
+      "spirit": 3
+    },
+    "scope": "Actual exported Godot game. Combat, route traversal, earnings, purchase, talent, save, death and reset exercised through real browser inputs. Mobile is Chromium touch emulation, not a physical iPhone."
+  },
+  "approvedSources": {
+    "foxBoard": {
+      "path": "art-source/approved/source.avif",
+      "sha256": "f16994556e23c1137325ae9864ce552ca939503a7d6191622dd10fa608c71369"
+    },
+    "worldBoard": {
+      "path": "art-source/approved/worlds.avif",
+      "sha256": "05c64c1a6568c2e53f305fb37aee7a5a90786979eb478ba857d36778ca2d8def"
+    },
+    "foxBlendScenes": 6,
+    "worldBlendScenes": 3,
+    "propBlendScenes": 10
+  },
+  "scope": "Exact local release candidate. Physical iPhone/Safari and physical gamepad are not certified."
+}

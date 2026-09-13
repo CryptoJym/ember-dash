@@ -1,0 +1,60 @@
+{
+  "url": "http://127.0.0.1:9034/",
+  "checks": [
+    {
+      "name": "Godot web runtime starts",
+      "pass": true
+    },
+    {
+      "name": "three distinct fox names",
+      "pass": true
+    },
+    {
+      "name": "begin removes every menu",
+      "pass": true
+    },
+    {
+      "name": "real keyboard movement",
+      "pass": true
+    },
+    {
+      "name": "ground braking stops promptly",
+      "pass": true
+    },
+    {
+      "name": "held jump has meaningful airtime",
+      "pass": true
+    },
+    {
+      "name": "dash activates from real key input",
+      "pass": true
+    },
+    {
+      "name": "dash moves fox forward",
+      "pass": true
+    },
+    {
+      "name": "pause has exactly one menu",
+      "pass": true
+    },
+    {
+      "name": "resume clears the pause menu",
+      "pass": true
+    },
+    {
+      "name": "real localStorage has living profile",
+      "pass": true
+    },
+    {
+      "name": "reload restores same living fox",
+      "pass": true
+    },
+    {
+      "name": "no script errors in browser",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "passed": 13,
+  "scope": "Godot WebGL build; actual mouse/keyboard inputs and native browser localStorage. No test mutator used."
+}

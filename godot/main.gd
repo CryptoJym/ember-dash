@@ -56,9 +56,13 @@ func _ready():
  configure_input()
  var bg_layer=CanvasLayer.new();bg_layer.layer=-5;add_child(bg_layer)
  background=TextureRect.new();background.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;background.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;bg_layer.add_child(background)
+ var atmosphere_layer=CanvasLayer.new();atmosphere_layer.layer=-4;add_child(atmosphere_layer)
+ var atmosphere=preload("res://atmosphere.gd").new();atmosphere.game=self;atmosphere_layer.add_child(atmosphere)
  world=Node2D.new();add_child(world)
  camera=Camera2D.new();add_child(camera);camera.enabled=true
  art=WorldArt.new();art.game=self;world.add_child(art)
+ var art_ui=CanvasLayer.new();art_ui.layer=9;add_child(art_ui)
+ var presentation=preload("res://presentation.gd").new();presentation.game=self;art_ui.add_child(presentation)
  ui=CanvasLayer.new();ui.layer=10;add_child(ui)
  menu_layer=CanvasLayer.new();menu_layer.layer=20;add_child(menu_layer)
  build_hud()
@@ -94,7 +98,7 @@ func set_mode(next):
  menu_layer.visible=mode!="playing"
  clear_input()
  if is_instance_valid(fox):fox.active=mode=="playing"
- background.modulate=Color(.50,.64,.74,1) if mode in ["playing","paused","camp"] else Color(.68,.78,.85,1)
+ background.modulate=Color(.93,.95,1,1) if mode in ["playing","paused","camp"] else Color(.86,.90,.96,1)
  hud.visible=mode not in ["title","choose","dead","confirm","conflict"]
  touch_root.visible=mode=="playing" and (DisplayServer.is_touchscreen_available() or (OS.has_feature("web") and JavaScriptBridge.eval("matchMedia('(pointer:coarse)').matches",true)==true))
  # Clear every menu panel, including any deferred/orphaned panel from a button callback.
@@ -107,7 +111,7 @@ func set_mode(next):
 
 func box_style(color=Color("102630"),border=Color("647778")):
  var b=StyleBoxFlat.new();b.bg_color=color;b.border_color=border
- b.set_border_width_all(1);b.set_corner_radius_all(12)
+ b.set_border_width_all(1);b.set_corner_radius_all(5)
  b.content_margin_left=20;b.content_margin_right=20;b.content_margin_top=18;b.content_margin_bottom=18
  return b
 
@@ -116,9 +120,9 @@ func label(text,size=16,color=Color("e6e6d4")):
 
 func button(text,callback,tint=Color("e8c790")):
  var b=Button.new();b.text=text;b.custom_minimum_size.y=48;b.add_theme_font_size_override("font_size",15)
- b.add_theme_color_override("font_color",Color("f2eddd"));b.add_theme_stylebox_override("normal",box_style(Color("18343b"),Color(tint,.55)))
- b.add_theme_stylebox_override("hover",box_style(Color("24474b"),tint));b.add_theme_stylebox_override("focus",box_style(Color("1f4147"),tint))
- b.add_theme_stylebox_override("pressed",box_style(Color("3d5651"),tint));b.pressed.connect(callback, CONNECT_DEFERRED);return b
+ b.add_theme_color_override("font_color",Color("f2eddd"));b.add_theme_stylebox_override("normal",box_style(Color("15262d"),Color(tint,.55)))
+ b.add_theme_stylebox_override("hover",box_style(Color("2c3737"),tint));b.add_theme_stylebox_override("focus",box_style(Color("303c3c"),tint))
+ b.add_theme_stylebox_override("pressed",box_style(Color("4c493d"),tint));b.pressed.connect(callback, CONNECT_DEFERRED);return b
 
 func make_menu(title,subtitle,wide=false):
  for child in menu_layer.get_children():
@@ -129,7 +133,7 @@ func make_menu(title,subtitle,wide=false):
  menu=PanelContainer.new();menu.add_theme_stylebox_override("panel",box_style(Color(.035,.085,.11,.96),Color("9b907363")));menu_layer.add_child(menu)
  var scroller=ScrollContainer.new();scroller.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;scroller.size_flags_vertical=Control.SIZE_EXPAND_FILL;menu.add_child(scroller)
  var outer=VBoxContainer.new();outer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;outer.add_theme_constant_override("separation",8 if get_viewport_rect().size.y<520 else 12);scroller.add_child(outer);menu.set_meta("content",outer);outer.minimum_size_changed.connect(_queue_menu_height.bind(menu.get_instance_id()))
- if get_viewport_rect().size.y>=520:outer.add_child(label("EMBER DASH  /  IRONFLAME",10,Color("e8c790")))
+ if get_viewport_rect().size.y>=520:outer.add_child(label("EMBER DASH  /  LINEAGE",10,Color("e8c790")))
  outer.add_child(label(title,24 if get_viewport_rect().size.y<520 else 32))
  outer.add_child(label(subtitle,13,Color("b3c6c1")))
  menu.set_meta("wide",wide)
@@ -140,7 +144,7 @@ func fit_menu():
  var viewport=get_viewport_rect().size
  var width=minf(1020 if menu.get_meta("wide",false) else 540,viewport.x-28)
  menu.size=Vector2(width,viewport.y-36)
- menu.position=Vector2((viewport.x-width)/2,18)
+ menu.position=Vector2(viewport.x*.065 if mode=="title" and viewport.x>1000 else (viewport.x-width)/2,18)
  _fit_menu_height.call_deferred(menu.get_instance_id())
 
 func _fit_menu_height(id):
@@ -179,15 +183,15 @@ func open_choices():
  set_mode("choose")
  var out=make_menu("Who will you become?","Three different names. Three entirely positive gifts.",true)
  var size=get_viewport_rect().size
- var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=minf(325,maxf(90,size.y-260));scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
+ var scroll=ScrollContainer.new();scroll.custom_minimum_size.y=minf(440,maxf(90,size.y-260));scroll.size_flags_vertical=Control.SIZE_EXPAND_FILL;out.add_child(scroll)
  var cards=VBoxContainer.new() if size.x<660 else HBoxContainer.new();cards.size_flags_horizontal=Control.SIZE_EXPAND_FILL;cards.add_theme_constant_override("separation",10);scroll.add_child(cards)
  for i in range(options.size()):
   var option=options[i];var birth=Rules.BLOODLINES[option.bloodline];var tint=Color(birth.color)
   var card=PanelContainer.new();card.size_flags_horizontal=Control.SIZE_EXPAND_FILL;card.custom_minimum_size.x=280 if size.x>=660 else 0
-  card.add_theme_stylebox_override("panel",box_style(Color("1b353c"),tint if selection==i else Color("4d6564")));cards.add_child(card)
+  card.add_theme_stylebox_override("panel",box_style(Color("152932"),tint if selection==i else Color("4d6564")));cards.add_child(card)
   var v=VBoxContainer.new();card.add_child(v)
-  var image=TextureRect.new();image.texture=load("res://assets/portraits/"+birth.id+".png");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;image.custom_minimum_size.y=175 if size.x>=660 else 115;v.add_child(image)
-  v.add_child(label(option.name,20,tint));v.add_child(label(birth.gift.to_upper(),10,tint));v.add_child(label(birth.detail,12))
+  var image=preload("res://bloodline_portrait.gd").new();image.birthright=birth.id;image.tone=tint;image.custom_minimum_size.y=240 if size.x>=660 else 190;v.add_child(image)
+  v.add_child(label(option.name,20,tint));v.add_child(label((birth.founder+"'S "+birth.name+" · "+birth.gift).to_upper(),10,tint));v.add_child(label(birth.tagline+"  "+birth.detail,12))
   var index=i
   var pick=button("Selected" if selection==i else "Choose this fox",func():selection=index;open_choices(),tint);v.add_child(pick)
  if size.y>=520:out.add_child(label("New terrain every life. Double jump and dash are available to every fox.",11,Color("a9c0b7")))
@@ -348,12 +352,16 @@ func damage_enemy(e,amount):
   if e.id in profile.defeated:return
   profile.defeated.append(e.id);profile.slain+=1
   var xp=(55+e.level*12) if e.type=="keeper" else (7+e.level*5)
+  var absorbed=maxi(1,int(e.level));profile.spirit=mini(1000000,int(profile.get("spirit",0))+absorbed)
   var levels=Rules.award_xp(profile,xp)
   profile.light+=16 if e.type=="keeper" else 3
+  # Spirit changes capabilities on every defeat, not only at an XP level boundary.
+  var old_max=fox.attributes.health
+  fox.attributes=Rules.stats(profile)
   if levels>0:
-   var old_max=fox.attributes.health;fox.attributes=Rules.stats(profile);fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
-   notify("LEVEL %d · Their spirit becomes your strength. +%d experience."%[fox.attributes.level,xp]);sound("level")
-  else:notify("+%d spirit experience"%xp,1.4)
+   fox.health=mini(fox.attributes.health,fox.health+maxi(1,fox.attributes.health-old_max))
+   notify("LEVEL %d · Absorbed %d enemy levels · +%d experience."%[fox.attributes.level,absorbed,xp]);sound("level")
+  else:notify("Absorbed %d enemy levels · +%d experience"%[absorbed,xp],1.6)
   burst(Vector2(e.x,e.y),fox.color,20);save_life()
 
 func keeper_alive():
@@ -429,12 +437,12 @@ func resize_ui():
  background.position=Vector2(-s.x*.03,-s.y*.02);background.size=s*Vector2(1.06,1.04)
  var portrait=s.x<s.y
  camera.zoom=Vector2.ONE*(s.x/500.0 if portrait else minf(s.x/1050.0,s.y/640.0))
- hud_name.position=Vector2(20,18);hud_name.size=Vector2(s.x-100 if portrait else 320,24)
- hud_health.position=Vector2(20,43);hud_health.size=Vector2(310,30)
- hud_level.position=Vector2(20,79);hud_level.size=Vector2(300,18)
- xp_bar.position=Vector2(20,104);xp_bar.size=Vector2(190 if portrait else 260,5)
+ hud_name.position=Vector2(90,18);hud_name.size=Vector2(s.x-164 if portrait else 310,24)
+ hud_health.position=Vector2(90,78);hud_health.size=Vector2(250,20);hud_health.add_theme_font_size_override("font_size",11)
+ hud_level.position=Vector2(90,40);hud_level.size=Vector2(s.x-154 if portrait else 310,20);hud_level.add_theme_font_size_override("font_size",10)
+ xp_bar.position=Vector2(90,103);xp_bar.size=Vector2(190 if portrait else 260,5)
  hud_place.position=Vector2(15 if portrait else s.x/2-210,125 if portrait else 20);hud_place.size=Vector2(s.x-30 if portrait else 420,50)
- hud_light.position=Vector2(s.x-115,64 if portrait else 20);hud_light.size=Vector2(95,32)
+ hud_light.position=Vector2(s.x-115,88 if portrait else 20);hud_light.size=Vector2(95,32)
  hud.get_node("Pause").position=Vector2(s.x-68,14 if portrait else 65);hud.get_node("Pause").size=Vector2(48,48)
  hint.position=Vector2(20,185 if portrait else s.y-155);hint.size=Vector2(s.x-40,50)
  var bottom=s.y-80
@@ -448,7 +456,7 @@ func update_hud():
  var b=Rules.BLOODLINES[int(profile.bloodline)];var level=Rules.level_info(profile.xp)
  hud_name.text=profile.name
  hud_health.text="HEARTS %d / %d%s"%[fox.health,fox.attributes.health,"  WARD" if fox.ward else ""]
- hud_level.text="LEVEL %d  ·  %s  ·  %s"%[level.level,b.gift,"DASH READY" if fox.dash_cooldown<=0 else "DASH %.1fs"%fox.dash_cooldown]
+ hud_level.text="LEVEL %d  ·  SPIRIT %d  ·  %s"%[level.level,profile.get("spirit",0),"DASH READY" if fox.dash_cooldown<=0 else "DASH %.1fs"%fox.dash_cooldown]
  hud_place.text="CHAMBER %02d\n%s"%[profile.depth,Rules.BIOMES[room.biome].name];hud_light.text="LIGHT "+str(profile.light)
  xp_bar.max_value=level.next;xp_bar.value=level.into
  for tb in touch_buttons:
@@ -480,7 +488,7 @@ func _process(dt):
    var state=snapshot();JavaScriptBridge.eval("window.emberStatus="+JSON.stringify(state)+";document.body.dataset.ember="+JSON.stringify(mode)+";",true)
 
 func snapshot():
- return {"engine":"Godot 4.7.2","mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[])}
+ return {"engine":"Godot 4.7.2","mode":mode,"alive":profile.get("alive",false),"name":profile.get("name",""),"level":Rules.level_info(profile.get("xp",0)).level,"xp":profile.get("xp",0),"light":profile.get("light",0),"spirit":profile.get("spirit",0),"depth":profile.get("depth",0),"health":fox.health if is_instance_valid(fox) else 0,"x":fox.position.x if is_instance_valid(fox) else 0,"y":fox.position.y if is_instance_valid(fox) else 0,"grounded":fox.is_on_floor() if is_instance_valid(fox) else false,"dash":fox.dash_time if is_instance_valid(fox) else 0,"candidateNames":options.map(func(x):return x.name),"warning":warning,"menus":menu_layer.get_children().filter(func(n):return n is PanelContainer and n.is_visible_in_tree()).size(),"menuButtons":button_observations(ui)+button_observations(menu_layer),"viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"touch":touch_buttons.filter(func(b):return b.is_visible_in_tree()).map(func(b):return {"action":b.action,"center":[b.position.x+40*b.scale.x,b.position.y+40*b.scale.y],"size":80*b.scale.x}),"vx":fox.velocity.x if is_instance_valid(fox) else 0,"vy":fox.velocity.y if is_instance_valid(fox) else 0,"camera":[camera.position.x,camera.position.y],"zoom":camera.zoom.x,"seed":profile.get("seed",0),"terrain":room.get("platforms",[]),"opponents":room.get("enemies",[])}
 
 func _unhandled_input(event):
  if event.is_action_pressed("pause_game") and not event.is_echo() and mode in ["playing","paused"]:
